@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Food  implements QuesAns{
     private final Map<Integer,String> questionText;
     private final List<Map<String,String>> options;
