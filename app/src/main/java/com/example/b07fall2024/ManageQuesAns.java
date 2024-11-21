@@ -39,4 +39,32 @@ public class ManageQuesAns {
         }
     }
 
+    public String getAnswer(QuesAns quesAns, int questionIndex){
+        if (quesAns != null ) {
+            // Ensure the QuesAns object exists before adding the answer
+            if (answersByCategory.containsKey(quesAns)) {
+                if(answersByCategory.get(quesAns).containsKey(questionIndex)){
+                    return answersByCategory.get(quesAns).get(questionIndex);
+                }
+                else{
+                    throw new QuestionException("Question index does not exist");
+                }
+            }     
+            else {
+                throw new QuestionException("QuesAns object not found in the category map.");
+            }
+        }
+        else {
+            throw new QuestionException("QuesAns object cannot be null.");
+        }
+    }
+
+    public float getTotalEmissions(){
+        float total = 0;
+        for (QuesAns quesAns: answersByCategory.getKeys()){
+            total += quesAns.getEmissions();
+        }
+        return total;
+    }
+
 }

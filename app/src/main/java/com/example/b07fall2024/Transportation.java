@@ -126,4 +126,11 @@ public class Transportation implements QuesAns{
         return options.get(number).size();
     }
 
+    @Override
+    public float getEmissions(){
+        float total = 0;
+        if getSelectedAnswer(1) = 
+
+    }
+
 }

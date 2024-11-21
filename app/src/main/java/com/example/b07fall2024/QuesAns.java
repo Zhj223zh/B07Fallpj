@@ -9,4 +9,5 @@ public interface QuesAns {
     void setSelectedAnswer(int index,String answer);
     int getEnding_quiz_number();
     int options_size(int number);
+    float getEmissions();
 }
