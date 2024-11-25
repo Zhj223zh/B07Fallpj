@@ -129,8 +129,10 @@ public class Transportation implements QuesAns{
     @Override
     public float getEmissions(){
         float total = 0;
-        if getSelectedAnswer(1) = 
-
+        if getSelectedAnswer(1) == "A":
+            return 0;
+        HashMap<String, int> ans2ToCO2 = new HashMap<>;
+        
     }
 
 }
