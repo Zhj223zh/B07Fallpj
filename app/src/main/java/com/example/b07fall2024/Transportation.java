@@ -144,7 +144,8 @@ public class Transportation implements QuesAns{
 
         if ans1 == "No":
             return 0;
-        HashMap<String, int> ans2ToCO2 = Map.of(
+
+        HashMap<String, float> ans2ToCO2 = Map.of(
             "Gasoline", 0.24,
             "Diesel", 0.27,
             "Hybrid", 0.16,
@@ -158,9 +159,6 @@ public class Transportation implements QuesAns{
             "20,000–25,000 km (12,000–15,000 miles)", 25000,
             "More than 25,000 km (15,000 miles)", 35000
         );
-        int kgPerKm = ans2ToCO2.get(ans2);
-        int milesDriven = ans3ToMiles.get(ans3);
-        total += kgPerKm * milesDriven;
 
         //Answers 4 and 5
         HashMap<String, int> ans5Occasionally = Map.of(
@@ -185,8 +183,6 @@ public class Transportation implements QuesAns{
             "Always", ans5Frequently.get(ans5);
         )
 
-        total += ans4ToCO2.get(ans4);
-
         //answer 6
         HashMap<String, int> ans6ToCO2 = Map.of(
             "None", 0,
@@ -205,6 +201,11 @@ public class Transportation implements QuesAns{
             "More than 10 flights", 6600
         );
 
+        int kgPerKm = ans2ToCO2.get(ans2);
+        int milesDriven = ans3ToMiles.get(ans3);
+
+        total += kgPerKm * milesDriven;
+        total += ans4ToCO2.get(ans4);
         total += ans6ToCO2.get(ans6);
         total += ans7ToCO2.get(ans7); 
 
