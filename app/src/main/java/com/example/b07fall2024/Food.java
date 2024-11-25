@@ -31,17 +31,38 @@ public class Food  implements QuesAns{
         options.add(options1);
 
         Map<String, String> options2 = new HashMap<>();
-        options2.put("A", "Beef");
-        options2.put("B", "Pork");
-        options2.put("C", "Chicken");
-        options2.put("D", "Fish/Seafood");
+        options2.put("A", "Daily");
+        options2.put("B", "Frequently (3-5 times/week)");
+        options2.put("C", "Occasionally (1-2 times/week)");
+        options2.put("D", "Never");
         options.add(options2);
 
         Map<String, String> options3 = new HashMap<>();
-        options3.put("A", "Never");
-        options3.put("B", "Rarely");
-        options3.put("C", "Occasionally");
-        options3.put("D", "Frequently");
+        options3.put("A", "Daily");
+        options3.put("B", "Frequently (3-5 times/week)");
+        options3.put("C", "Occasionally (1-2 times/week)");
+        options3.put("D", "Never");
+        options.add(options3);
+
+        Map<String, String> options4 = new HashMap<>();
+        options4.put("A", "Daily");
+        options4.put("B", "Frequently (3-5 times/week)");
+        options4.put("C", "Occasionally (1-2 times/week)");
+        options4.put("D", "Never");
+        options.add(options4);
+
+        Map<String, String> options5 = new HashMap<>();
+        options5.put("A", "Daily");
+        options5.put("B", "Frequently (3-5 times/week)");
+        options5.put("C", "Occasionally (1-2 times/week)");
+        options5.put("D", "Never");
+        options.add(options5);
+
+        Map<String, String> options6 = new HashMap<>();
+        options6.put("A", "Never");
+        options6.put("B", "Rarely");
+        options6.put("C", "Occasionally");
+        options6.put("D", "Frequently");
         options.add(options3);
 
     }
@@ -89,5 +110,31 @@ public class Food  implements QuesAns{
     @Override
     public int options_size(int number) {
         return options.get(number).size();
+    }
+
+    @Override
+    public float getEmissions(){
+        float total = 0;
+
+        String ans1 = getSelectedAnswer(1);
+        String ans2 = getSelectedAnswer(2);
+        String ans3 = getSelectedAnswer(3);
+        String ans4 = getSelectedAnswer(4);
+        String ans5 = getSelectedAnswer(5);
+        String ans6 = getSelectedAnswer(6);
+
+        HashMap<String, int> ans1ToCO2 = Map.of(
+            "Vegetarian", 1000,
+            "Vegan", 500,
+            "Pescatarian (fish/seafood)", 1500,
+            "Meat-based (eat all types of animal products)", 0
+        );
+
+        HashMap<String, int> ans2ToCO2 = Map.of(
+            
+        );
+
+        total += ans1ToCO2.get(ans1);
+
     }
 }
