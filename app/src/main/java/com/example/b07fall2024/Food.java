@@ -131,10 +131,48 @@ public class Food  implements QuesAns{
         );
 
         HashMap<String, int> ans2ToCO2 = Map.of(
-            
+            "Daily", 2500,
+            "Frequently (3-5 times/week)", 1900,
+            "Occasionally (1-2 times/week)", 1300,
+            "Never", 0
+        );
+
+        HashMap<String, int> ans3ToCO2 = Map.of(
+            "Daily", 1450,
+            "Frequently (3-5 times/week)", 860,
+            "Occasionally (1-2 times/week)", 450,
+            "Never", 0
+        );
+
+        HashMap<String, int> ans4ToCO2 = Map.of(
+            "Daily", 950,
+            "Frequently (3-5 times/week)", 600,
+            "Occasionally (1-2 times/week)", 200,
+            "Never", 0
+        );
+
+        HashMap<String, int> ans5ToCO2 = Map.of(
+            "Daily", 800,
+            "Frequently (3-5 times/week)", 500,
+            "Occasionally (1-2 times/week)", 150
+            "Never", 0
+        );
+
+        HashMap<String, float> ans6ToCO2 = Map.of(
+            "Never", 0,
+            "Rarely", 23.4,
+            "Occasionally", 70.2,
+            "Frequently", 140.4
         );
 
         total += ans1ToCO2.get(ans1);
+        total += ans2ToCO2.get(ans2);
+        total += ans3ToCO2.get(ans3);
+        total += ans4ToCO2.get(ans4);
+        total += ans5ToCO2.get(ans5);
+        total += ans6ToCO2.get(ans6);
+
+        return total;
 
     }
 }
