@@ -37,8 +37,6 @@ androidComponents {
         it.packaging.resources.excludes.add("mockito-extensions/org.mockito.plugins.MockMaker")
     }
 }
-
-
 dependencies {
 
     implementation(libs.appcompat)
@@ -69,6 +67,8 @@ dependencies {
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.nineoldandroids:library:2.4.0")
     // Skip this if you don't want to use integration libraries or configure Glide.
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 
