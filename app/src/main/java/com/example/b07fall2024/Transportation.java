@@ -23,17 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Transportation extends AppCompatActivity {
-    private LinearLayout mainContainer,vehicleSection,flightSection, cyclingWalkingSection,publicTransportSection;
-    private DatabaseReference databaseRef;
-    private FirebaseAuth mAuth;
+    private LinearLayout vehicleSection,flightSection, cyclingWalkingSection,publicTransportSection;
+
     private double TransportationEmission;
-
-    // 获取日期
-    String year = String.valueOf(DateStorage.getInstance().getYear());
-    String month = String.valueOf(DateStorage.getInstance().getMonth());
-    String week = String.valueOf(DateStorage.getInstance().getWeek());
-    String day = String.valueOf(DateStorage.getInstance().getDay());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +42,8 @@ public class Transportation extends AppCompatActivity {
         activityListButton.setOnClickListener(v -> {
             Intent intent = new Intent(Transportation.this, ActivityMainLayout.class);
             startActivity(intent);
+            UpdateToFirebase.getInstance().uploadDataToFirebase(Transportation.this);
+
         });
 
         // 跳转到 FoodConsumption 活动

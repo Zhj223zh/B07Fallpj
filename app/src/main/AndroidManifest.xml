@@ -13,7 +13,7 @@
         android:theme="@style/Theme.B07Fall2024"
         tools:targetApi="31">
         <activity
-            android:name="com.example.b07fall2024.MainActivity"
+            android:name="com.example.b07fall2024.ActivityMainLayout"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name="com.example.b07fall2024.Transportation"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.b07fall2024.FoodConsumption"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.b07fall2024.ConsumptionAndShopping"
+            android:exported="true" />
     </application>
 
 </manifest>

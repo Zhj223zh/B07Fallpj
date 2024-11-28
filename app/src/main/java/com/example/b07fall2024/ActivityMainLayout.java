@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -25,7 +30,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 public class ActivityMainLayout extends AppCompatActivity {
-    private int year, month, day, week;
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
 
@@ -68,12 +72,19 @@ public class ActivityMainLayout extends AppCompatActivity {
             Intent intent = new Intent(ActivityMainLayout.this, FoodConsumption.class);
             startActivity(intent);
         });
+
+        // to food consumption page
+        Button btnConsumptionShopping = findViewById(R.id.btnConsumptionShoppingActivities);
+        btnConsumptionShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivityMainLayout.this, ConsumptionAndShopping.class);
+            startActivity(intent);
+        });
     }
 
     private void updateDateStorage(Calendar calendar) {
         DateStorage dateStorage = DateStorage.getInstance();
         dateStorage.setYear(calendar.get(Calendar.YEAR));
-        dateStorage.setMonth(calendar.get(Calendar.MONTH) + 1); // 月份从0开始，需要加1
+        dateStorage.setMonth(calendar.get(Calendar.MONTH)); //加1?
         dateStorage.setDay(calendar.get(Calendar.DAY_OF_MONTH));
         dateStorage.setWeek(calendar.get(Calendar.WEEK_OF_YEAR));
     }
@@ -81,11 +92,11 @@ public class ActivityMainLayout extends AppCompatActivity {
     private void fetchEmissionDataFromFirebase() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
-            Log.d("ActivityMainLayout", "The user hasn't logged in");
+            Log.e("ActivityMainLayout", "The user hasn't logged in");
             return;
         }
 
-        // 获取日期信息
+        // Get date info
         DateStorage dateStorage = DateStorage.getInstance();
         String userId = user.getUid();
         String year = String.valueOf(dateStorage.getYear());
@@ -93,54 +104,65 @@ public class ActivityMainLayout extends AppCompatActivity {
         String week = String.valueOf(dateStorage.getWeek());
         String day = String.valueOf(dateStorage.getDay());
 
-        // 定义数据库路径
-        DocumentReference dayRef = firestore.collection("Emission")
-                .document(userId)
-                .collection(year)
-                .document(month)
-                .collection(week)
-                .document(day)
-                .collection("categoryBreakdown")
-                .document("EmissionData");
+        // Database path to "categoryBreakdown"
+        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(userId)
+                .child(year)
+                .child(month)
+                .child(week)
+                .child(day)
+                .child("categoryBreakdown");
 
-        // 从 Firebase 获取数据并存储到 EmissionStorage
-        dayRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
+        dayRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     EmissionStorage emissionStorage = EmissionStorage.getInstance();
 
-                    // 获取各个排放数据
-                    double energyUse = task.getResult().getDouble("EnergyUse") != null ? task.getResult().getDouble("EnergyUse") : 0.0;
-                    double foodConsumption = task.getResult().getDouble("FoodConsumption") != null ? task.getResult().getDouble("FoodConsumption") : 0.0;
-                    double shopping = task.getResult().getDouble("Shopping") != null ? task.getResult().getDouble("Shopping") : 0.0;
-                    double transportation = task.getResult().getDouble("Transportation") != null ? task.getResult().getDouble("Transportation") : 0.0;
+                    // Parse data as strings and convert to doubles
 
-                    // 存储到 EmissionStorage
-                    emissionStorage.setEnergyUse(energyUse);
+                    double foodConsumption = snapshot.hasChild("FoodConsumption") ?
+                            Double.parseDouble(snapshot.child("FoodConsumption").getValue(String.class)) : 0.0;
+
+                    double shopping = snapshot.hasChild("Shopping") ?
+                            Double.parseDouble(snapshot.child("Shopping").getValue(String.class)) : 0.0;
+
+                    double transportation = snapshot.hasChild("Transportation") ?
+                            Double.parseDouble(snapshot.child("Transportation").getValue(String.class)) : 0.0;
+
+                    double total = foodConsumption + shopping + transportation;
+
+                    // Store values in EmissionStorage
+                    emissionStorage.setEnergyUse(total);
                     emissionStorage.setFoodConsumption(foodConsumption);
                     emissionStorage.setShopping(shopping);
                     emissionStorage.setTransportation(transportation);
 
-                    // 更新 UI 上的 TextView
-                    TextView energyUseTextView = findViewById(R.id.textViewEnergyUse);
-                    TextView foodConsumptionTextView = findViewById(R.id.textViewFoodConsumption);
-                    TextView shoppingTextView = findViewById(R.id.textViewShopping);
-                    TextView transportationTextView = findViewById(R.id.textViewTransportation);
-
+                    // Update UI
                     runOnUiThread(() -> {
-                        energyUseTextView.setText("Energy Use: " + energyUse + " kg");
+                        TextView foodConsumptionTextView = findViewById(R.id.textViewFoodConsumption);
+                        TextView shoppingTextView = findViewById(R.id.textViewShopping);
+                        TextView transportationTextView = findViewById(R.id.textViewTransportation);
+                        TextView TotalTextView = findViewById(R.id.textViewDailyEmissions);
+
                         foodConsumptionTextView.setText("Food Consumption: " + foodConsumption + " kg");
                         shoppingTextView.setText("Shopping: " + shopping + " kg");
                         transportationTextView.setText("Transportation: " + transportation + " kg");
+                        TotalTextView.setText("Daily CO2e Emissions: \n" + total + " kg" );
                     });
 
                     Log.d("ActivityMainLayout", "Emission data successfully fetched and stored");
                 } else {
-                    Log.d("ActivityMainLayout", "No data found for the selected date");
+                    Log.e("ActivityMainLayout", "No data found for the selected date");
                 }
-            } else {
-                Log.d("ActivityMainLayout", "Failed to fetch data: " + task.getException());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("ActivityMainLayout", "Failed to fetch data: " + error.getMessage());
             }
         });
     }
+
 }

@@ -38,13 +38,6 @@
                 android:gravity="center_horizontal" />
 
             <!-- Emission Categories TextViews -->
-            <TextView
-                android:id="@+id/textViewEnergyUse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Energy Use: 0 kg"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp" />
 
             <TextView
                 android:id="@+id/textViewFoodConsumption"

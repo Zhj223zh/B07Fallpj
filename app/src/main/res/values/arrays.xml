@@ -35,4 +35,21 @@
         <item>(mile)</item>
         <item>(km)</item>
     </string-array>
+
+    <string-array name="electronics_types">
+        <item>Smartphone</item>
+        <item>Laptop</item>
+        <item>TV</item>
+    </string-array>
+
+    <string-array name="bill_types">
+        <item>Electricity</item>
+        <item>Gas</item>
+        <item>Water</item>
+    </string-array>
+
+    <string-array name="other_purchase_type">
+        <item>furniture</item>
+        <item>appliances</item>
+    </string-array>
 </resources>
