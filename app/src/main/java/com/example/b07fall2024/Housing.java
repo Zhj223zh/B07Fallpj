@@ -127,4 +127,8 @@ public class Housing implements QuesAns {
     public int options_size(int number) {
         return options.get(number).size();
     }
+
+    public float getEmissions(){
+        
+    }
 }
