@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 public class Housing implements QuesAns {
     private final Map<Integer, String> questionText;
@@ -129,6 +131,33 @@ public class Housing implements QuesAns {
     }
 
     public float getEmissions(){
-        
+        String homeType = getSelectedAnswer(1);
+        String householdSize = getSelectedAnswer(2);
+        String houseSize = getSelectedAnswer(3);
+        String heatingType = getSelectedAnswer(4);
+        String energyBill = getSelectedAnswer(5);
+        String waterType = getSelectedAnswer(6);
+        String renewables = getSelectedAnswer(7);
+
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("/Users/User/Desktop/course.json"));
+            JSONObject jsonObject = (JSONObject)obj;
+            //TODO: figure out how to get the four options as json objects
+          
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        float total;
+        HashMap<String, <String, <String, <String, int>>>> standin;
+        float heatingCO2 = standin.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
+        float waterCO2 = standin.get(houseSize.get(householdSize.get(energyBill.get(waterType))));
+
+        total = total + heatingCO2 + waterCO2;
+        if (heatingType != waterType){total += 233;}
+        if (renewables == "Yes, primarily (more than 50% of energy use)"){total -= 6000;}
+        if (renewables == "Yes, partially (less than 50% of energy use)"){total -= 4000;}
+
     }
 }
