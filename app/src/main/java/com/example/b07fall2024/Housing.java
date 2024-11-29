@@ -139,20 +139,25 @@ public class Housing implements QuesAns {
         String waterType = getSelectedAnswer(6);
         String renewables = getSelectedAnswer(7);
 
-        JSONParser parser = new JSONParser();
-        try {
-            Object obj = parser.parse(new FileReader("/Users/User/Desktop/course.json"));
-            JSONObject jsonObject = (JSONObject)obj;
-            //TODO: figure out how to get the four options as json objects
-          
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        HashMap<String, String> ans1homeType = Map.of(
+            "Detached house", "detached",
+            "Semi-detached house", "semidet",
+            "Townhouse", "townhouse",
+            "Condo/Apartment", "condo",
+            "Other", "townhouse"
+        );
+        homeType = ans1homeType.get(homeType);
+
+        JSONObject energyJSON = applicationContext.resources.openRawResources(
+            applicationContext.resources.getIdentifier(
+                homeType,
+                "raw", applicationContext.packageName
+            ).bufferedReader().use(it.readText())
+        );
 
         float total;
-        HashMap<String, <String, <String, <String, int>>>> standin;
-        float heatingCO2 = standin.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
-        float waterCO2 = standin.get(houseSize.get(householdSize.get(energyBill.get(waterType))));
+        float heatingCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
+        float waterCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(waterType))));
 
         total = total + heatingCO2 + waterCO2;
         if (heatingType != waterType){total += 233;}
