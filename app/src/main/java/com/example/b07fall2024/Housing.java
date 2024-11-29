@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import java.io.FileReader;
 
 public class Housing implements QuesAns {
     private final Map<Integer, String> questionText;
@@ -130,6 +131,19 @@ public class Housing implements QuesAns {
         return options.get(number).size();
     }
 
+    public JSONObject getJSON(String houseType){
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("b07_housing/" + houseType + ".json"));
+            return (JSONObject) obj;
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public float getEmissions(){
         String homeType = getSelectedAnswer(1);
         String householdSize = getSelectedAnswer(2);
@@ -139,21 +153,16 @@ public class Housing implements QuesAns {
         String waterType = getSelectedAnswer(6);
         String renewables = getSelectedAnswer(7);
 
-        HashMap<String, String> ans1homeType = Map.of(
+        HashMap<String, String> ans1homeType = new HashMap<>(Map.of(
             "Detached house", "detached",
             "Semi-detached house", "semidet",
             "Townhouse", "townhouse",
             "Condo/Apartment", "condo",
             "Other", "townhouse"
-        );
+        ));
         homeType = ans1homeType.get(homeType);
 
-        JSONObject energyJSON = applicationContext.resources.openRawResources(
-            applicationContext.resources.getIdentifier(
-                homeType,
-                "raw", applicationContext.packageName
-            ).bufferedReader().use(it.readText())
-        );
+        JSONObject energyJSON = getJSON(homeType);
 
         float total;
         float heatingCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
