@@ -29,11 +29,6 @@ public class FoodConsumption extends AppCompatActivity{
     private List<LinearLayout> mealEntries = new ArrayList<>();
     private double FoodEmission;
 
-    // get date
-    String year = String.valueOf(DateStorage.getInstance().getYear());
-    String month = String.valueOf(DateStorage.getInstance().getMonth());
-    String week = String.valueOf(DateStorage.getInstance().getWeek());
-    String day = String.valueOf(DateStorage.getInstance().getDay());
 
 
     @Override
