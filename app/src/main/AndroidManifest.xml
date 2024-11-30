@@ -34,6 +34,12 @@
         <activity
             android:name="com.example.b07fall2024.ConsumptionAndShopping"
             android:exported="true" />
+
+        <activity
+            android:name="com.habit.MainPage">
+
+        </activity>
+
     </application>
 
 </manifest>

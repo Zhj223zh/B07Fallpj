@@ -41,7 +41,7 @@ public class FoodConsumption extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_consumption);
 
-        // jump to activityMainLayout
+        // jump
         Button activityListButton = findViewById(R.id.activityListButton);
         activityListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +62,14 @@ public class FoodConsumption extends AppCompatActivity{
             }
         });
 
-        //create new meal
+        //container
         mealContainer = findViewById(R.id.mealContainer);
 
 
         Button submitButton = findViewById(R.id.submitButton);
         // onclicked button
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        submitButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 EmissionStorage emissionStorage = EmissionStorage.getInstance();
@@ -110,7 +111,6 @@ public class FoodConsumption extends AppCompatActivity{
             totalEmissions += originMealEmissions;
         }
 
-        // check all the items
         for (LinearLayout mealLayout : mealEntries) {
             Spinner mealTypeSpinner = (Spinner) mealLayout.getChildAt(0);
             EditText servingsInput = (EditText) mealLayout.getChildAt(1);
@@ -139,30 +139,29 @@ public class FoodConsumption extends AppCompatActivity{
     }
 
 
-    public void onAddClicked(View view) {
-        // Create a new LinearLayout for the new meal entry
-        LinearLayout newMealLayout = new LinearLayout(this);
+    public void onAdd(View view) {
+        LinearLayout newMealLayout = new LinearLayout(this)
+                ;
         newMealLayout.setOrientation(LinearLayout.HORIZONTAL);
         newMealLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         newMealLayout.setPadding(0, 8, 0, 8);
 
-        // new Spinner
-        Spinner newMealTypeSpinner = new Spinner(this);
+        Spinner spinner = new Spinner(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.meal_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        newMealTypeSpinner.setAdapter(adapter);
-        newMealLayout.addView(newMealTypeSpinner);
+        spinner.setAdapter(adapter);
+        newMealLayout.addView(spinner);
 
-        // EditText for number of servings
-        EditText newServingsInput = new EditText(this);
-        newServingsInput.setHint("Number of Servings");
-        newServingsInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-        newServingsInput.setLayoutParams(new LinearLayout.LayoutParams(
+
+        EditText editText = new EditText(this);
+        editText.setHint("Number of Servings");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setLayoutParams(new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        newMealLayout.addView(newServingsInput);
+        newMealLayout.addView(editText);
         mealContainer.addView(newMealLayout);
 
         mealEntries.add(newMealLayout);

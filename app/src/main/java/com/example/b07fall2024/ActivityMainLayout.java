@@ -1,4 +1,5 @@
 package com.example.b07fall2024;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.habit.MainPage;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,25 +40,21 @@ public class ActivityMainLayout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
 
-        // 初始化 Firebase Firestore 和 Auth
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         CalendarView calendarView = findViewById(R.id.calendarView);
         Calendar calendar = Calendar.getInstance();
 
-        // 设置默认日期为当天并存储到 DateStorage
+
         updateDateStorage(calendar);
         fetchEmissionDataFromFirebase();
 
-        // 设置 CalendarView 的日期选择监听器
         calendarView.setOnDateChangeListener((view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
-            // 更新 Calendar 对象
             calendar.set(selectedYear, selectedMonth, selectedDayOfMonth);
 
-            // 更新 DateStorage 中的年、月、日和星期
             updateDateStorage(calendar);
-            fetchEmissionDataFromFirebase(); // 获取特定日期的数据
+            fetchEmissionDataFromFirebase();
         });
 
         // to transportation page
@@ -79,12 +77,18 @@ public class ActivityMainLayout extends AppCompatActivity {
             Intent intent = new Intent(ActivityMainLayout.this, ConsumptionAndShopping.class);
             startActivity(intent);
         });
+
+        Button btnHabit = findViewById(R.id.btnHabit);
+        btnHabit.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivityMainLayout.this, MainPage.class);
+            startActivity(intent);
+        });
     }
 
     private void updateDateStorage(Calendar calendar) {
         DateStorage dateStorage = DateStorage.getInstance();
         dateStorage.setYear(calendar.get(Calendar.YEAR));
-        dateStorage.setMonth(calendar.get(Calendar.MONTH)); //加1?
+        dateStorage.setMonth(calendar.get(Calendar.MONTH)); //+1?
         dateStorage.setDay(calendar.get(Calendar.DAY_OF_MONTH));
         dateStorage.setWeek(calendar.get(Calendar.WEEK_OF_YEAR));
     }
@@ -105,22 +109,15 @@ public class ActivityMainLayout extends AppCompatActivity {
         String day = String.valueOf(dateStorage.getDay());
 
         // Database path to "categoryBreakdown"
-        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(userId)
-                .child(year)
-                .child(month)
-                .child(week)
-                .child(day)
-                .child("categoryBreakdown");
+        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child(year).child(month).child(week).child(day).child("categoryBreakdown");
 
-        dayRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dayRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     EmissionStorage emissionStorage = EmissionStorage.getInstance();
 
-                    // Parse data as strings and convert to doubles
 
                     double foodConsumption = snapshot.hasChild("FoodConsumption") ?
                             Double.parseDouble(snapshot.child("FoodConsumption").getValue(String.class)) : 0.0;
@@ -131,30 +128,38 @@ public class ActivityMainLayout extends AppCompatActivity {
                     double transportation = snapshot.hasChild("Transportation") ?
                             Double.parseDouble(snapshot.child("Transportation").getValue(String.class)) : 0.0;
 
-                    double total = foodConsumption + shopping + transportation;
+                    double energyUse = snapshot.hasChild("EnergyUse") ?
+                            Double.parseDouble(snapshot.child("EnergyUse").getValue(String.class)) : 0.0;
+
+                    double total = foodConsumption + shopping + transportation + energyUse;
 
                     // Store values in EmissionStorage
-                    emissionStorage.setEnergyUse(total);
+                    emissionStorage.setEnergyUse(energyUse);
                     emissionStorage.setFoodConsumption(foodConsumption);
                     emissionStorage.setShopping(shopping);
                     emissionStorage.setTransportation(transportation);
 
-                    // Update UI
                     runOnUiThread(() -> {
                         TextView foodConsumptionTextView = findViewById(R.id.textViewFoodConsumption);
                         TextView shoppingTextView = findViewById(R.id.textViewShopping);
                         TextView transportationTextView = findViewById(R.id.textViewTransportation);
+                        TextView EneryUseTextView = findViewById(R.id.textViewEnergyUse);
+
+
+
+
                         TextView TotalTextView = findViewById(R.id.textViewDailyEmissions);
 
                         foodConsumptionTextView.setText("Food Consumption: " + foodConsumption + " kg");
                         shoppingTextView.setText("Shopping: " + shopping + " kg");
                         transportationTextView.setText("Transportation: " + transportation + " kg");
+                        EneryUseTextView.setText("EneryUse: " + energyUse + " kg");
                         TotalTextView.setText("Daily CO2e Emissions: \n" + total + " kg" );
                     });
 
-                    Log.d("ActivityMainLayout", "Emission data successfully fetched and stored");
-                } else {
-                    Log.e("ActivityMainLayout", "No data found for the selected date");
+//                    Log.d("ActivityMainLayout", "Emission data successfully fetched and stored");
+//                } else {
+//                    Log.e("ActivityMainLayout", "No data found for the selected date");
                 }
             }
 
