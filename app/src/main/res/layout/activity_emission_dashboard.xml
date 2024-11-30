@@ -16,7 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible" />
 
-    <!-- Fragment container 2: Emission Breakdown -->
     <FrameLayout
         android:id="@+id/fragment_container_emission_breakdown"
         android:layout_width="match_parent"
@@ -26,7 +25,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible" />
 
-    <!-- Fragment container 3: Emission Trend -->
     <FrameLayout
         android:id="@+id/fragment_container_emission_trend"
         android:layout_width="match_parent"
@@ -36,7 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible" />
 
-    <!-- Fragment container 4: Emission Comparison -->
     <FrameLayout
         android:id="@+id/fragment_container_emission_comparison"
         android:layout_width="match_parent"

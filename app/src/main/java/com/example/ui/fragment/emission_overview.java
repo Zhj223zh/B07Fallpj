@@ -33,45 +33,35 @@ import java.util.Objects;
  */
 public class emission_overview extends Fragment {
 
-
     private TextView totalEmissionsText;
     protected Spinner timePeriodSpinner;
     protected DatabaseReference userRef;
     private int selectedTimePeriod;
     private String currentUserId;
 
-    public emission_overview() {
-    }
-
-
     /** @noinspection DataFlowIssue*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_emission_overview, container, false);
-
         totalEmissionsText = rootView.findViewById(R.id.totalEmissionsText);
         timePeriodSpinner = rootView.findViewById(R.id.timePeriodSpinner);
-
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null)
         {currentUserId = currentUser.getUid();}
         else
         {currentUserId = "0";}
-
         userRef = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
         @SuppressLint("UseRequireInsteadOfGet") ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.time_period_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timePeriodSpinner.setAdapter(adapter);
-
         timePeriodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedTimePeriod = position; // 0 -> Weekly, 1 -> Monthly, 2 -> Yearly
                 fetchAndDisplayTotalEmissions(currentUserId);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
