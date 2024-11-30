@@ -129,7 +129,7 @@ public class emission_comparison extends Fragment {
         entries.add(new BarEntry(1, regionAverage));
         entries.add(new BarEntry(2, countryAverage));
         BarDataSet dataSet = new BarDataSet(entries, "CO2e Emissions");
-        dataSet.setColors(new int[]{R.color.black, R.color.black, R.color.black}, getContext());
+        dataSet.setColors(new int[]{R.color.white, R.color.white, R.color.white}, getContext());
         BarData barData = new BarData(dataSet);
         comparisonChart.setData(barData);
         String[] labels = {"Your Emission", "Region Avg", "Country Avg"};

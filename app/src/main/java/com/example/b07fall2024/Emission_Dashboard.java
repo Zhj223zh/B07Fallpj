@@ -1,7 +1,9 @@
 package com.example.b07fall2024;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -46,6 +48,15 @@ public class Emission_Dashboard extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        Button backButton = findViewById(R.id.btn_back_to_main);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Emission_Dashboard.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     private void loadFragment_overview(Fragment fragment) {
         // Get the FragmentManager and start a transaction

@@ -5,6 +5,8 @@
     <string name="total_emissions">Total Emissions</string>
     <string name="open_emission_dashboard">Open Emission Dashboard</string>
     <string name="no_data">no date</string>
+    <string name="emission_overview_and_analysis">Emission overview and analysis</string>
+    <string name="back_to_main">Back to Main</string>
     <string-array name="time_period_options">
         <item>Weekly</item>
         <item>Monthly</item>
