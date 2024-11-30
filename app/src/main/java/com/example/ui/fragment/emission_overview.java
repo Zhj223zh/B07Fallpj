@@ -69,7 +69,6 @@ public class emission_overview extends Fragment {
         return rootView;
     }
 
-    // Fetch data and calculate total emissions for a given user ID
     private void fetchAndDisplayTotalEmissions(String userId) {
         DatabaseReference userEmissionRef = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/")
                 .getReference()
