@@ -48,7 +48,6 @@ public class emission_comparison extends Fragment {
         View view = inflater.inflate(R.layout.fragment_emission_comparison, container, false);
         comparisonChart = view.findViewById(R.id.comparison_chart);
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
-
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null)
         {currentUserId = currentUser.getUid();}
@@ -67,7 +66,6 @@ public class emission_comparison extends Fragment {
                 currentYear = Calendar.getInstance().get(Calendar.YEAR);
                 fetchUserEmission();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -80,10 +78,8 @@ public class emission_comparison extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         userAnnualEmission = getTotalEmissionFromCategoryBreakdown(dataSnapshot);
-
                         fetchAverageEmission();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
@@ -109,17 +105,18 @@ public class emission_comparison extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(country).exists()) {
                     countryAverage = dataSnapshot.child(country).getValue(Float.class);
-                } else {
+                }
+                else {
                     countryAverage = 0;
                 }
                 if (dataSnapshot.child(region).exists()) {
                     regionAverage = dataSnapshot.child(region).getValue(Float.class);
-                } else {
+                }
+                else {
                     regionAverage = 0;
                 }
                 displayComparisonChart();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -131,18 +128,14 @@ public class emission_comparison extends Fragment {
         entries.add(new BarEntry(0, userAnnualEmission));
         entries.add(new BarEntry(1, regionAverage));
         entries.add(new BarEntry(2, countryAverage));
-
         BarDataSet dataSet = new BarDataSet(entries, "CO2e Emissions");
         dataSet.setColors(new int[]{R.color.black, R.color.black, R.color.black}, getContext());
-
         BarData barData = new BarData(dataSet);
         comparisonChart.setData(barData);
-
         String[] labels = {"Your Emission", "Region Avg", "Country Avg"};
         comparisonChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         comparisonChart.getXAxis().setGranularity(1f);
         comparisonChart.getXAxis().setGranularityEnabled(true);
-
         comparisonChart.invalidate();
     }
 }

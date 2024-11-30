@@ -37,11 +37,10 @@ public class emission_overview extends Fragment {
     private TextView totalEmissionsText;
     protected Spinner timePeriodSpinner;
     protected DatabaseReference userRef;
-    private int selectedTimePeriod; // Weekly, Monthly, or Yearly
+    private int selectedTimePeriod;
     private String currentUserId;
 
     public emission_overview() {
-        // Required empty public constructor
     }
 
 
@@ -61,8 +60,6 @@ public class emission_overview extends Fragment {
         {currentUserId = "0";}
 
         userRef = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
-
-        // Setting up Spinner
         @SuppressLint("UseRequireInsteadOfGet") ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.time_period_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -77,10 +74,8 @@ public class emission_overview extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing
             }
         });
-
         return rootView;
     }
 
@@ -91,37 +86,29 @@ public class emission_overview extends Fragment {
                 .child("Users")
                 .child(userId)
                 .child("Emission");
-
         userEmissionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 double totalEmissions = 0.0;
-
                 Calendar calendar = Calendar.getInstance();
                 int currentYear = calendar.get(Calendar.YEAR);
                 int currentMonth = calendar.get(Calendar.MONTH) + 1;
                 int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
-
                 for (DataSnapshot yearSnapshot : dataSnapshot.getChildren()) {
                     int year = Integer.parseInt(Objects.requireNonNull(yearSnapshot.getKey()));
-
                     if (selectedTimePeriod == 2 && year == currentYear) {
                         totalEmissions += calculateEmissionsForYear(yearSnapshot);
                     }
-
                     if (selectedTimePeriod <= 1 && year == currentYear) {
                         for (DataSnapshot monthSnapshot : yearSnapshot.getChildren()) {
                             int month = Integer.parseInt(Objects.requireNonNull(monthSnapshot.getKey()));
-
                             if (selectedTimePeriod == 1 && month == currentMonth) {
                                 totalEmissions += calculateEmissionsForMonth(monthSnapshot);
                             }
-
                             if (selectedTimePeriod == 0 && month == currentMonth) {
                                 for (DataSnapshot weekSnapshot : monthSnapshot.getChildren()) {
                                     int week = Integer.parseInt(Objects.requireNonNull(weekSnapshot.getKey()));
-
                                     if (week == currentWeek) {
                                         totalEmissions += calculateEmissionsForWeek(weekSnapshot);
                                     }
@@ -130,10 +117,8 @@ public class emission_overview extends Fragment {
                         }
                     }
                 }
-
                 totalEmissionsText.setText("You’ve emitted " + totalEmissions + " kg CO2e this " + getPeriodString(selectedTimePeriod));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -142,31 +127,25 @@ public class emission_overview extends Fragment {
 
     private double calculateEmissionsForMonth(DataSnapshot monthSnapshot) {
         double totalEmissions = 0.0;
-
         for (DataSnapshot weekSnapshot : monthSnapshot.getChildren()) {
             totalEmissions += calculateEmissionsForWeek(weekSnapshot);
         }
-
         return totalEmissions;
     }
 
     private double calculateEmissionsForWeek(DataSnapshot weekSnapshot) {
         double totalEmissions = 0.0;
-
         for (DataSnapshot daySnapshot : weekSnapshot.getChildren()) {
             totalEmissions += calculateEmissionsForDay(daySnapshot);
         }
-
         return totalEmissions;
     }
 
     private double calculateEmissionsForYear(DataSnapshot yearSnapshot) {
         double totalEmissions = 0.0;
-
         for (DataSnapshot monthSnapshot : yearSnapshot.getChildren()) {
             totalEmissions += calculateEmissionsForMonth(monthSnapshot);
         }
-
         return totalEmissions;
     }
 
@@ -179,7 +158,6 @@ public class emission_overview extends Fragment {
                 totalEmissions += category.getValue(Double.class);
             }
         }
-
         return totalEmissions;
     }
 
