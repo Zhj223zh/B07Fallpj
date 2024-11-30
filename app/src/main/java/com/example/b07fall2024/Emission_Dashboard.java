@@ -1,8 +1,11 @@
 package com.example.b07fall2024;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,14 +28,10 @@ public class Emission_Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_emission_dashboard);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/");
+        EdgeToEdge.enable(this);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,6 +42,10 @@ public class Emission_Dashboard extends AppCompatActivity {
         loadFragment_breakdown(new emission_breakdown());
         loadFragment_trend(new emission_trend());
         loadFragment_comparison(new emission_comparison());
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
     private void loadFragment_overview(Fragment fragment) {
         // Get the FragmentManager and start a transaction
@@ -81,5 +84,14 @@ public class Emission_Dashboard extends AppCompatActivity {
         // Replace the fragment_container with the new fragment
         fragmentTransaction.replace(R.id.fragment_container_emission_comparison, fragment);
         fragmentTransaction.commit();
+    }
+    /** @noinspection deprecation*/
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

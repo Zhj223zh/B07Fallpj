@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_emissions">Total Emissions</string>
+    <string name="open_emission_dashboard">Open Emission Dashboard</string>
+    <string name="no_data">no date</string>
     <string-array name="time_period_options">
         <item>Weekly</item>
         <item>Monthly</item>

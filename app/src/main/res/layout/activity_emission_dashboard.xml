@@ -7,29 +7,42 @@
     android:layout_height="match_parent"
     tools:context="com.example.b07fall2024.Emission_Dashboard">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/fragment_container_emission_overview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible" />
 
-        <!-- Fragment container -->
-        <FrameLayout
-            android:id="@+id/fragment_container_emission_overview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <!-- Fragment container 2: Emission Breakdown -->
+    <FrameLayout
+        android:id="@+id/fragment_container_emission_breakdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container_emission_overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible" />
 
-        <FrameLayout
-            android:id="@+id/fragment_container_emission_breakdown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <!-- Fragment container 3: Emission Trend -->
+    <FrameLayout
+        android:id="@+id/fragment_container_emission_trend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container_emission_breakdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible" />
 
-        <FrameLayout
-            android:id="@+id/fragment_container_emission_trend"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <FrameLayout
-            android:id="@+id/fragment_container_emission_comparison"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+    <!-- Fragment container 4: Emission Comparison -->
+    <FrameLayout
+        android:id="@+id/fragment_container_emission_comparison"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container_emission_trend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

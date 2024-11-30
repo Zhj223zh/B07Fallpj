@@ -1,6 +1,7 @@
 package com.example.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,10 @@ public class emission_comparison extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser != null;
-        currentUserId = currentUser.getUid();
-
+        if(currentUser != null)
+        {currentUserId = currentUser.getUid();}
+        else
+        {currentUserId = "0";}
         fetchUserData();
         return view;
     }
@@ -88,6 +90,7 @@ public class emission_comparison extends Fragment {
                 });
     }
 
+    /** @noinspection DataFlowIssue*/
     private float getTotalEmissionFromCategoryBreakdown(DataSnapshot dataSnapshot) {
         float total = 0;
         for (DataSnapshot category : dataSnapshot.getChildren()) {
@@ -97,14 +100,22 @@ public class emission_comparison extends Fragment {
     }
 
     private void fetchAverageEmission() {
-        db.child("Global").addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("Global");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * @noinspection DataFlowIssue
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(country).exists()) {
                     countryAverage = dataSnapshot.child(country).getValue(Float.class);
+                } else {
+                    countryAverage = 0;
                 }
                 if (dataSnapshot.child(region).exists()) {
                     regionAverage = dataSnapshot.child(region).getValue(Float.class);
+                } else {
+                    regionAverage = 0;
                 }
                 displayComparisonChart();
             }

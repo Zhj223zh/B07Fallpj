@@ -1,7 +1,9 @@
 package com.example.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,8 +35,8 @@ public class emission_overview extends Fragment {
 
 
     private TextView totalEmissionsText;
-    private Spinner timePeriodSpinner;
-    private DatabaseReference userRef;
+    protected Spinner timePeriodSpinner;
+    protected DatabaseReference userRef;
     private int selectedTimePeriod; // Weekly, Monthly, or Yearly
     private String currentUserId;
 
@@ -42,6 +45,7 @@ public class emission_overview extends Fragment {
     }
 
 
+    /** @noinspection DataFlowIssue*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,13 +55,15 @@ public class emission_overview extends Fragment {
         timePeriodSpinner = rootView.findViewById(R.id.timePeriodSpinner);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser != null;
-        currentUserId = currentUser.getUid();
+        if(currentUser != null)
+        {currentUserId = currentUser.getUid();}
+        else
+        {currentUserId = "0";}
 
         userRef = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
 
         // Setting up Spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        @SuppressLint("UseRequireInsteadOfGet") ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.time_period_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timePeriodSpinner.setAdapter(adapter);
@@ -87,8 +93,9 @@ public class emission_overview extends Fragment {
                 .child("Emission");
 
         userEmissionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 double totalEmissions = 0.0;
 
                 Calendar calendar = Calendar.getInstance();
@@ -97,7 +104,7 @@ public class emission_overview extends Fragment {
                 int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 
                 for (DataSnapshot yearSnapshot : dataSnapshot.getChildren()) {
-                    int year = Integer.parseInt(yearSnapshot.getKey());
+                    int year = Integer.parseInt(Objects.requireNonNull(yearSnapshot.getKey()));
 
                     if (selectedTimePeriod == 2 && year == currentYear) {
                         totalEmissions += calculateEmissionsForYear(yearSnapshot);
@@ -105,7 +112,7 @@ public class emission_overview extends Fragment {
 
                     if (selectedTimePeriod <= 1 && year == currentYear) {
                         for (DataSnapshot monthSnapshot : yearSnapshot.getChildren()) {
-                            int month = Integer.parseInt(monthSnapshot.getKey());
+                            int month = Integer.parseInt(Objects.requireNonNull(monthSnapshot.getKey()));
 
                             if (selectedTimePeriod == 1 && month == currentMonth) {
                                 totalEmissions += calculateEmissionsForMonth(monthSnapshot);
@@ -113,7 +120,7 @@ public class emission_overview extends Fragment {
 
                             if (selectedTimePeriod == 0 && month == currentMonth) {
                                 for (DataSnapshot weekSnapshot : monthSnapshot.getChildren()) {
-                                    int week = Integer.parseInt(weekSnapshot.getKey());
+                                    int week = Integer.parseInt(Objects.requireNonNull(weekSnapshot.getKey()));
 
                                     if (week == currentWeek) {
                                         totalEmissions += calculateEmissionsForWeek(weekSnapshot);
@@ -128,7 +135,7 @@ public class emission_overview extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
@@ -163,6 +170,7 @@ public class emission_overview extends Fragment {
         return totalEmissions;
     }
 
+    /** @noinspection DataFlowIssue*/
     private double calculateEmissionsForDay(DataSnapshot daySnapshot) {
         double totalEmissions = 0.0;
         DataSnapshot categorySnapshot = daySnapshot.child("categoryBreakdown");

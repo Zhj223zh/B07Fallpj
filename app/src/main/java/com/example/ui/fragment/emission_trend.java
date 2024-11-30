@@ -51,8 +51,10 @@ public class emission_trend extends Fragment {
 
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser != null;
-        currentUserId = currentUser.getUid();
+        if(currentUser != null)
+        {currentUserId = currentUser.getUid();}
+        else
+        {currentUserId = "0";}
 
         setupSpinner();
         return view;
@@ -141,7 +143,7 @@ public class emission_trend extends Fragment {
                 });
     }
 
-    // Helper method to get the total emission from a day
+    /** @noinspection DataFlowIssue*/ // Helper method to get the total emission from a day
     private float getTotalEmissionFromDay(DataSnapshot daySnapshot) {
         float total = 0;
         DataSnapshot categoryBreakdown = daySnapshot.child("categoryBreakdown");
@@ -187,6 +189,7 @@ public class emission_trend extends Fragment {
         return calendar.get(Calendar.WEEK_OF_MONTH);
     }
 
+    /** @noinspection deprecation*/
     private void displayLineChart(List<Entry> entries) {
         LineDataSet lineDataSet = new LineDataSet(entries, "CO2e Emissions Trend");
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);

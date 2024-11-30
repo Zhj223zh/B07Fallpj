@@ -62,11 +62,15 @@ public class emission_breakdown extends Fragment {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser != null;
-        String currentUserId = currentUser.getUid();
+        String currentUserId;
+        if(currentUser != null)
+        {currentUserId = currentUser.getUid();}
+        else
+        {currentUserId = "0";}
         databaseReference.child("Users").child(currentUserId).child("Emission").child(String.valueOf(currentYear))
                 .child(String.valueOf(currentWeek))
                 .addListenerForSingleValueEvent(new ValueEventListener() {
+                    /** @noinspection DataFlowIssue*/
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists() && snapshot.hasChild("categoryBreakdown")) {
