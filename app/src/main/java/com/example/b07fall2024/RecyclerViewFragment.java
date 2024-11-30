@@ -144,11 +144,21 @@ public class RecyclerViewFragment extends Fragment implements View.OnClickListen
 
     // Finish the quiz and show a dialog to restart
     private void finishQuiz() {
+        submitData();
         new AlertDialog.Builder(getActivity())
                 .setMessage("Quiz Finished!")
                 .setPositiveButton("Restart", (dialog, which) -> restartQuiz())
                 .setCancelable(false)
                 .show();
+
+    }
+
+    private void submitData(){
+        float transportation, food, housing, consumption; //TODO: fill in
+        mDatabase.child("Users").child(userId).child("AnnualCF").child("Transportation").setValue(transportation);
+        mDatabase.child("Users").child(userId).child("AnnualCF").child("Food").setValue(food);
+        mDatabase.child("Users").child(userId).child("AnnualCF").child("Housing").setValue(housing);
+        mDatabase.child("Users").child(userId).child("AnnualCF").child("Consmption").setValue(consumption);
     }
 
     // Restart the quiz by resetting the question index
