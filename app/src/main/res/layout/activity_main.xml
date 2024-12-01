@@ -7,11 +7,4 @@
     android:layout_height="match_parent"
     tools:context="com.example.b07fall2024.MainActivity">
 
-    <Button
-        android:id="@+id/btn_open_dashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_emission_dashboard"
-        android:layout_centerInParent="true"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

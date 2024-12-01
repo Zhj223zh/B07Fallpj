@@ -45,15 +45,6 @@ public class Emission_Dashboard extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Button backButton = findViewById(R.id.btn_back_to_main);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Emission_Dashboard.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
     private void loadFragment_overview(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
