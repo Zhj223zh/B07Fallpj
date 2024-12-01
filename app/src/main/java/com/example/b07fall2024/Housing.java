@@ -134,7 +134,7 @@ public class Housing implements QuesAns {
     public JSONObject getJSON(String houseType) {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("b07_housing/" + houseType + ".json"));
+            Object obj = parser.parse(new FileReader(houseType + ".json"));
             return (JSONObject) obj;
         }
 
