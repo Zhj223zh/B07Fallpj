@@ -46,8 +46,6 @@ public class UpdateToFirebase {
         // user ID
         String userId = user.getUid();
 
-
-
         // data from storage
         String year = String.valueOf(DateStorage.getInstance().getYear());
         String month = String.valueOf(DateStorage.getInstance().getMonth());
@@ -72,12 +70,7 @@ public class UpdateToFirebase {
 
         // path
         DatabaseReference categoryBreakdownRef = databaseRef.child("users")
-                .child(userId)
-                .child(year)
-                .child(month)
-                .child(week)
-                .child(day)
-                .child("categoryBreakdown");
+                .child("Emission").child(userId).child(year).child(month).child(week).child(day).child("categoryBreakdown");
 
         // Check if the path exists
         categoryBreakdownRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,7 +87,7 @@ public class UpdateToFirebase {
 
                     for (int i = 1; i <= daysInMonth; i++) {
                         String dayKey = String.valueOf(i);
-                        DatabaseReference dayRef = monthRef.child(String.valueOf(week)).child(dayKey).child("categoryBreakdown");
+                        DatabaseReference dayRef = monthRef.child(week).child(dayKey).child("categoryBreakdown");
 
                         Map<String, Object> dailyData = new HashMap<>();
                         dailyData.put("EnergyUse", String.valueOf(averageEnergyUse));
@@ -111,27 +104,19 @@ public class UpdateToFirebase {
                     }
                 }
 
-                if (snapshot.exists()) {
-                    // day exists, replace
-                    categoryBreakdownRef.setValue(data)
-                            .addOnCompleteListener(task -> {
+                //                                if (task.isSuccessful()) {
+                //                                    Toast.makeText(context, "Data uploaded successfully.", Toast.LENGTH_SHORT).show();
+                //                                } else {
+                //                                    Toast.makeText(context, "Failed to upload data.", Toast.LENGTH_SHORT).show();
+                //                                }
+                categoryBreakdownRef.setValue(data)
+                        .addOnCompleteListener(task -> {
 //                                if (task.isSuccessful()) {
 //                                    Toast.makeText(context, "Data replaced successfully.", Toast.LENGTH_SHORT).show();
 //                                } else {
 //                                    Toast.makeText(context, "Failed to replace data.", Toast.LENGTH_SHORT).show();
 //                                }
-                            });
-                } else {
-                    // not exist
-                    categoryBreakdownRef.setValue(data)
-                            .addOnCompleteListener(task -> {
-//                                if (task.isSuccessful()) {
-//                                    Toast.makeText(context, "Data uploaded successfully.", Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(context, "Failed to upload data.", Toast.LENGTH_SHORT).show();
-//                                }
-                            });
-                }
+                        });
             }
 
             @Override

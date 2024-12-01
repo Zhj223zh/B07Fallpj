@@ -39,31 +39,25 @@ public class ConsumptionAndShopping extends AppCompatActivity {
 
         // jump to main
         Button nextButton = findViewById(R.id.activityListButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConsumptionAndShopping.this, ActivityMainLayout.class);
-                startActivity(intent);
+        nextButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ConsumptionAndShopping.this, ActivityMainLayout.class);
+            startActivity(intent);
 
-                UpdateToFirebase.getInstance().uploadDataToFirebase(ConsumptionAndShopping.this);
+            UpdateToFirebase.getInstance().uploadDataToFirebase(ConsumptionAndShopping.this);
 
 
-            }
         });
 
 
         Button submitButton = findViewById(R.id.submitButton);
         //n
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EmissionStorage emissionStorage = EmissionStorage.getInstance();
-                Shopping = calShopping();
-                Bill = calBill();
-                emissionStorage.setShopping(Shopping);
-                emissionStorage.setEnergyUse(Bill);
-                Toast.makeText(ConsumptionAndShopping.this, "Shopping: " + Shopping + " kg CO2e" + "Bill: " + Bill + " kg CO2e", Toast.LENGTH_SHORT).show();
-            }
+        submitButton.setOnClickListener(v -> {
+            EmissionStorage emissionStorage = EmissionStorage.getInstance();
+            Shopping = calShopping();
+            Bill = calBill();
+            emissionStorage.setShopping(Shopping);
+            emissionStorage.setEnergyUse(Bill);
+            Toast.makeText(ConsumptionAndShopping.this, "Shopping: " + Shopping + " kg CO2e" + "Bill: " + Bill + " kg CO2e", Toast.LENGTH_SHORT).show();
         });
     }
 

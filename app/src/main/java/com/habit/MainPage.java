@@ -3,6 +3,7 @@ package com.habit;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,94 +14,76 @@ import androidx.appcompat.app.AlertDialog;
 import com.b072024gr2.ecoproj.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import android.content.Intent;
+
+import com.example.b07fall2024.ActivityMainLayout;
+import com.example.b07fall2024.DateStorage;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainPage extends AppCompatActivity {
-
     private RecyclerView recyclerViewHabits;
     private HabitAdapter habitAdapter;
-    private List<Habit> habitList;
-    private SearchView searchView;
-    private Button btnFilterType, btnFilterImpact, btnReset;
+    private List<Habit> hList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
 
-        // 初始化组件
         recyclerViewHabits = findViewById(R.id.recyclerViewHabits);
-        searchView = findViewById(R.id.searchView);
-        btnFilterType = findViewById(R.id.btnFilterType);
-        btnFilterImpact = findViewById(R.id.btnFilterImpact);
-        btnReset = findViewById(R.id.btnReset);
+        SearchView searchView = findViewById(R.id.searchView);
+        Button btnFilterType = findViewById(R.id.btnFilterType);
+        Button btnFilterImpact = findViewById(R.id.btnFilterImpact);
+        Button btnReset = findViewById(R.id.btnReset);
 
-        // 初始化数据
-        habitList = getDummyHabits();
-        habitAdapter = new HabitAdapter(this, habitList);
-
-        // 配置 RecyclerView
+        hList = getDummyHabits();
+        habitAdapter = new HabitAdapter(this, hList);
         recyclerViewHabits.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewHabits.setAdapter(habitAdapter);
 
-        // 搜索功能
+        Button btnUploadAndReturn = findViewById(R.id.btnUploadAndReturn);
+        btnUploadAndReturn.setOnClickListener(v -> {
+            uploadDataToFirebase();
+            Intent intent = new Intent(MainPage.this, ActivityMainLayout.class); // 跳转到主页面
+            startActivity(intent);
+        });
+
+        // Search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
             public boolean onQueryTextSubmit(String query) {
                 filterHabitsByName(query);
                 return false;
             }
 
-            @Override
             public boolean onQueryTextChange(String newText) {
                 filterHabitsByName(newText);
                 return false;
             }
         });
 
-        // 按类别筛选
-        btnFilterType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterByTypeDialog();
-            }
-        });
-
-        // 按影响力筛选
-        btnFilterImpact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterByImpactDialog();
-            }
-        });
-
-        // 重置筛选
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetFilters();
-            }
-        });
+        btnFilterType.setOnClickListener(v -> showFilterByType());
+        btnFilterImpact.setOnClickListener(v -> showFilterByImpact());
+        btnReset.setOnClickListener(v -> resetFilters());
     }
 
-    /**
-     * 示例数据：预定义的习惯列表
-     */
-    private List<Habit> getDummyHabits() {
+    public static List<Habit> getDummyHabits() {
         List<Habit> habits = new ArrayList<>();
-        habits.add(new Habit("Walk to school", "Transportation", "减少驾驶，选择步行或骑行。", 5));
-        habits.add(new Habit("Reduce Food Waste", "Food", "按需购买食物，避免浪费。", 4));
-        habits.add(new Habit("Recycling", "Consumption", "回收和重复利用不需要的物品。", 3));
-        habits.add(new Habit("Use Public Transportation", "Transportation", "更多使用公交或地铁，减少开车。", 4));
+        habits.add(new Habit("Walk to school", "Transportation", "Reduce driving, choose cycling and walking instead.", 5));
+        habits.add(new Habit("Reduce Food Waste", "Food", "Avoid wasting food", 2));
+        habits.add(new Habit("Recycling", "Consumption", "Recycle and reuse unneeded items", 3));
+        habits.add(new Habit("Use Public Transportation", "Transportation", "Choose public transportation instead of private vehicle", 4));
+        habits.add(new Habit("Turn Off Light", "EnergyUse", "Turn off light every time you leave a room", 2));
         return habits;
     }
 
-    /**
-     * 搜索功能：根据用户输入过滤习惯列表
-     */
     private void filterHabitsByName(String query) {
         List<Habit> filteredList = new ArrayList<>();
-        for (Habit habit : habitList) {
+        for (Habit habit : hList) {
             if (habit.getName().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(habit);
             }
@@ -108,80 +91,89 @@ public class MainPage extends AppCompatActivity {
         updateRecyclerView(filteredList);
     }
 
-    /**
-     * 筛选功能：按类别过滤习惯
-     */
     private void filterByType(String category) {
         List<Habit> filteredList = new ArrayList<>();
-        for (Habit habit : habitList) {
+        for (Habit habit : hList) {
             if (habit.getCategory().equalsIgnoreCase(category)) {
                 filteredList.add(habit);
             }
         }
-
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No habits found for category: " + category, Toast.LENGTH_SHORT).show();
         }
-
         updateRecyclerView(filteredList);
     }
 
-    /**
-     * 筛选功能：按影响力过滤习惯
-     */
     private void filterByImpact(int minImpact) {
         List<Habit> filteredList = new ArrayList<>();
-        for (Habit habit : habitList) {
-            if (habit.getImpactLevel() >= minImpact) {
+        for (Habit habit : hList) {
+            if (habit.getImpact() >= minImpact) {
                 filteredList.add(habit);
             }
         }
-
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No habits found with impact >= " + minImpact, Toast.LENGTH_SHORT).show();
         }
-
         updateRecyclerView(filteredList);
     }
 
-    /**
-     * 重置筛选
-     */
     private void resetFilters() {
-        updateRecyclerView(habitList);
+        updateRecyclerView(hList);
     }
 
-    /**
-     * 显示类别筛选对话框
-     */
-    private void showFilterByTypeDialog() {
-        final String[] categories = {"Transportation", "Food", "Consumption"};
-        new AlertDialog.Builder(this)
-                .setTitle("Select a category")
-                .setItems(categories, (dialog, which) -> {
-                    filterByType(categories[which]); // 根据用户选择的类别进行筛选
-                })
-                .show();
+    private void showFilterByType() {
+        final String[] categories = {"Transportation", "Food", "Consumption", "EnergyUse"};
+        new AlertDialog.Builder(this).setTitle("Select a category").setItems(categories, (dialog, which) -> filterByType(categories[which])).show();
     }
 
-    /**
-     * 显示影响力筛选对话框
-     */
-    private void showFilterByImpactDialog() {
+    private void showFilterByImpact() {
         final String[] impacts = {"1", "2", "3", "4", "5"};
-        new AlertDialog.Builder(this)
-                .setTitle("Select minimum impact")
-                .setItems(impacts, (dialog, which) -> {
-                    filterByImpact(Integer.parseInt(impacts[which])); // 根据用户选择的影响力进行筛选
-                })
-                .show();
+        new AlertDialog.Builder(this).setTitle("Select minimum impact").setItems(impacts, (dialog, which) -> filterByImpact(Integer.parseInt(impacts[which]))).show();
     }
 
-    /**
-     * 更新 RecyclerView 数据
-     */
     private void updateRecyclerView(List<Habit> newList) {
         habitAdapter = new HabitAdapter(this, newList);
         recyclerViewHabits.setAdapter(habitAdapter);
     }
+
+    private void uploadDataToFirebase() {
+        String year = String.valueOf(DateStorage.getInstance().getYear());
+        String month = String.valueOf(DateStorage.getInstance().getMonth());
+        String day = String.valueOf(DateStorage.getInstance().getDay());
+        String currentDate = year + "/" + month + "/" + day;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "User not logged in. Unable to upload data.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 获取当前用户的 UID
+        String userId = user.getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(userId).child("Habit");
+
+        for (Habit habit : hList) {
+            if (habit.isAdopted() && habit.getProgress() > 0) {
+                String habitKey = habit.getName();
+                DatabaseReference habitRef = databaseReference.child(habitKey);
+
+                habitRef.child("progress").setValue(habit.getProgress());
+                habitRef.child("adoptDate").setValue(currentDate).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Data uploaded for: " + habit.getName(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Failed to upload data for: " + habit.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
+
+
+
+
+
 }

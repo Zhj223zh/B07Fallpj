@@ -14,14 +14,20 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 搜索框 -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:queryHint="Search habits..." />
 
-        <!-- 筛选按钮 -->
+        <Button
+            android:id="@+id/btnUploadAndReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload and Return"
+            android:layout_marginTop="16dp" />
+
+
         <Button
             android:id="@+id/btnFilterType"
             android:layout_width="wrap_content"

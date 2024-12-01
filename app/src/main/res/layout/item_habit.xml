@@ -14,11 +14,26 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <Button
+            android:id="@+id/btnAdopt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adopt"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/btnLogProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log Progress"
+            android:layout_marginTop="4dp"/>
+
+
         <TextView
             android:id="@+id/tvHabitName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="习惯名称"
+            android:text="habit name"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@android:color/black"/>
@@ -27,7 +42,7 @@
             android:id="@+id/tvHabitDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="习惯描述"
+            android:text="habit discription"
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="4dp"/>
@@ -42,17 +57,26 @@
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="类别: 交通"
+                android:text="type"
                 android:textSize="12sp"
-                android:textColor="@android:color/holo_blue_dark"/>
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvImpactLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="影响力: 4/5"
+                android:text="impact"
                 android:textSize="12sp"
-                android:textColor="@android:color/holo_red_dark"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"/>
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="progress"
+                android:textSize="12sp"
+                android:textColor="@android:color/black"
                 android:layout_marginStart="16dp"/>
         </LinearLayout>
     </LinearLayout>

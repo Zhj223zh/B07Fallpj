@@ -38,7 +38,6 @@
                 android:textColor="@android:color/black"
                 android:gravity="center_horizontal" />
 
-            <!-- Emission Categories TextViews -->
 
             <TextView
                 android:id="@+id/textViewFoodConsumption"
@@ -72,14 +71,48 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="16dp" />
 
+            <TextView
+                android:id="@+id/textViewHabitTracking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Habit Tracking"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvAdoptedSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adopted Habits Summary"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewHabits"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:padding="8dp" />
+
             <Button
                 android:id="@+id/btnHabit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Habit"
-                app:layout_constraintTop_toBottomOf="@id/searchView"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="16dp"/>
+                android:text="Go to habit Page" />
+
+
+            <TextView
+                android:id="@+id/tvReminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You have not adopted any habits yet."
+                android:padding="16dp"
+                android:gravity="center"
+                android:textSize="16sp" />
+
 
 
             <!-- Record your activities guide -->

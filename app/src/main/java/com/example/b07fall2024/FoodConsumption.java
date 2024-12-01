@@ -26,7 +26,7 @@ public class FoodConsumption extends AppCompatActivity{
     private LinearLayout mealContainer;
     private DatabaseReference databaseRef;
     private FirebaseAuth mAuth;
-    private List<LinearLayout> mealEntries = new ArrayList<>();
+    private final List<LinearLayout> mealEntries = new ArrayList<>();
     private double FoodEmission;
 
 
@@ -38,23 +38,17 @@ public class FoodConsumption extends AppCompatActivity{
 
         // jump
         Button activityListButton = findViewById(R.id.activityListButton);
-        activityListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FoodConsumption.this, ActivityMainLayout.class);
-                startActivity(intent);
-                UpdateToFirebase.getInstance().uploadDataToFirebase(FoodConsumption.this);
-            }
+        activityListButton.setOnClickListener(v -> {
+            Intent intent = new Intent(FoodConsumption.this, ActivityMainLayout.class);
+            startActivity(intent);
+            UpdateToFirebase.getInstance().uploadDataToFirebase(FoodConsumption.this);
         });
 
         // jump to c&s
         Button nextButton = findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent intent = new Intent(FoodConsumption.this, ConsumptionAndShopping.class);
-            startActivity(intent);
-            }
+        nextButton.setOnClickListener(v -> {
+        Intent intent = new Intent(FoodConsumption.this, ConsumptionAndShopping.class);
+        startActivity(intent);
         });
 
         //container
@@ -63,15 +57,11 @@ public class FoodConsumption extends AppCompatActivity{
 
         Button submitButton = findViewById(R.id.submitButton);
         // onclicked button
-        submitButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                EmissionStorage emissionStorage = EmissionStorage.getInstance();
-                FoodEmission = onSubmitButtonClicked();
-                Toast.makeText(FoodConsumption.this, "碳排放量: " + FoodEmission + " kg CO2e", Toast.LENGTH_SHORT).show();
-                emissionStorage.setFoodConsumption(FoodEmission);
-            }
+        submitButton.setOnClickListener(v -> {
+            EmissionStorage emissionStorage = EmissionStorage.getInstance();
+            FoodEmission = onSubmitButtonClicked();
+            Toast.makeText(FoodConsumption.this, "碳排放量: " + FoodEmission + " kg CO2e", Toast.LENGTH_SHORT).show();
+            emissionStorage.setFoodConsumption(FoodEmission);
         });
 
     }

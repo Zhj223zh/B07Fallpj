@@ -1,16 +1,27 @@
 package com.habit;
 
 public class Habit {
-    private String name;
-    private String category;
-    private String description;
-    private int impactLevel;
+    private final String name;
+    private final String category;
+    private final String description;
+    private final int impact;
+    private int progress;
+    private boolean adopted;
 
-    public Habit(String name, String category, String description, int impactLevel) {
+    public Habit(String name, String category, String description, int impact) {
         this.name = name;
         this.category = category;
         this.description = description;
-        this.impactLevel = impactLevel;
+        this.impact = impact;
+        this.progress = 0;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void increaseProgress(int value) {
+        progress += value;
     }
 
     public String getName() {
@@ -25,7 +36,15 @@ public class Habit {
         return description;
     }
 
-    public int getImpactLevel() {
-        return impactLevel;
+    public int getImpact() {
+        return impact;
+    }
+
+    public boolean isAdopted() {
+        return adopted;
+    }
+
+    public void setAdopted(boolean adopted) {
+        this.adopted = adopted;
     }
 }
