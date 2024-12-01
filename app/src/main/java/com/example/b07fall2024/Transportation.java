@@ -1,5 +1,4 @@
 package com.example.b07fall2024;
-
 import android.content.Intent;
 import android.text.InputType;
 import android.view.View;
@@ -10,14 +9,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.b072024gr2.ecoproj.R;
-
 import java.util.HashMap;
 import java.util.Map;
-
 //detail change now
 public class Transportation extends AppCompatActivity {
     private LinearLayout VeSec, flightSec, cWSec,pubTraSec;
@@ -84,7 +79,7 @@ public class Transportation extends AppCompatActivity {
         emissionFactors.put("Bus", 0.08); // kg per mile
         emissionFactors.put("Train", 0.04);
         emissionFactors.put("Subway", 0.06);
-        emissionFactors.put("(km)", 0.0); // cycling
+        emissionFactors.put("(km)", 0.0);
         emissionFactors.put("(mile)", 0.0);
         emissionFactors.put("Short-Haul (<1,500 km)", 225.0);
         emissionFactors.put("Long-Haul (>1,500 km)", 825.0);
@@ -138,11 +133,8 @@ public class Transportation extends AppCompatActivity {
 
     // vehicle add
     public void addVehicle(View view) {
-
         LinearLayout vehicleL = new LinearLayout(this);
-
         vehicleL.setOrientation(LinearLayout.HORIZONTAL);
-
         vehicleL.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));

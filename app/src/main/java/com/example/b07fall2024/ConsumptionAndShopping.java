@@ -3,7 +3,6 @@ package com.example.b07fall2024;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,15 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConsumptionAndShopping extends AppCompatActivity {
-
     private double Shopping, Bill;
-    private LinearLayout clothesContainer, elecContainer, othPurContainer, billsContainer;
+    private LinearLayout elecContainer, othPurContainer, billsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consumption_and_shopping);
-
         //container button
         elecContainer = findViewById(R.id.electronicsContainer);
         othPurContainer = findViewById(R.id.otherPurchasesContainer);
@@ -36,19 +33,13 @@ public class ConsumptionAndShopping extends AppCompatActivity {
         findViewById(R.id.addElectronicsButton).setOnClickListener(this::addElectronics);
         findViewById(R.id.addOtherPurchasesButton).setOnClickListener(this::onAddOtherPurchases);
         findViewById(R.id.addBillButton).setOnClickListener(this::onAddBill);
-
         // jump to main
         Button nextButton = findViewById(R.id.activityListButton);
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(ConsumptionAndShopping.this, ActivityMainLayout.class);
             startActivity(intent);
-
             UpdateToFirebase.getInstance().uploadDataToFirebase(ConsumptionAndShopping.this);
-
-
         });
-
-
         Button submitButton = findViewById(R.id.submitButton);
         //n
         submitButton.setOnClickListener(v -> {
@@ -85,7 +76,6 @@ public class ConsumptionAndShopping extends AppCompatActivity {
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         newElectronicsLayout.addView(newElectronicsInput);
-
         elecContainer.addView(newElectronicsLayout);
     }
 
@@ -104,8 +94,6 @@ public class ConsumptionAndShopping extends AppCompatActivity {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
         newOtherPurchasesLayout.addView(spinner);
-
-
         // EditText
         EditText editText = new EditText(this);
         editText.setHint("Number of items");
@@ -113,7 +101,6 @@ public class ConsumptionAndShopping extends AppCompatActivity {
         editText.setLayoutParams(new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         newOtherPurchasesLayout.addView(editText);
-
         othPurContainer.addView(newOtherPurchasesLayout);
     }
 
@@ -156,13 +143,12 @@ public class ConsumptionAndShopping extends AppCompatActivity {
         aDouble.put("appliances", 300.0);
 
         double totalEmissions = 0.0;
-        // Emission factor for clothes (single value)
-        double clothesEmissionFactor = 10.0; //
+        //factor for clothes (single value)
+        double clothesEmissionFactor = 10.0;
         EditText numClothesInput = findViewById(R.id.numClothesInput);
         String numClothesStr = numClothesInput.getText().toString();
         int numClothes = numClothesStr.isEmpty() ? 0 : Integer.parseInt(numClothesStr);
         totalEmissions += clothesEmissionFactor * numClothes;
-
 
         // Calculate emissions from electronics
         for (int i = 0; i < elecContainer.getChildCount(); i++) {
@@ -200,22 +186,17 @@ public class ConsumptionAndShopping extends AppCompatActivity {
                 totalEmissions += quantity * aDouble.get(type);
             }
         }
-
-        // Log the total emissions for debugging
-        Log.d("Emissions", "Total Emissions: " + totalEmissions + " kg CO2e");
-
         return totalEmissions;
     }
 
     public double calBill()
     {
         Map<String, Double> aDouble = new HashMap<>();
-        aDouble.put("Electricity", 0.5); // kg CO2e per dollar
-        aDouble.put("Gas", 2.0);        // kg CO2e per dollar
-        aDouble.put("Water", 0.2);      // kg CO2e per dollar
+        aDouble.put("Electricity", 0.5);
+        aDouble.put("Gas", 2.0);
+        aDouble.put("Water", 0.2);
 
         double total = 0.0;
-
         for (int i = 0; i < billsContainer.getChildCount(); i++) {
             LinearLayout billEntry = (LinearLayout) billsContainer.getChildAt(i);
 
@@ -225,27 +206,18 @@ public class ConsumptionAndShopping extends AppCompatActivity {
             EditText billAmountInput = (EditText) billEntry.getChildAt(1);
             String billAmountStr = billAmountInput.getText().toString();
             double billAmount;
-
             if (billAmountStr.isEmpty()) {
                 billAmount = 0.0;
             } else {
                 billAmount = Double.parseDouble(billAmountStr);
             }
 
-
-            // Calculate emissions for this bill if the type is in the emission factors
             if (aDouble.containsKey(billType)) {
                 double emissionFactor = aDouble.get(billType);
                 double billEmissions = billAmount * emissionFactor;
                 total += billEmissions;
-
-                Log.d("BillEmissions", "Bill Type: " + billType + ", Amount: $" + billAmount +
-                        ", Emissions: " + billEmissions + " kg CO2e");
             }
         }
-
-        Log.d("BillEmissions", "Total Bill Emissions: " + total + " kg CO2e");
-
         return total;
     }
 

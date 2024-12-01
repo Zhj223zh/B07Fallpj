@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tracker_background">
-
-
-
+    android:background="#a9bcd0">
 
     <TextView
         android:id="@+id/TransportationTitle"

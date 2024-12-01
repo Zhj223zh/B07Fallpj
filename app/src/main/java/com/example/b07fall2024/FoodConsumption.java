@@ -53,8 +53,6 @@ public class FoodConsumption extends AppCompatActivity{
 
         //container
         mealContainer = findViewById(R.id.mealContainer);
-
-
         Button submitButton = findViewById(R.id.submitButton);
         // onclicked button
         submitButton.setOnClickListener(v -> {
@@ -63,10 +61,7 @@ public class FoodConsumption extends AppCompatActivity{
             Toast.makeText(FoodConsumption.this, "碳排放量: " + FoodEmission + " kg CO2e", Toast.LENGTH_SHORT).show();
             emissionStorage.setFoodConsumption(FoodEmission);
         });
-
     }
-
-
     // private
     public double onSubmitButtonClicked() {
         // the assumption of CO2
@@ -99,25 +94,18 @@ public class FoodConsumption extends AppCompatActivity{
         for (LinearLayout mealLayout : mealEntries) {
             Spinner mealTypeSpinner = (Spinner) mealLayout.getChildAt(0);
             EditText servingsInput = (EditText) mealLayout.getChildAt(1);
-
             // translate the type
             String mealType = mealTypeSpinner.getSelectedItem().toString();
             String servingsStr = servingsInput.getText().toString();
-
             int numberOfServings = 0;
             if (!servingsStr.isEmpty()) {
                 numberOfServings = Integer.parseInt(servingsStr);
             }
-
             // calculate
             if (emissionFactors.containsKey(mealType)) {
                 double emissionFactor = emissionFactors.get(mealType);
                 double mealEmissions = numberOfServings * servingWeightKg * emissionFactor;
                 totalEmissions += mealEmissions;
-
-                // print
-                Log.d("MealData", "Meal Type: " + mealType + ", Servings: " + numberOfServings +
-                        ", Emissions: " + mealEmissions + " kg CO2e");
             }
         }
         return totalEmissions;
@@ -140,7 +128,6 @@ public class FoodConsumption extends AppCompatActivity{
         spinner.setAdapter(adapter);
         newMealLayout.addView(spinner);
 
-
         EditText editText = new EditText(this);
         editText.setHint("Number of Servings");
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -148,9 +135,6 @@ public class FoodConsumption extends AppCompatActivity{
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         newMealLayout.addView(editText);
         mealContainer.addView(newMealLayout);
-
         mealEntries.add(newMealLayout);
     }
-
-
 }

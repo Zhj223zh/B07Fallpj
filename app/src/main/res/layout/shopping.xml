@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tracker_background">
+    android:background="#a9bcd0">
 
-    <!-- 标题 -->
     <TextView
         android:id="@+id/consumptionTitle"
         android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 指导文本 -->
     <TextView
         android:id="@+id/consumptionGuide"
         android:layout_width="wrap_content"
@@ -45,7 +43,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Buy New Clothes -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +79,6 @@
                 android:orientation="vertical"
                 android:padding="8dp" />
 
-            <!-- Buy Electronics -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

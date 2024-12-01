@@ -29,7 +29,6 @@ public class MainPage extends AppCompatActivity {
     private RecyclerView recyclerViewHabits;
     private HabitAdapter habitAdapter;
     private List<Habit> hList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,23 +48,20 @@ public class MainPage extends AppCompatActivity {
         Button btnUploadAndReturn = findViewById(R.id.btnUploadAndReturn);
         btnUploadAndReturn.setOnClickListener(v -> {
             uploadDataToFirebase();
-            Intent intent = new Intent(MainPage.this, ActivityMainLayout.class); // 跳转到主页面
+            Intent intent = new Intent(MainPage.this, ActivityMainLayout.class);
             startActivity(intent);
         });
-
         // Search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {
                 filterHabitsByName(query);
                 return false;
             }
-
             public boolean onQueryTextChange(String newText) {
                 filterHabitsByName(newText);
                 return false;
             }
         });
-
         btnFilterType.setOnClickListener(v -> showFilterByType());
         btnFilterImpact.setOnClickListener(v -> showFilterByImpact());
         btnReset.setOnClickListener(v -> resetFilters());
@@ -147,18 +143,13 @@ public class MainPage extends AppCompatActivity {
             Toast.makeText(this, "User not logged in. Unable to upload data.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // 获取当前用户的 UID
         String userId = user.getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                .getReference("users")
-                .child(userId).child("Habit");
-
+                .getReference("Users").child(userId).child("Habit");
         for (Habit habit : hList) {
             if (habit.isAdopted() && habit.getProgress() > 0) {
                 String habitKey = habit.getName();
                 DatabaseReference habitRef = databaseReference.child(habitKey);
-
                 habitRef.child("progress").setValue(habit.getProgress());
                 habitRef.child("adoptDate").setValue(currentDate).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -170,10 +161,4 @@ public class MainPage extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
-
 }

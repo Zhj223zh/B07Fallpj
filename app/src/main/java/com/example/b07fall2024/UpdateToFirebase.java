@@ -27,7 +27,6 @@ public class UpdateToFirebase {
         databaseRef = FirebaseDatabase.getInstance().getReference();
     }
 
-    // Singleton
     public static UpdateToFirebase getInstance() {
         if (instance == null) {
             instance = new UpdateToFirebase();
@@ -42,10 +41,7 @@ public class UpdateToFirebase {
             Toast.makeText(context, "User is not logged in.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // user ID
         String userId = user.getUid();
-
         // data from storage
         String year = String.valueOf(DateStorage.getInstance().getYear());
         String month = String.valueOf(DateStorage.getInstance().getMonth());
@@ -69,30 +65,22 @@ public class UpdateToFirebase {
         data.put("EnergyUse", String.valueOf(EnergyUse/daysInMonth));
 
         // path
-        DatabaseReference categoryBreakdownRef = databaseRef.child("users")
-                .child("Emission").child(userId).child(year).child(month).child(week).child(day).child("categoryBreakdown");
+        DatabaseReference categoryBreakdownRef = databaseRef.child("Users").child(userId)
+                .child("Emission").child(year).child(month).child(week).child(day).child("categoryBreakdown");
 
         // Check if the path exists
         categoryBreakdownRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-
                 if (EnergyUse != 0) {
                     double averageEnergyUse = EnergyUse / daysInMonth;
-
-                    DatabaseReference monthRef = databaseRef.child("users").child(userId).child(year).child(month);
-
+                    DatabaseReference monthRef = databaseRef.child("Users").child(userId).child(year).child(month);
                     for (int i = 1; i <= daysInMonth; i++) {
                         String dayKey = String.valueOf(i);
                         DatabaseReference dayRef = monthRef.child(week).child(dayKey).child("categoryBreakdown");
 
                         Map<String, Object> dailyData = new HashMap<>();
                         dailyData.put("EnergyUse", String.valueOf(averageEnergyUse));
-
-                        //
                         dayRef.updateChildren(dailyData)
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -103,7 +91,6 @@ public class UpdateToFirebase {
                                 });
                     }
                 }
-
                 //                                if (task.isSuccessful()) {
                 //                                    Toast.makeText(context, "Data uploaded successfully.", Toast.LENGTH_SHORT).show();
                 //                                } else {
@@ -111,11 +98,6 @@ public class UpdateToFirebase {
                 //                                }
                 categoryBreakdownRef.setValue(data)
                         .addOnCompleteListener(task -> {
-//                                if (task.isSuccessful()) {
-//                                    Toast.makeText(context, "Data replaced successfully.", Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(context, "Failed to replace data.", Toast.LENGTH_SHORT).show();
-//                                }
                         });
             }
 
