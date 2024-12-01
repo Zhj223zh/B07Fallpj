@@ -13,9 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.os.Parcelable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -253,7 +256,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             if (currentQuesAns != null) {
                 Integer currentQuestionIndex = currentQuestionIndexMap.get(currentQuesAns);
                 if (currentQuestionIndex != null) {
-                    questionbank.setAnswer(currentQuesAns, currentQuestionIndex, selectedAnswer);
+                    questionbank.storeAnswer(currentQuesAns, currentQuestionIndex, selectedAnswer);
                     updateQuestionIndex(currentQuesAns, currentQuestionIndex);
                     displayCurrentCategoryQuestion();
                     System.out.println("QuizActivity" +"Question Index Updated: " + currentQuestionIndex);
@@ -281,7 +284,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.println("QuizActivity"+ "Next Category Index: " + currentCategoryIndex);
             } else {
                 System.out.println("QuizActivity" + "Quiz finished");
-                startActivity(new Intent(QuizActivity.this, FinishActivity.class));
+                Intent intent = new Intent(QuizActivity.this, FinishActivity.class);
+                intent.putExtra("mqa", questionbank);  // Passing data with a key-value pair
+                startActivity(intent);
                 finish();
             }
         }

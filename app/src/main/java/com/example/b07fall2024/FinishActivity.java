@@ -7,7 +7,14 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+
 public class FinishActivity extends AppCompatActivity {
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,11 @@ public class FinishActivity extends AppCompatActivity {
     }
 
     private void submitData(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("com.example.b07fall2024");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        String userId = mAuth.getCurrentUser().getUid();
+
+        Intent intent = getIntent();
+        ManageQuesAns questionbank = (ManageQuesAns) intent.getParcelableExtra("mqa");
         HashMap<String, Float> emissionsByCategory = questionbank.getEmissionsByCategory();
 
         ref.child("users").child(userId).child("AnualCF").child("EnergyUse").setValue(emissionsByCategory.get("housing"));
@@ -43,7 +54,7 @@ public class FinishActivity extends AppCompatActivity {
         ref.child("users").child(userId).child("AnualCF").child("Shopping").setValue(emissionsByCategory.get("consumption"));
         ref.child("users").child(userId).child("AnualCF").child("Transportation").setValue(emissionsByCategory.get("transportation"));
 
-        ref.child("users").child(userId).child("Location").child("Country").setValue(country);
+        ref.child("users").child(userId).child("Location").child("Country").setValue(questionbank.getCountry());
 
     }
 }

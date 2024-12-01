@@ -10,7 +10,8 @@ public interface QuesAns {
     String getSelectedAnswer(String question);
     void setSelectedAnswer(String question,String answer);
     boolean isValidOption(int questionIndex,String answer);
-     int questionTextSize();
+    int questionTextSize();
+    float getEmissions();
 
 }
 
