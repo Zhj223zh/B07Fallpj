@@ -54,8 +54,12 @@ public class ManageQuesAns {
         }
     }
 
-    public HashMap<String, Float> getEmissionsByCategory(){
-        HashMap<String, Float> EmissionsByCategory = 
+    public HashMap<String, Float> getEmissionsByCategory() {
+        HashMap<String, Float> EmissionsByCategory = new HashMap<>(Map.of(
+                "transportation", answersByCategory.get(0).getEmissions(),
+                "food", answersByCategory.get(1).getEmissions(),
+                "housing", answersByCategory.get(2).getEmissions(),
+                "consumption", answersByCategory.get(3).getEmissions()));
     }
 
     public float getTotalEmissions() {
