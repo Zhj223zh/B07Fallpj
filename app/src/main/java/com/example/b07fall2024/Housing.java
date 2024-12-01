@@ -95,7 +95,7 @@ public class Housing implements QuesAns {
     }
 
     @Override
-    public Map<String,String> getOptions(int questionIndex) {
+    public Map<String, String> getOptions(int questionIndex) {
         if (questionIndex >= starting_quiz_number && questionIndex < ending_quiz_number) {
             return options.get(questionIndex - 1);
         } else {
@@ -131,7 +131,7 @@ public class Housing implements QuesAns {
         return options.get(number).size();
     }
 
-    public JSONObject getJSON(String houseType){
+    public JSONObject getJSON(String houseType) {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("b07_housing/" + houseType + ".json"));
@@ -144,7 +144,7 @@ public class Housing implements QuesAns {
         return null;
     }
 
-    public float getEmissions(){
+    public float getEmissions() {
         String homeType = getSelectedAnswer(1);
         String householdSize = getSelectedAnswer(2);
         String houseSize = getSelectedAnswer(3);
@@ -154,12 +154,11 @@ public class Housing implements QuesAns {
         String renewables = getSelectedAnswer(7);
 
         HashMap<String, String> ans1homeType = new HashMap<>(Map.of(
-            "Detached house", "detached",
-            "Semi-detached house", "semidet",
-            "Townhouse", "townhouse",
-            "Condo/Apartment", "condo",
-            "Other", "townhouse"
-        ));
+                "Detached house", "detached",
+                "Semi-detached house", "semidet",
+                "Townhouse", "townhouse",
+                "Condo/Apartment", "condo",
+                "Other", "townhouse"));
         homeType = ans1homeType.get(homeType);
 
         JSONObject energyJSON = getJSON(homeType);
@@ -169,9 +168,17 @@ public class Housing implements QuesAns {
         float waterCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(waterType))));
 
         total = total + heatingCO2 + waterCO2;
-        if (heatingType != waterType){total += 233;}
-        if (renewables == "Yes, primarily (more than 50% of energy use)"){total -= 6000;}
-        if (renewables == "Yes, partially (less than 50% of energy use)"){total -= 4000;}
+        if (heatingType != waterType) {
+            total += 233;
+        }
+        if (renewables == "Yes, primarily (more than 50% of energy use)") {
+            total -= 6000;
+        }
+        if (renewables == "Yes, partially (less than 50% of energy use)") {
+            total -= 4000;
+        }
+
+        return total / 1000;
 
     }
 }

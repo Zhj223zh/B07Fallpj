@@ -53,14 +53,17 @@ public class Consumption implements QuesAns {
         options4.put("D", "Always");
         options.add(options4);
     }
+
     @Override
-    public int getEnding_quiz_number(){
+    public int getEnding_quiz_number() {
         return ending_quiz_number;
     }
+
     @Override
-    public int options_size(int number){
+    public int options_size(int number) {
         return options.get(number).size();
     }
+
     @Override
     public String getQuestionText(int questionIndex) {
         if (questionText.containsKey(questionIndex)) {
@@ -97,47 +100,46 @@ public class Consumption implements QuesAns {
         }
     }
 
-    public float getEmissions(){
+    public float getEmissions() {
         float total = 0;
 
         String ans2 = getSelectedAnswer(2);
         String ans3 = getSelectedAnswer(3);
         String ans4 = getSelectedAnswer(4);
 
-        HashMap<String, float> ans2ToMultiplier = Map.of(
-            "Yes, regularly", 0.5,
-            "Yes, occasionally", 0.7,
-            "No", 1
-        );
-        
-        HashMap<String, int> ans3ToCO2 = Map.of(
-            "None", 0,
-            "1", 300,
-            "2", 600,
-            "3 or more", 900
+        HashMap<String, Float> ans2ToMultiplier = Map.of(
+                "Yes, regularly", 0.5,
+                "Yes, occasionally", 0.7,
+                "No", 1);
+
+        HashMap<String, Integer> ans3ToCO2 = Map.of(
+                "None", 0,
+                "1", 300,
+                "2", 600,
+                "3 or more", 900
 
         );
 
-        HashMap<String, int> ans4ToCO2 = Map.of(
-            "Never", 0,
-            "Occasionally", 0,
-            "Frequently", 30,
-            "Always", 50
-        );
+        HashMap<String, Integer> ans4ToCO2 = Map.of(
+                "Never", 0,
+                "Occasionally", 0,
+                "Frequently", 30,
+                "Always", 50);
 
-        HashMap<String, float> ans4ToCO2Rarely = Map.of(
-            "Never", 0,
-            "Occasionally", 0.75,
-            "Frequently", 1.5,
-            "Always", 2.5
-        );
+        HashMap<String, Float> ans4ToCO2Rarely = Map.of(
+                "Never", 0,
+                "Occasionally", 0.75,
+                "Frequently", 1.5,
+                "Always", 2.5);
 
         total += 5 * ans2ToMultiplier.get(ans2);
         total += ans3ToCO2.get(ans3);
-        if (ans1 == "Rarely"){
+        if (ans1 == "Rarely") {
             return total - ans4ToCO2Rarely.get(ans4);
         }
-        return total - ans4ToCO2.get(ans4);
+
+        total = total - ans4ToCO2.get(ans4);
+        return total / 1000;
 
     }
 }

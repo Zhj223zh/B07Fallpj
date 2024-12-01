@@ -3,10 +3,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Food  implements QuesAns{
-    private final Map<Integer,String> questionText;
-    private final List<Map<String,String>> options;
-    private final Map<Integer,String> selectedAnswer;
+public class Food implements QuesAns {
+    private final Map<Integer, String> questionText;
+    private final List<Map<String, String>> options;
+    private final Map<Integer, String> selectedAnswer;
     private final int starting_quiz_number;
     private final int ending_quiz_number;
 
@@ -16,7 +16,6 @@ public class Food  implements QuesAns{
         this.selectedAnswer = new HashMap<>();
         starting_quiz_number = 1;
         ending_quiz_number = 3;
-
 
         questionText.put(1, "What best describes your diet?");
         questionText.put(2, "How often do you eat the following animal-based products?");
@@ -66,6 +65,7 @@ public class Food  implements QuesAns{
         options.add(options3);
 
     }
+
     @Override
     public String getQuestionText(int questionIndex) {
         if (questionText.containsKey(questionIndex)) {
@@ -76,7 +76,7 @@ public class Food  implements QuesAns{
     }
 
     @Override
-    public Map<String,String> getOptions(int questionIndex) {
+    public Map<String, String> getOptions(int questionIndex) {
         if (questionIndex >= starting_quiz_number && questionIndex < ending_quiz_number) {
             return options.get(questionIndex - 1);
         } else {
@@ -113,7 +113,7 @@ public class Food  implements QuesAns{
     }
 
     @Override
-    public float getEmissions(){
+    public float getEmissions() {
         float total = 0;
 
         String ans1 = getSelectedAnswer(1);
@@ -123,47 +123,41 @@ public class Food  implements QuesAns{
         String ans5 = getSelectedAnswer(5);
         String ans6 = getSelectedAnswer(6);
 
-        HashMap<String, int> ans1ToCO2 = Map.of(
-            "Vegetarian", 1000,
-            "Vegan", 500,
-            "Pescatarian (fish/seafood)", 1500,
-            "Meat-based (eat all types of animal products)", 0
-        );
+        HashMap<String, Integer> ans1ToCO2 = Map.of(
+                "Vegetarian", 1000,
+                "Vegan", 500,
+                "Pescatarian (fish/seafood)", 1500,
+                "Meat-based (eat all types of animal products)", 0);
 
-        HashMap<String, int> ans2ToCO2 = Map.of(
-            "Daily", 2500,
-            "Frequently (3-5 times/week)", 1900,
-            "Occasionally (1-2 times/week)", 1300,
-            "Never", 0
-        );
+        HashMap<String, Integer> ans2ToCO2 = Map.of(
+                "Daily", 2500,
+                "Frequently (3-5 times/week)", 1900,
+                "Occasionally (1-2 times/week)", 1300,
+                "Never", 0);
 
-        HashMap<String, int> ans3ToCO2 = Map.of(
-            "Daily", 1450,
-            "Frequently (3-5 times/week)", 860,
-            "Occasionally (1-2 times/week)", 450,
-            "Never", 0
-        );
+        HashMap<String, Integer> ans3ToCO2 = Map.of(
+                "Daily", 1450,
+                "Frequently (3-5 times/week)", 860,
+                "Occasionally (1-2 times/week)", 450,
+                "Never", 0);
 
-        HashMap<String, int> ans4ToCO2 = Map.of(
-            "Daily", 950,
-            "Frequently (3-5 times/week)", 600,
-            "Occasionally (1-2 times/week)", 200,
-            "Never", 0
-        );
+        HashMap<String, Integer> ans4ToCO2 = Map.of(
+                "Daily", 950,
+                "Frequently (3-5 times/week)", 600,
+                "Occasionally (1-2 times/week)", 200,
+                "Never", 0);
 
-        HashMap<String, int> ans5ToCO2 = Map.of(
-            "Daily", 800,
-            "Frequently (3-5 times/week)", 500,
-            "Occasionally (1-2 times/week)", 150
-            "Never", 0
-        );
+        HashMap<String, Integer> ans5ToCO2 = Map.of(
+                "Daily", 800,
+                "Frequently (3-5 times/week)", 500,
+                "Occasionally (1-2 times/week)", 150,
+                "Never", 0);
 
-        HashMap<String, float> ans6ToCO2 = Map.of(
-            "Never", 0,
-            "Rarely", 23.4,
-            "Occasionally", 70.2,
-            "Frequently", 140.4
-        );
+        HashMap<String, Float> ans6ToCO2 = Map.of(
+                "Never", 0,
+                "Rarely", 23.4,
+                "Occasionally", 70.2,
+                "Frequently", 140.4);
 
         total += ans1ToCO2.get(ans1);
         total += ans2ToCO2.get(ans2);
@@ -172,7 +166,7 @@ public class Food  implements QuesAns{
         total += ans5ToCO2.get(ans5);
         total += ans6ToCO2.get(ans6);
 
-        return total;
+        return total / 1000;
 
     }
 }
