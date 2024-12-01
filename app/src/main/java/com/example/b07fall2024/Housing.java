@@ -144,6 +144,14 @@ public class Housing implements QuesAns {
         return null;
     }
 
+    public JSONObject getJSON2(String houseType){
+        InputStream inputStream = AssetManager.open(houseType + ".json");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject)jsonParser.parse(
+            new InputStreamReader(inputStream, "UTF-8"));
+        return JSONObject;
+    }
+
     public float getEmissions() {
         String homeType = getSelectedAnswer(1);
         String householdSize = getSelectedAnswer(2);
@@ -161,7 +169,7 @@ public class Housing implements QuesAns {
                 "Other", "townhouse"));
         homeType = ans1homeType.get(homeType);
 
-        JSONObject energyJSON = getJSON(homeType);
+        JSONObject energyJSON = getJSON2(homeType);
 
         float total;
         float heatingCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
