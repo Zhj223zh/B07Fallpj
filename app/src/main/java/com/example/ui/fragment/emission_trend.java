@@ -157,7 +157,7 @@ public class emission_trend extends Fragment {
 
     private int getCurrentMonth() {
         Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.MONTH) + 1; // Calendar.MONTH is 0-based
+        return calendar.get(Calendar.MONTH) + 1;
     }
 
     private int getCurrentWeek() {

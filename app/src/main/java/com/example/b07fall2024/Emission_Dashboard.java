@@ -33,18 +33,15 @@ public class Emission_Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_emission_dashboard);
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/");
         EdgeToEdge.enable(this);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         loadFragment_overview(new emission_overview());
         loadFragment_breakdown(new emission_breakdown());
         loadFragment_trend(new emission_trend());
         loadFragment_comparison(new emission_comparison());
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -59,40 +56,28 @@ public class Emission_Dashboard extends AppCompatActivity {
         });
     }
     private void loadFragment_overview(Fragment fragment) {
-        // Get the FragmentManager and start a transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace the fragment_container with the new fragment
         fragmentTransaction.replace(R.id.fragment_container_emission_overview, fragment);
         fragmentTransaction.commit();
     }
     private void loadFragment_breakdown(Fragment fragment) {
-        // Get the FragmentManager and start a transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace the fragment_container with the new fragment
         fragmentTransaction.replace(R.id.fragment_container_emission_breakdown, fragment);
         fragmentTransaction.commit();
     }
 
     private void loadFragment_trend(Fragment fragment) {
-        // Get the FragmentManager and start a transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace the fragment_container with the new fragment
         fragmentTransaction.replace(R.id.fragment_container_emission_trend, fragment);
         fragmentTransaction.commit();
     }
 
     private void loadFragment_comparison(Fragment fragment) {
-        // Get the FragmentManager and start a transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace the fragment_container with the new fragment
         fragmentTransaction.replace(R.id.fragment_container_emission_comparison, fragment);
         fragmentTransaction.commit();
     }

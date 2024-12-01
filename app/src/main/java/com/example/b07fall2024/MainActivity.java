@@ -29,16 +29,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         db = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/");
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         Button openDashboardButton = findViewById(R.id.btn_open_dashboard);
-
         openDashboardButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, Emission_Dashboard.class);
             startActivity(intent);
