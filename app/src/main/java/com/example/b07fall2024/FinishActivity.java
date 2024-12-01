@@ -18,7 +18,7 @@ public class FinishActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FinishActivity.this,MainActivity.class);
+                Intent intent = new Intent(FinishActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -27,9 +27,23 @@ public class FinishActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                submitData();
                 finish();
             }
 
         });
+    }
+
+    private void submitData(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        HashMap<String, float> emissionsByCategory = questionbank.getTotalEmissions();
+
+        ref.child("users").child(userId).child("AnualCF").child("EnergyUse").setValue(emissionsByCategory.get("housing"));
+        ref.child("users").child(userId).child("AnualCF").child("FoodConsumption").setValue(emissionsByCategory.get("food"));
+        ref.child("users").child(userId).child("AnualCF").child("Shopping").setValue(emissionsByCategory.get("consumption"));
+        ref.child("users").child(userId).child("AnualCF").child("Transportation").setValue(emissionsByCategory.get("transportation"));
+
+        ref.child("users").child(userId).child("Location").child("Country").setValue(country);
+
     }
 }
