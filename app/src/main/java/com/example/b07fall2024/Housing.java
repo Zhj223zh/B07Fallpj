@@ -1,10 +1,14 @@
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
+import org.json.parser.JSONParser;
 import java.io.FileReader;
+import android.content.res.AssetManager;
 
 public class Housing implements QuesAns {
     private final Map<Integer, String> questionText;
@@ -144,12 +148,17 @@ public class Housing implements QuesAns {
         return null;
     }
 
-    public JSONObject getJSON2(String houseType){
+    public JSONObject getJSON2(String houseType) throws UnsupportedEncodingException {
+        try {
         InputStream inputStream = AssetManager.open(houseType + ".json");
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject)jsonParser.parse(
             new InputStreamReader(inputStream, "UTF-8"));
-        return JSONObject;
+        return jsonObject;
+        }
+        catch(UnsupportedEncodingException e){
+            return new JSONObject();
+        }
     }
 
     public float getEmissions() {

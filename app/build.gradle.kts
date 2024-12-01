@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.ui.graphics.android)
     implementation(libs.firebase.auth)
     testImplementation(libs.junit)
-    implementation(org.json.simple)
     testImplementation("org.mockito:mockito-core:4.2.0")
     testImplementation("org.mockito:mockito-inline:4.2.0")
     testImplementation("com.google.android.gms:play-services-tasks:18.0.1")
