@@ -32,6 +32,4 @@ public class FinishActivity extends AppCompatActivity {
 
         });
     }
-
-    submitData(){}
 }
