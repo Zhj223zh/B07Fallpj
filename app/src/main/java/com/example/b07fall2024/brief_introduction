@@ -1,0 +1,79 @@
+Carbon Emission Tracking App Documentation
+Overview
+This app helps users track their daily carbon emissions across various activities like food consumption, shopping, transportation, and energy use. Users can input their activity data, view calculated emissions, and upload their data to Firebase for long-term tracking.
+
+Components
+1. ActivityMainLayout
+Purpose: Acts as the central hub of the app, allowing users to navigate to specific activity pages and view daily emissions data.
+Key Features:
+Fetches and displays daily carbon emissions from Firebase.
+Provides navigation to:
+-Transportation
+-Food Consumption
+-Consumption & Shopping
+-Habits Main Page
+
+Firebase Integration:
+Fetches categoryBreakdown for the selected date and populates emissions data in the UI.
+Updates global date information through DateStorage.
+
+2. DateStorage
+Purpose: Singleton class that stores and manages the current date details.
+Attributes:
+-year, month, day, week
+Usage: Shared across the app for consistent date tracking.
+
+3. EmissionStorage
+Purpose: Singleton class for storing emission values for the current session.
+Attributes:
+FoodConsumption, Shopping, Transportation, EnergyUse
+Usage: Temporarily holds emission data before uploading to Firebase.
+
+4. Transportation
+Purpose: Allows users to input transportation activities and calculates related emissions.
+Features:
+Input sections for:
+-Vehicle usage
+-Public transport
+-Flights
+-Cycling/Walking
+Emission Factors: Based on distance or activity type (e.g., fuel type, public transport type).
+Calculated Emissions: Displayed in a toast and stored in EmissionStorage.
+
+5. FoodConsumption
+Purpose: Tracks food-related carbon emissions based on meal types and quantities.
+Features:
+Dropdown for meal types (e.g., Beef, Chicken, Plant-Based).
+Inputs for the number of servings.
+Emission Factors: Calculated based on a predefined emission factor per serving weight.
+Calculated Emissions: Displayed in a toast and stored in EmissionStorage.
+
+6. ConsumptionAndShopping
+Purpose: Tracks shopping and energy use emissions.
+Features:
+Inputs for:
+-Electronics
+-Other purchases
+-Energy bills
+Emission Factors: Based on item types and bill amounts.
+Calculated Emissions: Displayed in a toast and stored in EmissionStorage.
+
+7. UpdateToFirebase
+Purpose: Uploads emission data to Firebase.
+Features:
+Automatically divides energy use across the days of the selected month.
+Updates Firebase in the path:
+sql
+
+users/{userId}/{year}/{month}/{week}/{day}/categoryBreakdown
+Checks for existing data and replaces it if found.
+
+
+Each activity page calculates the emissions using predefined factors.
+Calculated data is stored in EmissionStorage.
+Data Upload:
+
+When users navigate back to the main page, the data is uploaded to Firebase using UpdateToFirebase.
+Data Retrieval:
+
+The app fetches stored data from Firebase and displays it on ActivityMainLayout.
