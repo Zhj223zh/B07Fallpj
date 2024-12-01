@@ -123,41 +123,41 @@ public class Food implements QuesAns {
         String ans5 = getSelectedAnswer(5);
         String ans6 = getSelectedAnswer(6);
 
-        HashMap<String, Integer> ans1ToCO2 = Map.of(
+        HashMap<String, Integer> ans1ToCO2 = new HashMap<>(Map.of(
                 "Vegetarian", 1000,
                 "Vegan", 500,
                 "Pescatarian (fish/seafood)", 1500,
-                "Meat-based (eat all types of animal products)", 0);
+                "Meat-based (eat all types of animal products)", 0));
 
-        HashMap<String, Integer> ans2ToCO2 = Map.of(
+        HashMap<String, Integer> ans2ToCO2 = new HashMap<>(Map.of(
                 "Daily", 2500,
                 "Frequently (3-5 times/week)", 1900,
                 "Occasionally (1-2 times/week)", 1300,
-                "Never", 0);
+                "Never", 0));
 
-        HashMap<String, Integer> ans3ToCO2 = Map.of(
+        HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
                 "Daily", 1450,
                 "Frequently (3-5 times/week)", 860,
                 "Occasionally (1-2 times/week)", 450,
-                "Never", 0);
+                "Never", 0));
 
-        HashMap<String, Integer> ans4ToCO2 = Map.of(
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
                 "Daily", 950,
                 "Frequently (3-5 times/week)", 600,
                 "Occasionally (1-2 times/week)", 200,
-                "Never", 0);
+                "Never", 0));
 
-        HashMap<String, Integer> ans5ToCO2 = Map.of(
+        HashMap<String, Integer> ans5ToCO2 = new HashMap<>(Map.of(
                 "Daily", 800,
                 "Frequently (3-5 times/week)", 500,
                 "Occasionally (1-2 times/week)", 150,
-                "Never", 0);
+                "Never", 0));
 
-        HashMap<String, Float> ans6ToCO2 = Map.of(
+        HashMap<String, Float> ans6ToCO2 = new HashMap<>(Map.of(
                 "Never", 0,
                 "Rarely", 23.4,
                 "Occasionally", 70.2,
-                "Frequently", 140.4);
+                "Frequently", 140.4));
 
         total += ans1ToCO2.get(ans1);
         total += ans2ToCO2.get(ans2);

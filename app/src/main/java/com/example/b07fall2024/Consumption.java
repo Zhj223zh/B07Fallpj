@@ -107,30 +107,28 @@ public class Consumption implements QuesAns {
         String ans3 = getSelectedAnswer(3);
         String ans4 = getSelectedAnswer(4);
 
-        HashMap<String, Float> ans2ToMultiplier = Map.of(
+        HashMap<String, Float> ans2ToMultiplier = new HashMap<>(Map.of(
                 "Yes, regularly", 0.5,
                 "Yes, occasionally", 0.7,
-                "No", 1);
+                "No", 1));
 
-        HashMap<String, Integer> ans3ToCO2 = Map.of(
+        HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
                 "None", 0,
                 "1", 300,
                 "2", 600,
-                "3 or more", 900
+                "3 or more", 900));
 
-        );
-
-        HashMap<String, Integer> ans4ToCO2 = Map.of(
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
                 "Never", 0,
                 "Occasionally", 0,
                 "Frequently", 30,
-                "Always", 50);
+                "Always", 50));
 
-        HashMap<String, Float> ans4ToCO2Rarely = Map.of(
+        HashMap<String, Float> ans4ToCO2Rarely = new HashMap<>(Map.of(
                 "Never", 0,
                 "Occasionally", 0.75,
                 "Frequently", 1.5,
-                "Always", 2.5);
+                "Always", 2.5));
 
         total += 5 * ans2ToMultiplier.get(ans2);
         total += ans3ToCO2.get(ans3);
