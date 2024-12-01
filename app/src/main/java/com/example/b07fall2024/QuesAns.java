@@ -1,3 +1,4 @@
+package com.example.b07fall2024;
 import java.util.Map;
 
 public interface QuesAns {

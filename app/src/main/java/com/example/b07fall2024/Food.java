@@ -1,27 +1,28 @@
+package com.example.b07fall2024;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Food implements QuesAns {
-    private final Map<Integer, String> questionText;
+    private final List<Integer, String> questionText;
     private final List<Map<String, String>> options;
     private final Map<Integer, String> selectedAnswer;
-    private final int starting_quiz_number;
-    private final int ending_quiz_number;
 
     public Food() {
-        this.questionText = new HashMap<>();
-        this.options = new ArrayList<>();
-        this.selectedAnswer = new HashMap<>();
-        starting_quiz_number = 1;
-        ending_quiz_number = 3;
+        // Initialize options and questionText arrays
+        questionText = new ArrayList<>();
+        options = new ArrayList<>();
+        selectedAnswer = new HashMap<>();
 
-        questionText.put(1, "What best describes your diet?");
-        questionText.put(2, "How often do you eat the following animal-based products?");
-        questionText.put(3, "How often do you waste food or throw away uneaten leftovers?");
+        questionText.add("What best describes your diet?");
+        questionText.add("How often do you eat the following animal-based products?: Beef");
+        questionText.add("How often do you eat the following animal-based products?: Pork");
+        questionText.add("How often do you eat the following animal-based products?: Chicken");
+        questionText.add("How often do you eat the following animal-based products?: Fish/Seafood");
+        questionText.add("How often do you waste food or throw away uneaten leftovers?");
 
-        // Add options for each question
         Map<String, String> options1 = new HashMap<>();
         options1.put("A", "Vegetarian");
         options1.put("B", "Vegan");
@@ -62,8 +63,7 @@ public class Food implements QuesAns {
         options6.put("B", "Rarely");
         options6.put("C", "Occasionally");
         options6.put("D", "Frequently");
-        options.add(options3);
-
+        options.add(options6);
     }
 
     @Override

@@ -1,19 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Top header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/blue_green"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+        <TextView
+            android:id="@+id/carbon_footprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/carbon_fooprint"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- FrameLayout for overlapping images -->
+    <FrameLayout
+        android:id="@+id/overlap_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:id="@+id/globe"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/myglobe" />
+        <ImageView
+            android:id="@+id/planet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/planetze" />
+    </FrameLayout>
+
+    <!-- LinearLayout for the quiz title and description -->
+    <LinearLayout
+        android:id="@+id/quiz_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/overlap_images"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_back_white"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/quiz_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/planet_quiz"
+            android:textColor="#FF000000"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/quiz_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/survey_on_the_carbon_footprint"
+            android:textColor="#FF000000"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <!-- Spinner for category selection -->
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/quiz_info"
+        android:layout_marginTop="20dp"
+        android:entries="@array/categories_array" />
+
+    <!-- LinearLayout for Start Quiz Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/start_quiz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start_quiz"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/round_blue_green"
+            android:elevation="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:cardCornerRadius="24dp"/>
+    </LinearLayout>
+</RelativeLayout>
