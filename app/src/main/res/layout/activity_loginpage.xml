@@ -8,7 +8,7 @@
     android:background="@drawable/login_background"
     android:layout_gravity="center"
     android:padding="16dp"
-    tools:context=".LoginActivity">
+    tools:context="com.example.b07fall2024.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,15 +59,34 @@
             android:inputType="textPassword"
             android:id="@+id/password_input"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:id="@+id/forgotPassword_text"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <CheckBox
+                android:id="@+id/remember_me_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember me"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/forgotPassword_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot password?"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginStart="72dp"
+                android:clickable="true" />
+        </LinearLayout>
 
         <ProgressBar
             android:layout_width="wrap_content"
