@@ -36,7 +36,7 @@ public class FinishActivity extends AppCompatActivity {
 
     private void submitData(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        HashMap<String, float> emissionsByCategory = questionbank.getTotalEmissions();
+        HashMap<String, float> emissionsByCategory = questionbank.getEmissionsByCategory();
 
         ref.child("users").child(userId).child("AnualCF").child("EnergyUse").setValue(emissionsByCategory.get("housing"));
         ref.child("users").child(userId).child("AnualCF").child("FoodConsumption").setValue(emissionsByCategory.get("food"));
