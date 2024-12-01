@@ -289,8 +289,16 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     //Source: QuizApplication | Android Studio Tutorial | 2024
     private void handleOptionButtonClick(AppCompatButton clickedButton) {
+        for (int i = 0; i < optionsContainer.getChildCount(); i++) {
+            View child = optionsContainer.getChildAt(i);
+            if (child instanceof AppCompatButton) {
+                child.setBackgroundColor(Color.TRANSPARENT); // Reset background
+                child.setSelected(false); // Unselect button
+            }
+        }
+
         selectedAnswer = clickedButton.getTag().toString();
-        clickedButton.setBackgroundColor(Color.parseColor("#009999")); // Change this color as desired
-        selectOption(selectedAnswer); // Ensure only one option is selected
+        clickedButton.setBackgroundColor(Color.parseColor("#009999")); // Change to desired highlight color
+        clickedButton.setSelected(true);
     }
 }
