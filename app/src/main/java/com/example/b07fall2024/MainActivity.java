@@ -1,4 +1,12 @@
+package com.example.b07fall2024;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +19,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+    private Spinner spinnerCategory;
+    //stores the selected category of country
+    String selectedCategory;
 
     FirebaseDatabase db;
 
@@ -23,31 +33,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      
+        // Initialize the Button and Spinner
+        final Button startBtn = findViewById(R.id.start_quiz);
+        spinnerCategory = findViewById(R.id.spinnerCategory);  // Corrected this line
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-        DatabaseReference myRef = db.getReference("testDemo");
+        // Create an adapter for the Spinner using the categories array
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.categories_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapter);
 
-//        myRef.setValue("B07 Demo!");
-        myRef.child("movies").setValue("B07 Demo!");
+        // Set OnClickListener for the Button
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the selected category from the Spinner
+                selectedCategory = spinnerCategory.getSelectedItem().toString();
 
-        if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
-        }
-    }
-
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
+                // Check if the user has selected a category
+                if (selectedCategory.isEmpty() || selectedCategory.equals("Select Category")) {
+                    // Show a message if no category is selected
+                    Toast.makeText(MainActivity.this, "Please select a category", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Create an Intent to start the QuizActivity and pass the selected category
+                    Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                    intent.putExtra("selected category", selectedCategory); // Pass the selected category
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }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

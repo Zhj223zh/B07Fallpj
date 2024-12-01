@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.b072024gr2.ecoproj"
+    namespace = "com.example.b07fall2024"
     compileSdk = 34
 
     defaultConfig {
