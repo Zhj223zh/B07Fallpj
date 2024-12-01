@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Transportation implements QuesAns {
-    private final List<String> questionText;
+    private final Map<Integer, String> questionText;
     private final List<Map<String, String>> options;
-    private final Map<String, String> selectedAnswer;
+    private final Map<Integer, String> selectedAnswer;
+    private final int starting_quiz_number;
+    private final int ending_quiz_number;
 
     public Transportation() {
         // Initialize options and questionText arrays
@@ -80,7 +82,7 @@ public class Transportation implements QuesAns {
 
     @Override
     public String getQuestionText(int questionIndex) {
-        if (questionIndex >= 0 && questionIndex < questionText.size()) {
+        if (questionText.containsKey(questionIndex)) {
             return questionText.get(questionIndex);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
@@ -89,48 +91,114 @@ public class Transportation implements QuesAns {
 
     @Override
     public Map<String, String> getOptions(int questionIndex) {
-        if (questionIndex >= 0 && questionIndex < options.size()) {
-            return options.get(questionIndex);
+        if (questionIndex >= starting_quiz_number && questionIndex < ending_quiz_number) {
+            return options.get(questionIndex - 1);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
         }
     }
 
     @Override
-    public String getSelectedAnswer(String question) {
-        if (selectedAnswer.containsKey(question)) {
-            return selectedAnswer.get(question);
+    public String getSelectedAnswer(int questionIndex) {
+        if (selectedAnswer.containsKey(questionIndex)) {
+            return selectedAnswer.get(questionIndex);
         } else {
-            throw new QuestionException("No answer selected for question: " + question);
+            throw new QuestionException("No answer selected for question: " + questionIndex);
         }
     }
 
     @Override
-    public void setSelectedAnswer(String question, String key) {
-        if (questionText.contains(question)) {
-            int questionIndex = questionText.indexOf(question);
-            Map<String, String> questionOptions = options.get(questionIndex);
-            if (questionOptions.containsKey(key)) {
-                String value = questionOptions.get(key);
-                selectedAnswer.put(question, value);
-                System.out.println("Saved in transportation " + question + "answer " + value);
-            } else {
-                throw new QuestionException("Invalid answer: " + key + " for question: " + question);
-            }
+    public void setSelectedAnswer(int index, String answer) {
+        if (questionText.containsKey(index)) {
+            selectedAnswer.put(index, answer);
         } else {
-            throw new QuestionException("Invalid question: " + question);
+            throw new QuestionException("Invalid question index: " + index);
         }
     }
 
-    // Function to verify if the key exists in the options
-    public boolean isValidOption(int questionIndex, String answer) {
-        if (questionIndex >= 0 && questionIndex < options.size()) {
-            return options.get(questionIndex).containsValue(answer);
-        }
-        return false;
-    }
     @Override
-    public int questionTextSize(){
-        return questionText.size();
+    public int getEnding_quiz_number() {
+        return ending_quiz_number;
+    }
+
+    @Override
+    public int options_size(int number) {
+        return options.get(number).size();
+    }
+
+    @Override
+    public float getEmissions() {
+        float total = 0;
+
+        String ans1 = getSelectedAnswer(1);
+        String ans2 = getSelectedAnswer(2);
+        String ans3 = getSelectedAnswer(3);
+        String ans4 = getSelectedAnswer(4);
+        String ans5 = getSelectedAnswer(5);
+        String ans6 = getSelectedAnswer(6);
+        String ans7 = getSelectedAnswer(7);
+
+        if (ans1 == "No") {
+            return 0;
+        }
+
+        HashMap<String, Float> ans2ToCO2 = new HashMap<>(Map.of(
+                "Gasoline", 0.24,
+                "Diesel", 0.27,
+                "Hybrid", 0.16,
+                "Electric", 0.05));
+        HashMap<String, Integer> ans3ToMiles = new HashMap<>(Map.of(
+                "Up to 5,000 km (3,000 miles)", 5000,
+                "5,000–10,000 km (3,000–6,000 miles)", 10000,
+                "10,000–15,000 km (6,000–9,000 miles)", 15000,
+                "15,000–20,000 km (9,000–12,000 miles)", 20000,
+                "20,000–25,000 km (12,000–15,000 miles)", 25000,
+                "More than 25,000 km (15,000 miles)", 35000));
+
+        // Answers 4 and 5
+        HashMap<String, Integer> ans5Occasionally = new HashMap<>(Map.of(
+                "Under 1 hour", 246,
+                "1-3 hours", 819,
+                "3-5 hours", 1638,
+                "5-10 hours", 3071,
+                "More than 10 hours", 9555));
+        HashMap<String, Integer> ans5Frequently = new HashMap<>(Map.of(
+                "Under 1 hour", 573,
+                "1-3 hours", 1911,
+                "3-5 hours", 3822,
+                "5-10 hours", 7166,
+                "More than 10 hours", 9555));
+
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
+                "Never", 0,
+                "Occasionally", ans5Occasionally.get(ans5),
+                "Frequently", ans5Frequently.get(ans5),
+                "Always", ans5Frequently.get(ans5)));
+
+        // answer 6
+        HashMap<String, Integer> ans6ToCO2 = new HashMap<>(Map.of(
+                "None", 0,
+                "1-2 flights", 225,
+                "3-5 flights", 600,
+                "6-10 flights", 1200,
+                "More than 10 flights", 1800));
+
+        // answer 7
+        HashMap<String, Integer> ans7ToCO2 = new HashMap<>(Map.of(
+                "None", 0,
+                "1-2 flights", 825,
+                "3-5 flights", 2200,
+                "6-10 flights", 4400,
+                "More than 10 flights", 6600));
+
+        int kgPerKm = ans2ToCO2.get(ans2);
+        int milesDriven = ans3ToMiles.get(ans3);
+
+        total += kgPerKm * milesDriven;
+        total += ans4ToCO2.get(ans4);
+        total += ans6ToCO2.get(ans6);
+        total += ans7ToCO2.get(ans7);
+
+        return total / 1000;
     }
 }

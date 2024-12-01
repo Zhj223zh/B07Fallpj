@@ -88,7 +88,6 @@ public class ManageQuesAns implements Parcelable {
         return total;
     }
 
-
     // New method to determine if a question should be skipped
     public boolean shouldSkipQuestion(QuesAns quesAns, int questionIndex) {
         if (quesAns instanceof Transportation) {
@@ -157,5 +156,3 @@ public class ManageQuesAns implements Parcelable {
     };
 
 }
-
-

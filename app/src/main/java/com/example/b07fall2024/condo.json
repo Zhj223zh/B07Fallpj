@@ -1,0 +1,464 @@
+{
+    "Under 1000":{
+        "1 Occupant":
+        {
+          "25": {
+            "natural": 1680,
+            "electricity": 200,
+            "oil": 0,
+            "propane": 1320,
+            "wood": 1600
+          },
+          "50": {
+            "natural": 2240,
+            "electricity": 500,
+            "oil": 0,
+            "propane": 2100,
+            "wood": 1800
+          },
+          "100": {
+            "natural": 2800,
+            "electricity": 900,
+            "oil": 0,
+            "propane": 3000,
+            "wood": 2800
+          },
+          "150": {
+            "natural": 3700,
+            "electricity": 1400,
+            "oil": 0,
+            "propane": 3300,
+            "wood": 3000
+          },
+          "200": {
+            "natural": 5000,
+            "electricity": 1900,
+            "oil": 0,
+            "propane": 5700,
+            "wood": 3500
+          }
+        },
+        "2 Occupants":
+        {
+          "25": {
+            "natural": 1870,
+            "electricity": 250,
+            "oil": 0,
+            "propane": 1550,
+            "wood": 1850
+          },
+          "50": {
+            "natural": 2430,
+            "electricity": 550,
+            "oil": 0,
+            "propane": 2400,
+            "wood": 2000
+          },
+          "100": {
+            "natural": 3000,
+            "electricity": 1100,
+            "oil": 0,
+            "propane": 3300,
+            "wood": 3000
+          },
+          "150": {
+            "natural": 4100,
+            "electricity": 1600,
+            "oil": 0,
+            "propane": 3700,
+            "wood": 3100
+          },
+          "200": {
+            "natural": 7200,
+            "electricity": 2100,
+            "oil": 0,
+            "propane": 6000,
+            "wood": 3600
+          }
+        },
+        "3-4 Occupants":
+        {
+          "25": {
+            "natural": 2170,
+            "electricity": 380,
+            "oil": 0,
+            "propane": 1800,
+            "wood": 2000
+          },
+          "50": {
+            "natural": 2719,
+            "electricity": 580,
+            "oil": 0,
+            "propane": 2800,
+            "wood": 2300
+          },
+          "100": {
+            "natural": 3200,
+            "electricity": 1200,
+            "oil": 0,
+            "propane": 3700,
+            "wood": 3300
+          },
+          "150": {
+            "natural": 4600,
+            "electricity": 1700,
+            "oil": 0,
+            "propane": 4400,
+            "wood": 3500
+          },
+          "200": {
+            "natural": 8000,
+            "electricity": 2200,
+            "oil": 0,
+            "propane": 6600,
+            "wood": 3900
+          }
+        },
+        "5 Occupants":
+        {
+          "25": {
+            "natural": 2440,
+            "electricity": 450,
+            "oil": 0,
+            "propane": 2000,
+            "wood": 2100
+          },
+          "50": {
+            "natural": 2997,
+            "electricity": 600,
+            "oil": 0,
+            "propane": 3200,
+            "wood": 2400
+          },
+          "100": {
+            "natural": 3500,
+            "electricity": 1300,
+            "oil": 0,
+            "propane": 4300,
+            "wood": 3500
+          },
+          "150": {
+            "natural": 5000,
+            "electricity": 1900,
+            "oil": 0,
+            "propane": 5200,
+            "wood": 3900
+          },
+          "200": {
+            "natural": 10000,
+            "electricity": 2600,
+            "oil": 0,
+            "propane": 7000,
+            "wood": 4200
+          }
+        }
+      },
+    "1000-2000":{
+        "1 Occupant":
+        {
+          "25": {
+            "natural": 2060,
+            "electricity": 300,
+            "oil": 0,
+            "propane": 1500,
+            "wood": 1800
+          },
+          "50": {
+            "natural": 2500,
+            "electricity": 550,
+            "oil": 0,
+            "propane": 3000,
+            "wood": 2200
+          },
+          "100": {
+            "natural": 3100,
+            "electricity": 1250,
+            "oil": 0,
+            "propane": 4100,
+            "wood": 3200
+          },
+          "150": {
+            "natural": 4000,
+            "electricity": 1900,
+            "oil": 0,
+            "propane": 4550,
+            "wood": 3100
+          },
+          "200": {
+            "natural": 5350,
+            "electricity": 2300,
+            "oil": 0,
+            "propane": 6000,
+            "wood": 3900
+          }
+        },
+        "2 Occupants":
+        {
+          "25": {
+            "natural": 2260,
+            "electricity": 400,
+            "oil": 0,
+            "propane": 1700,
+            "wood": 2200
+          },
+          "50": {
+            "natural": 2880,
+            "electricity": 670,
+            "oil": 0,
+            "propane": 3400,
+            "wood": 2500
+          },
+          "100": {
+            "natural": 3300,
+            "electricity": 1450,
+            "oil": 0,
+            "propane": 4600,
+            "wood": 3500
+          },
+          "150": {
+            "natural": 4700,
+            "electricity": 2300,
+            "oil": 0,
+            "propane": 4950,
+            "wood": 3300
+          },
+          "200": {
+            "natural": 7550,
+            "electricity": 2500,
+            "oil": 0,
+            "propane": 6300,
+            "wood": 4200
+          }
+        },
+        "3-4 Occupants":
+        {
+          "25": {
+            "natural": 2540,
+            "electricity": 500,
+            "oil": 0,
+            "propane": 2100,
+            "wood": 2500
+          },
+          "50": {
+            "natural": 3110,
+            "electricity": 780,
+            "oil": 0,
+            "propane": 3800,
+            "wood": 2900
+          },
+          "100": {
+            "natural": 3500,
+            "electricity": 1750,
+            "oil": 0,
+            "propane": 5000,
+            "wood": 3600
+          },
+          "150": {
+            "natural": 5200,
+            "electricity": 2700,
+            "oil": 0,
+            "propane": 5350,
+            "wood": 3700
+          },
+          "200": {
+            "natural": 8200,
+            "electricity": 2700,
+            "oil": 0,
+            "propane": 7000,
+            "wood": 4500
+          }
+        },
+        "5 Occupants":
+        {
+          "25": {
+            "natural": 3010,
+            "electricity": 620,
+            "oil": 0,
+            "propane": 2300,
+            "wood": 2700
+          },
+          "50": {
+            "natural": 3320,
+            "electricity": 900,
+            "oil": 0,
+            "propane": 4200,
+            "wood": 3300
+          },
+          "100": {
+            "natural": 3900,
+            "electricity": 2100,
+            "oil": 0,
+            "propane": 5400,
+            "wood": 4000
+          },
+          "150": {
+            "natural": 5900,
+            "electricity": 3000,
+            "oil": 0,
+            "propane": 5650,
+            "wood": 4100
+          },
+          "200": {
+            "natural": 10500,
+            "electricity": 3100,
+            "oil": 0,
+            "propane": 7400,
+            "wood": 4700
+          }
+        }
+      },
+    "Over 2000":{
+        "1 Occupant":
+        {
+          "25": {
+            "natural": 2440,
+            "electricity": 350,
+            "oil": 0,
+            "propane": 1800,
+            "wood": 2300
+          },
+          "50": {
+            "natural": 2700,
+            "electricity": 610,
+            "oil": 0,
+            "propane": 3650,
+            "wood": 2600
+          },
+          "100": {
+            "natural": 3670,
+            "electricity": 1500,
+            "oil": 0,
+            "propane": 4500,
+            "wood": 3500
+          },
+          "150": {
+            "natural": 4250,
+            "electricity": 2150,
+            "oil": 0,
+            "propane": 5000,
+            "wood": 3530
+          },
+          "200": {
+            "natural": 6000,
+            "electricity": 2600,
+            "oil": 0,
+            "propane": 6500,
+            "wood": 4100
+          }
+        },
+        "2 Occupants":
+        {
+          "25": {
+            "natural": 2727,
+            "electricity": 570,
+            "oil": 0,
+            "propane": 2100,
+            "wood": 2600
+          },
+          "50": {
+            "natural": 3100,
+            "electricity": 690,
+            "oil": 0,
+            "propane": 4050,
+            "wood": 2900
+          },
+          "100": {
+            "natural": 3870,
+            "electricity": 1700,
+            "oil": 0,
+            "propane": 5000,
+            "wood": 3700
+          },
+          "150": {
+            "natural": 5050,
+            "electricity": 2550,
+            "oil": 0,
+            "propane": 5300,
+            "wood": 3730
+          },
+          "200": {
+            "natural": 7800,
+            "electricity": 3100,
+            "oil": 0,
+            "propane": 6800,
+            "wood": 4400
+          }
+        },
+        "3-4 Occupants":
+        {
+          "25": {
+            "natural": 3010,
+            "electricity": 900,
+            "oil": 0,
+            "propane": 2450,
+            "wood": 2900
+          },
+          "50": {
+            "natural": 3300,
+            "electricity": 820,
+            "oil": 0,
+            "propane": 4650,
+            "wood": 3300
+          },
+          "100": {
+            "natural": 4100,
+            "electricity": 2000,
+            "oil": 0,
+            "propane": 5400,
+            "wood": 4200
+          },
+          "150": {
+            "natural": 5400,
+            "electricity": 2850,
+            "oil": 0,
+            "propane": 5600,
+            "wood": 4200
+          },
+          "200": {
+            "natural": 8500,
+            "electricity": 3600,
+            "oil": 0,
+            "propane": 7400,
+            "wood": 4900
+          }
+        },
+        "5 Occupants":
+        {
+          "25": {
+            "natural": 3577,
+            "electricity": 980,
+            "oil": 0,
+            "propane": 2600,
+            "wood": 3300
+          },
+          "50": {
+            "natural": 3600,
+            "electricity": 980,
+            "oil": 0,
+            "propane": 5150,
+            "wood": 3600
+          },
+          "100": {
+            "natural": 4300,
+            "electricity": 2350,
+            "oil": 0,
+            "propane": 5700,
+            "wood": 4600
+          },
+          "150": {
+            "natural": 6200,
+            "electricity": 3150,
+            "oil": 0,
+            "propane": 6000,
+            "wood": 4630
+          },
+          "200": {
+            "natural": 11100,
+            "electricity": 4000,
+            "oil": 0,
+            "propane": 7800,
+            "wood": 5100
+          }
+        }
+      }
+}

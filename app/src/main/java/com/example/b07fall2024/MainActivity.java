@@ -13,18 +13,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-//Source: How to create a quiz app in android studio by Learnoset- learn coding online
+import android.widget.Button;
+import android.view.View;
+import android.content.Intent;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     //stores the selected category of country
     String selectedCategory;
 
+    FirebaseDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+      
         // Initialize the Button and Spinner
         final Button startBtn = findViewById(R.id.start_quiz);
         spinnerCategory = findViewById(R.id.spinnerCategory);  // Corrected this line
@@ -55,4 +64,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-}
+}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
