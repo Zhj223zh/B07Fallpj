@@ -59,11 +59,7 @@ public class ManageQuesAns implements Parcelable {
         if (quesAns != null) {
             // Ensure the QuesAns object exists before adding the answer
             if (answersByCategory.contains(quesAns)) {
-                if (answersByCategory.get(quesAns).containsKey(questionIndex)) {
-                    return answersByCategory.get(quesAns).get(questionIndex);
-                } else {
-                    throw new QuestionException("Question index does not exist");
-                }
+                return quesAns.getSelectedAnswer(questionIndex);
             } else {
                 throw new QuestionException("QuesAns object not found in the category map.");
             }
@@ -132,9 +128,26 @@ public class ManageQuesAns implements Parcelable {
         return false;
     }
 
+    private int getAnswerIndex(QuesAns quesAns, String questionText){
+        int i = 0;
+        while(true){
+            try{
+                String currAnswer = quesAns.getQuestionText(i);
+                if (currAnswer.equals(questionText)){
+                    return i;
+                }
+            }
+            catch (QuestionException e){
+                break;
+            }
+            i++;
+        }
+        return -1;
+    }
     private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
-        Map<String, String> answers = answersByCategory.get(quesAns);
-        return answers != null ? answers.get(questionText) : null;
+        int questionIndex = getAnswerIndex(quesAns, questionText);
+        return quesAns.getSelectedAnswer(questionIndex);
+
     }
 
     public int describeContents(){
