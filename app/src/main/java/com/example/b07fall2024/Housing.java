@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONObject;
-import org.json.parser.JSONParser;
 import java.io.FileReader;
 import android.content.res.AssetManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import org.json.JSONObject;
 
 public class Housing implements QuesAns {
     private final Map<Integer, String> questionText;
@@ -137,29 +141,18 @@ public class Housing implements QuesAns {
         return options.get(number).size();
     }
 
-    public JSONObject getJSON(String houseType) {
-        JSONParser parser = new JSONParser();
+    public HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> getJSON(String houseType){
         try {
-            Object obj = parser.parse(new FileReader(houseType + ".json"));
-            return (JSONObject) obj;
+            java.lang.reflect.Type mapType = new TypeToken<Map<String, Object>>() {
+            }.getType();
+            ;
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader(houseType + ".json"));
+            Map map = gson.fromJson(reader, Map.class);
+            return (HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>>)map;
         }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public JSONObject getJSON2(String houseType) throws UnsupportedEncodingException {
-        try {
-            InputStream inputStream = AssetManager.open(houseType + ".json");
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject)jsonParser.parse(
-                    new InputStreamReader(inputStream, "UTF-8"));
-            return jsonObject;
-        }
-        catch(UnsupportedEncodingException e){
-            return new JSONObject();
+        catch(Exception e){
+            return null;
         }
     }
 
@@ -180,12 +173,20 @@ public class Housing implements QuesAns {
                 "Other", "townhouse"));
         homeType = ans1homeType.get(homeType);
 
-        JSONObject energyJSON = getJSON2(homeType);
+        float heatingCO2;
+        float waterCO2;
+        try {
+            HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> energyJSON = getJSON(homeType);
+
+            heatingCO2 = energyJSON.get(houseSize).get(householdSize).get(energyBill).get(heatingType);
+            waterCO2 = energyJSON.get(houseSize).get(householdSize).get(energyBill).get(heatingType);
+        }
+        catch (Exception e){
+            heatingCO2 = 0;
+            waterCO2 = 0;
+        }
 
         float total = 0;
-        float heatingCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(heatingType))));
-        float waterCO2 = energyJSON.get(houseSize.get(householdSize.get(energyBill.get(waterType))));
-
         total = total + heatingCO2 + waterCO2;
         if (heatingType != waterType) {
             total += 233;
