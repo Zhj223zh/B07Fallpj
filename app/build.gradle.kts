@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.ui.graphics.android)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:4.2.0")
     testImplementation("org.mockito:mockito-inline:4.2.0")
@@ -59,9 +60,11 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.code.gson:gson:2.11.0")
+
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
@@ -72,5 +75,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     // Skip this if you don't want to use integration libraries or configure Glide.
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+
 
 }
