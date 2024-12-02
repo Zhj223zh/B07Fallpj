@@ -13,9 +13,9 @@ public class LoginPresenter implements LoginContract.Presenter{
         this.view = view;
     }
 
-    public boolean isUserLoggedIn() {//其实我也不知道这是干啥的，没用上啊
-        return model.isUserLoggedIn();
-    }
+//    public boolean isUserLoggedIn() {//其实我也不知道这是干啥的，没用上啊
+//        return model.isUserLoggedIn();
+//    }
 
     @Override
     public void login(String email, String password) {
@@ -23,13 +23,12 @@ public class LoginPresenter implements LoginContract.Presenter{
             if (user == null) {
                 view.failedToLogin();
             } else {
-                // Fetch user details from the database
                 model.getUser(user.getUid(), (User currentUser) -> {
                     if (currentUser == null) {
                         view.failedToLogin();
                     } else if (!currentUser.isQuestionsCompleted) {
                         view.jumpToQuestionsActivity(user);
-                    } else {
+                    }else {
                         view.jumpToDashboard(user);
                     }
                 });

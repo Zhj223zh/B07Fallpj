@@ -19,7 +19,7 @@
             android:name="com.example.b07fall2024.SignUpActivity"
             android:exported="true"/>
         <activity
-            android:name="com.example.b07fall2024.EcotrackerActivity"
+            android:name="com.example.b07fall2024.EcoTrackerActivity"
             android:exported="true"/>
         <activity
             android:name="com.example.b07fall2024.MainActivity"

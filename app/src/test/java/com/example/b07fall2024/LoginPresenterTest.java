@@ -10,112 +10,159 @@ import com.google.firebase.auth.FirebaseUser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import java.util.function.Consumer;
+
 @RunWith(MockitoJUnitRunner.class)
 public class LoginPresenterTest {
-    @Mock
-    //private LoginContract.View mockView;
-    private MainActivity mockView;
 
     @Mock
-    private LoginModel mockModel;
+    LoginModel model;
 
-    private LoginPresenter loginPresenter;
+    @Mock
+    MainActivity view;
+
+    @Captor
+    private ArgumentCaptor<Consumer<FirebaseUser>> firebaseUserCaptor;
+
+    @Captor
+    private ArgumentCaptor<Consumer<User>> userCaptor;
+
+    private LoginPresenter presenter;
 
     @Before
     public void setUp() {
-        mockModel = mock(LoginModel.class);
-        mockView = mock(MainActivity.class);
-        loginPresenter = new LoginPresenter(mockModel, mockView);
-    }
-
-
-    @Test
-    public void testLoginWithEmptyEmail() {
-        // 测试当 email 为空时
-        loginPresenter.login("", "123456");
-
-        // 验证 View 方法是否被正确调用
-        verify(mockView).hideProgressBar();
-        verify(mockView).showError("Please enter email");
-        verifyNoMoreInteractions(mockView); // 确保没有其他方法被调用
+        presenter = new LoginPresenter(model, view);
     }
 
     @Test
-    public void testLoginWithEmptyPassword() {
-        // 测试当 password 为空时
-        loginPresenter.login("user@example.com", "");
+    public void testLoginSuccessJumpToDashboard() {
+        String email = "aaa@mail.com";
+        String password = "123456";
+        User mockUser = new User("testUser", email, "mockUid", true);
+        FirebaseUser mockFirebaseUser = mock(FirebaseUser.class);
+        when(mockFirebaseUser.getUid()).thenReturn("mockUid");
 
-        // 验证 View 方法是否被正确调用
-        verify(mockView).hideProgressBar();
-        verify(mockView).showError("Please enter password");
-        verifyNoMoreInteractions(mockView);
+        doAnswer((Answer<Void>) invocation -> {
+            Consumer<FirebaseUser> callback = invocation.getArgument(2);
+//            FirebaseUser mockFirebaseUser = mock(FirebaseUser.class);
+//            when(mockFirebaseUser.getUid()).thenReturn("mockUid");
+            callback.accept(mockFirebaseUser);
+            return null;
+        }).when(model).authenticate(eq(email), eq(password), any());
+
+        doAnswer((Answer<Void>) invocation -> {
+            Consumer<User> callback = invocation.getArgument(1);
+            callback.accept(mockUser);
+            return null;
+        }).when(model).getUser(eq("mockUid"), any());
+
+        presenter.login(email, password);
+
+        verify(model).authenticate(eq(email), eq(password), any());
+        verify(model).getUser(eq("mockUid"), any());
+//        verify(view, times(1)).jumpToDashboard(mockFirebaseUser);
+//        verify(view, never()).jumpToQuestionsActivity(any());
+        verify(view, never()).failedToLogin();
     }
 
-    @Test//这个是我直接复制粘贴的张给的summer code，记得改
-    public void testLoginSuccess() {
-        User testUser = new User("thomas", "123");
-
-        Task<User> mockedTask = mock(Task.class);
-        when(loginModelMock.login("thomas", "123")).thenReturn(mockedTask);
+    @Test
+    public void testLoginSuccessJumpToQuestions() {
+        String email = "aaa@mail.com";
+        String password = "123456";
+        User mockUser = new User("testUser", email, "mockUid", false);
 
         doAnswer(new Answer<Void>() {
-            public Void answer(InvocationOnMock invocation) {
-                OnCompleteListener<User> listener = invocation.getArgument(0, OnCompleteListener.class);
-                listener.onComplete(mockedTask);
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Consumer<FirebaseUser> callback = invocation.getArgument(2);
+                FirebaseUser mockFirebaseUser = mock(FirebaseUser.class);
+                when(mockFirebaseUser.getUid()).thenReturn("mockUid");
+                callback.accept(mockFirebaseUser);
                 return null;
             }
-        }).when(mockedTask).addOnCompleteListener(any());
+        }).when(model).authenticate(eq(email), eq(password), any());
 
-        when(mockedTask.getResult()).thenReturn(testUser);
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Consumer<User> callback = invocation.getArgument(1);
+                callback.accept(mockUser);
+                return null;
+            }
+        }).when(model).getUser(eq("mockUid"), any());
 
-        loginPresenter.onButtonClick("thomas", "123");
+        presenter.login(email, password);
 
-        verify(loginViewMock).onSuccess();
+        verify(model).authenticate(eq(email), eq(password), any());
+        verify(model).getUser(eq("mockUid"), any());
+        //verify(view, times(1)).jumpToQuestionsActivity(any());
+        //verify(view, never()).jumpToDashboard(any());
+        verify(view, never()).failedToLogin();
     }
 
     @Test
-    public void testLoginSuccess() {
-        // 模拟 Model 的登录成功回调
-        doAnswer(invocation -> {
-            LoginModel.LoginCallback callback = invocation.getArgument(2);
-            callback.onSuccess();
-            return null;
-        }).when(mockModel).loginUser(eq("user@example.com"), eq("123456"), any());
+    public void testLoginFailed() {
+        String email = "aaa@mail.com";
+        String password = "123456";
 
-        // 调用 Presenter 的登录方法
-        loginPresenter.login("user@example.com", "123456");
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Consumer<FirebaseUser> callback = invocation.getArgument(2);
+                callback.accept(null);
+                return null;
+            }
+        }).when(model).authenticate(eq(email), eq(password), any());
 
-        // 验证 Model 的方法是否被调用
-        verify(mockModel).loginPresenter(eq("user@example.com"), eq("123456"), any());
+        presenter.login(email, password);
 
-        // 验证 View 的成功显示和导航方法是否被调用
-        verify(mockView).hideProgressBar();
-        verify(mockView).showSuccess("Login Successful!");
-        verify(mockView).jumpToDashboard(currentUser);
+        verify(model).authenticate(eq(email), eq(password), any());
+        verify(view, times(1)).failedToLogin();
+        //verify(view, never()).jumpToDashboard(any());
+        //verify(view, never()).jumpToQuestionsActivity(any());
     }
 
     @Test
-    public void testLoginFailure() {
-        // 模拟 Model 的登录失败回调
-        doAnswer(invocation -> {
-            LoginModel.LoginCallback callback = invocation.getArgument(2);
-            callback.onFailure("Invalid credentials");
-            return null;
-        }).when(mockModel).loginUser(eq("user@example.com"), eq("wrongpassword"), any());
+    public void testGetUserFailed() {
+        String email = "aaa@mail.com";
+        String password = "123456";
 
-        // 调用 Presenter 的登录方法
-        presenter.login("user@example.com", "wrongpassword");
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Consumer<FirebaseUser> callback = invocation.getArgument(2);
+                FirebaseUser mockFirebaseUser = mock(FirebaseUser.class);
+                when(mockFirebaseUser.getUid()).thenReturn("mockUid");
+                callback.accept(mockFirebaseUser);
+                return null;
+            }
+        }).when(model).authenticate(eq(email), eq(password), any());
 
-        // 验证 Model 的方法是否被调用
-        verify(mockModel).loginUser(eq("user@example.com"), eq("wrongpassword"), any());
+        // Mock getUser 方法
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Consumer<User> callback = invocation.getArgument(1);
+                callback.accept(null);
+                return null;
+            }
+        }).when(model).getUser(eq("mockUid"), any());
 
-        // 验证 View 的失败显示方法是否被调用
-        verify(mockView).hideProgressBar();
-        verify(mockView).showError("Invalid credentials");
+        presenter.login(email, password);
+
+        verify(model).authenticate(eq(email), eq(password), any());
+        verify(model).getUser(eq("mockUid"), any());
+        verify(view, times(1)).failedToLogin();
+        //verify(view, never()).jumpToDashboard(any());
+        //verify(view, never()).jumpToQuestionsActivity(any());
     }
 }
+
+

@@ -17,7 +17,6 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.b072024gr2.ecoproj.R;
-import com.example.b07fall2024.model.User;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements LoginContract.View{
@@ -118,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements LoginContract.Vie
     }
 
     public void jumpToQuestionsActivity(FirebaseUser currentUser) {
-        Intent intent = new Intent(this,QuestionsActivity.class);//注意dashboard的activity名称
+        Intent intent = new Intent(this,QuestionsActivity.class);
+        Toast.makeText(this, "Let's get started! We will calculate your current carbon footprint " +
+                "based on your lifestyle. You only need to do this once.", Toast.LENGTH_LONG).show();//注意dashboard的activity名称
         intent.putExtra("user", currentUser);// 将 user 对象附加到 Intent，这样在目标页面的账户就是登录页面的账户
         startActivity(intent);
     }
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements LoginContract.Vie
 
     @Override
     public void jumpToEcotrackerActivity() {
-        Intent intent = new Intent(MainActivity.this, EcotrackerActivity.class);
+        Intent intent = new Intent(MainActivity.this, EcoTrackerActivity.class);
         startActivity(intent);
         finish();
     }

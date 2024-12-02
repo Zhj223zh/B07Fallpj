@@ -14,6 +14,7 @@ public class User implements Serializable{
 
     public User() {
         this.answers = new HashMap<>();
+        this.isQuestionsCompleted = false;//有改动！！！
     }
 
     public User(String username, String email, String uid, boolean isQuestionsCompleted) {

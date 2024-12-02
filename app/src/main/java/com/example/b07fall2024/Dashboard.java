@@ -18,6 +18,7 @@ public class Dashboard extends AppCompatActivity {
         Button carbonCalculatorButton = findViewById(R.id.carbon_calculator_button);
         Button ecoTrackerButton = findViewById(R.id.eco_tracker_button);
         Button ecoGaugeButton = findViewById(R.id.eco_gauge_button);
+        Button ecoHubButton = findViewById(R.id.eco_hub_button);
 
         carbonCalculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,14 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Dashboard.this, Emission_Dashboard.class);
+                startActivity(intent);
+            }
+        });
+
+        ecoHubButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, EcoHubActivity.class);
                 startActivity(intent);
             }
         });

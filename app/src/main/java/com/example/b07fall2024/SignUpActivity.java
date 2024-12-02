@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 progressbar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     String uid = mAuth.getCurrentUser().getUid();
-                                    User newUser = new User(name, username, uid);
+                                    User newUser = new User(name, username, uid, false);
 
                                     databaseReference.child("Users").child(uid).setValue(newUser)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
