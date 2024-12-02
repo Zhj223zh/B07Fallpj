@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Transportation implements QuesAns {
+public class QuizTransportation implements QuesAns {
     private final List<String> questionText;
     private final List<Map<String, String>> options;
     private final Map<String, String> selectedAnswer;
 
-    public Transportation() {
+    public QuizTransportation() {
         // Initialize options and questionText arrays
         questionText = new ArrayList<>();
         options = new ArrayList<>();
