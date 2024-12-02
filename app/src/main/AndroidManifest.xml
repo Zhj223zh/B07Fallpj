@@ -13,9 +13,29 @@
         android:theme="@style/Theme.B07Fall2024"
         tools:targetApi="31">
         <activity
+            android:name="com.example.b07fall2024.ForgotPasswordActivity"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.b07fall2024.SignUpActivity"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.b07fall2024.EcoHubActivity"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.b07fall2024.Dashboard"
+            android:exported="true"/>
+        <activity
             android:name="com.example.b07fall2024.MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.b07fall2024.ActivityMainLayout"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +45,22 @@
         <activity
             android:name="com.example.b07fall2024.Emission_Dashboard"
             android:exported="false" />
+        <activity
+            android:name="com.example.b07fall2024.Transportation"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.b07fall2024.FoodConsumption"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.b07fall2024.ConsumptionAndShopping"
+            android:exported="true" />
+
+        <activity
+            android:name="com.habit.MainPage">
+
+        </activity>
     </application>
 
 </manifest>
