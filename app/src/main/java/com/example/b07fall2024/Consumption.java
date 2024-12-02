@@ -1,25 +1,31 @@
 package com.example.b07fall2024;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Consumption implements QuesAns {
-    private final List<String> questionText;
+    private final Map<Integer, String> questionText;
     private final List<Map<String, String>> options;
-    private final Map<String, String> selectedAnswer;
+    private final Map<Integer, String> selectedAnswer;
+
+    private final int starting_quiz_number;
+    private final int ending_quiz_number;
 
     public Consumption() {
-        questionText = new ArrayList<>();
+        questionText = new HashMap<>();
         options = new ArrayList<>();
         selectedAnswer = new HashMap<>();
+        starting_quiz_number = 1;
+        ending_quiz_number = 4;
 
         // Add questions
-        questionText.add("How often do you buy new clothes?");
-        questionText.add("Do you buy second-hand or eco-friendly products?");
-        questionText.add("How many electronic devices (phones, laptops, etc.) have you purchased in the past year?");
-        questionText.add("How often do you recycle?");
+        questionText.put(1, "How often do you buy new clothes");
+        questionText.put(2, "Do you buy second-hand or eco-friendly products?");
+        questionText.put(3, "How many electronic devices (phones, laptops, etc.) have you purchased in the past year?");
+        questionText.put(4, "How often do you recycle?");
 
         // Add options for each question
         Map<String, String> options1 = new HashMap<>();
@@ -51,57 +57,90 @@ public class Consumption implements QuesAns {
     }
 
     @Override
+    public int getEnding_quiz_number() {
+        return ending_quiz_number;
+    }
+
+    @Override
+    public int options_size(int number) {
+        return options.get(number).size();
+    }
+
+    @Override
     public String getQuestionText(int questionIndex) {
-        if (questionIndex >= 0 && questionIndex < questionText.size()) {
+        if (questionText.containsKey(questionIndex)) {
             return questionText.get(questionIndex);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
         }
     }
 
-
     @Override
     public Map<String, String> getOptions(int questionIndex) {
-        if (questionIndex >= 0 && questionIndex < options.size()) {
-            return options.get(questionIndex);
+        if (questionIndex >= starting_quiz_number && questionIndex < ending_quiz_number) {
+            return options.get(questionIndex - 1);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
         }
     }
 
     @Override
-    public String getSelectedAnswer(String question) {
-        if (selectedAnswer.containsKey(question)) {
-            return selectedAnswer.get(question);
+    public String getSelectedAnswer(int questionIndex) {
+        if (selectedAnswer.containsKey(questionIndex)) {
+            return selectedAnswer.get(questionIndex);
         } else {
-            throw new QuestionException("No answer selected for question: " + question);
+            throw new QuestionException("No answer selected for question: " + questionIndex);
         }
     }
 
     @Override
-    public void setSelectedAnswer(String question, String key) {
-        if (questionText.contains(question)) {
-            int questionIndex = questionText.indexOf(question);
-            Map<String, String> questionOptions = options.get(questionIndex);
-            if (questionOptions.containsKey(key)) {
-                String value = questionOptions.get(key);
-                selectedAnswer.put(question, value);
-                System.out.println("Saved in consumption " + question + "answer " + value);
-            } else {
-                throw new QuestionException("Invalid answer: " + key + " for question: " + question);
-            }
+    public void setSelectedAnswer(int index, String answer) {
+        if (questionText.containsKey(index)) {
+            selectedAnswer.put(index, answer);
         } else {
-            throw new QuestionException("Invalid question: " + question);
+            throw new QuestionException("Invalid question index: " + index);
         }
     }
-    public boolean isValidOption(int questionIndex, String answer) {
-        if (questionIndex >= 0 && questionIndex < options.size()) {
-            return options.get(questionIndex).containsValue(answer);
+
+    public float getEmissions() {
+        float total = 0;
+
+        String ans1 = getSelectedAnswer(1);
+        String ans2 = getSelectedAnswer(2);
+        String ans3 = getSelectedAnswer(3);
+        String ans4 = getSelectedAnswer(4);
+
+        HashMap<String, Float> ans2ToMultiplier = new HashMap<>(Map.of(
+                "Yes, regularly", 0.5f,
+                "Yes, occasionally", 0.7f,
+                "No", 1f));
+
+        HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
+                "None", 0,
+                "1", 300,
+                "2", 600,
+                "3 or more", 900));
+
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
+                "Never", 0,
+                "Occasionally", 0,
+                "Frequently", 30,
+                "Always", 50));
+
+        HashMap<String, Float> ans4ToCO2Rarely = new HashMap<>(Map.of(
+                "Never", 0f,
+                "Occasionally", 0.75f,
+                "Frequently", 1.5f,
+                "Always", 2.5f));
+
+        total += 5 * ans2ToMultiplier.get(ans2);
+        total += ans3ToCO2.get(ans3);
+        if (ans1 == "Rarely") {
+            return total - ans4ToCO2Rarely.get(ans4);
         }
-        return false;
-    }
-    @Override
-    public int questionTextSize(){
-        return questionText.size();
+
+        total = total - ans4ToCO2.get(ans4);
+        return total / 1000;
+
     }
 }
