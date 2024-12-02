@@ -1,6 +1,5 @@
 package com.example.b07fall2024;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +13,8 @@ public class Transportation implements QuesAns {
     private final int ending_quiz_number;
 
     public Transportation() {
-        Initialize options and questionText array
-                questionText = new HashMap<>();
+        //Initialize options and questionText array
+        questionText = new HashMap<>();
         options = new ArrayList<>();
         selectedAnswer = new HashMap<>();
         starting_quiz_number = 1;
@@ -24,14 +23,10 @@ public class Transportation implements QuesAns {
         questionText.put(1, "Do you own or regularly use a car?");
         questionText.put(2, "What type of car do you drive?");
         questionText.put(3, "How many kilometers/miles do you drive per year?");
-        questionText.put(4, "How often do you use public transportation (bus, train,
-                subway) ? ");
-        questionText.put(5, "How much time do you spend on public transport per week
-        (bus, train, subway)?");
-        questionText.put(6, "How many short-haul flights (less than 1,500 km / 932
-                miles) have you taken in the past year ? ");
-        questionText.put(7, "How many long-haul flights (more than 1,500 km / 932
-                miles) have you taken in the past year ? ");
+        questionText.put(4, "How often do you use public transportation (bus, train, subway)? ");
+        questionText.put(5, "How much time do you spend on public transport per week (bus, train, subway)?");
+        questionText.put(6, "How many short-haul flights (less than 1,500 km / 932 miles) have you taken in the past year ? ");
+        questionText.put(7, "How many long-haul flights (more than 1,500 km / 932 miles) have you taken in the past year ? ");
 
         Map<String, String> options1 = new HashMap<>();
         options1.put("A", "Yes");
