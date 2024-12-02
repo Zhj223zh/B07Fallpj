@@ -74,6 +74,7 @@ public class ManageQuesAns implements Parcelable {
                 "food", answersByCategory.get(1).getEmissions(),
                 "housing", answersByCategory.get(2).getEmissions(),
                 "consumption", answersByCategory.get(3).getEmissions()));
+        return EmissionsByCategory;
     }
 
     public float getTotalEmissions() {

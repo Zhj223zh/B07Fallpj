@@ -140,7 +140,7 @@ public class Transportation implements QuesAns {
         String ans6 = getSelectedAnswer(6);
         String ans7 = getSelectedAnswer(7);
 
-        if (ans1 == "No") {
+        if (ans1.equals("No")) {
             return 0;
         }
 

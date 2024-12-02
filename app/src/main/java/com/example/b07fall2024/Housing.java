@@ -188,13 +188,13 @@ public class Housing implements QuesAns {
 
         float total = 0;
         total = total + heatingCO2 + waterCO2;
-        if (heatingType != waterType) {
+        if (!heatingType.equals(waterType)) {
             total += 233;
         }
-        if (renewables == "Yes, primarily (more than 50% of energy use)") {
+        if (renewables.equals("Yes, primarily (more than 50% of energy use)")) {
             total -= 6000;
         }
-        if (renewables == "Yes, partially (less than 50% of energy use)") {
+        if (renewables.equals("Yes, partially (less than 50% of energy use)")) {
             total -= 4000;
         }
 
