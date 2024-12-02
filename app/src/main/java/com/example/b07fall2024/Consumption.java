@@ -105,7 +105,45 @@ public class Consumption implements QuesAns {
         return questionText.size();
     }
 
-    public float getEmissions(){
-        return 0;
+    public float getEmissions() {
+        float total = 0;
+
+        String ans1 = getSelectedAnswer("How often do you buy new clothes?");
+        String ans2 = getSelectedAnswer("Do you buy second-hand or eco-friendly products?");
+        String ans3 = getSelectedAnswer("How many electronic devices (phones, laptops, etc.) have you purchased in the past year?");
+        String ans4 = getSelectedAnswer("How often do you recycle?");
+
+        HashMap<String, Float> ans2ToMultiplier = new HashMap<>(Map.of(
+                "Yes, regularly", 0.5f,
+                "Yes, occasionally", 0.7f,
+                "No", 1f));
+
+        HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
+                "None", 0,
+                "1", 300,
+                "2", 600,
+                "3 or more", 900));
+
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
+                "Never", 0,
+                "Occasionally", 0,
+                "Frequently", 30,
+                "Always", 50));
+
+        HashMap<String, Float> ans4ToCO2Rarely = new HashMap<>(Map.of(
+                "Never", 0f,
+                "Occasionally", 0.75f,
+                "Frequently", 1.5f,
+                "Always", 2.5f));
+
+        total += 5 * ans2ToMultiplier.get(ans2);
+        total += ans3ToCO2.get(ans3);
+        if (ans1.equals("Rarely")) {
+            return total - ans4ToCO2Rarely.get(ans4);
+        }
+
+        total = total - ans4ToCO2.get(ans4);
+        return total / 1000;
+
     }
 }

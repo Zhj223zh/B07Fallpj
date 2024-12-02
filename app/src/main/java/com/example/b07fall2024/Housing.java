@@ -1,9 +1,20 @@
 package com.example.b07fall2024;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.FileReader;
+import android.content.res.AssetManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import org.json.JSONObject;
 
 public class Housing implements QuesAns {
     private final List<String> questionText;
@@ -135,8 +146,65 @@ public class Housing implements QuesAns {
         return questionText.size();
     }
 
+    public HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> getJSON(String houseType){
+        try {
+            java.lang.reflect.Type mapType = new TypeToken<Map<String, Object>>() {
+            }.getType();
+            ;
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader(houseType + ".json"));
+            Map map = gson.fromJson(reader, Map.class);
+            return (HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>>)map;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
     public float getEmissions(){
-        return 0;
+        String homeType = getSelectedAnswer("What type of home do you live in?");
+        String householdSize = getSelectedAnswer("How many people live in your household?");
+        String houseSize = getSelectedAnswer("What is the size of your home?");
+        String heatingType = getSelectedAnswer("What type of energy do you use to heat your home?");
+        String energyBill = getSelectedAnswer("What is your average monthly electricity bill?");
+        String waterType = getSelectedAnswer("What type of energy do you use to heat water in your home?");
+        String renewables = getSelectedAnswer("Do you use any renewable energy sources for electricity or heating (e.g., solar, wind)?");
+
+        HashMap<String, String> ans1homeType = new HashMap<>(Map.of(
+                "Detached house", "detached",
+                "Semi-detached house", "semidet",
+                "Townhouse", "townhouse",
+                "Condo/Apartment", "condo",
+                "Other", "townhouse"));
+        homeType = ans1homeType.get(homeType);
+
+        float heatingCO2;
+        float waterCO2;
+        try {
+            HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> energyJSON = getJSON(homeType);
+
+            heatingCO2 = energyJSON.get(houseSize).get(householdSize).get(energyBill).get(heatingType);
+            waterCO2 = energyJSON.get(houseSize).get(householdSize).get(energyBill).get(heatingType);
+        }
+        catch (Exception e){
+            heatingCO2 = 0;
+            waterCO2 = 0;
+        }
+
+        float total = 0;
+        total = total + heatingCO2 + waterCO2;
+        if (!heatingType.equals(waterType)) {
+            total += 233;
+        }
+        if (renewables.equals("Yes, primarily (more than 50% of energy use)")) {
+            total -= 6000;
+        }
+        if (renewables.equals("Yes, partially (less than 50% of energy use)")) {
+            total -= 4000;
+        }
+
+        return total / 1000;
+
     }
 }
 

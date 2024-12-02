@@ -122,7 +122,61 @@ public class Food implements QuesAns {
         return questionText.size();
     }
 
-    public float getEmissions(){
-        return 0;
+    @Override
+    public float getEmissions() {
+        float total = 0;
+
+        String ans1 = getSelectedAnswer("What best describes your diet?");
+        String ans2 = getSelectedAnswer("How often do you eat the following animal-based products?: Beef");
+        String ans3 = getSelectedAnswer("How often do you eat the following animal-based products?: Pork");
+        String ans4 = getSelectedAnswer("How often do you eat the following animal-based products?: Chicken");
+        String ans5 = getSelectedAnswer("How often do you eat the following animal-based products?: Fish/Seafood");
+        String ans6 = getSelectedAnswer("How often do you waste food or throw away uneaten leftovers?");
+
+        HashMap<String, Integer> ans1ToCO2 = new HashMap<>(Map.of(
+                "Vegetarian", 1000,
+                "Vegan", 500,
+                "Pescatarian (fish/seafood)", 1500,
+                "Meat-based (eat all types of animal products)", 0));
+
+        HashMap<String, Integer> ans2ToCO2 = new HashMap<>(Map.of(
+                "Daily", 2500,
+                "Frequently (3-5 times/week)", 1900,
+                "Occasionally (1-2 times/week)", 1300,
+                "Never", 0));
+
+        HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
+                "Daily", 1450,
+                "Frequently (3-5 times/week)", 860,
+                "Occasionally (1-2 times/week)", 450,
+                "Never", 0));
+
+        HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
+                "Daily", 950,
+                "Frequently (3-5 times/week)", 600,
+                "Occasionally (1-2 times/week)", 200,
+                "Never", 0));
+
+        HashMap<String, Integer> ans5ToCO2 = new HashMap<>(Map.of(
+                "Daily", 800,
+                "Frequently (3-5 times/week)", 500,
+                "Occasionally (1-2 times/week)", 150,
+                "Never", 0));
+
+        HashMap<String, Float> ans6ToCO2 = new HashMap<>(Map.of(
+                "Never", 0f,
+                "Rarely", 23.4f,
+                "Occasionally", 70.2f,
+                "Frequently", 140.4f));
+
+        total += ans1ToCO2.get(ans1);
+        total += ans2ToCO2.get(ans2);
+        total += ans3ToCO2.get(ans3);
+        total += ans4ToCO2.get(ans4);
+        total += ans5ToCO2.get(ans5);
+        total += ans6ToCO2.get(ans6);
+
+        return total / 1000;
+
     }
 }
