@@ -15,12 +15,16 @@
         <activity
             android:name="com.example.b07fall2024.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.b07fall2024.Emission_Dashboard"
+            android:exported="false" />
     </application>
 
 </manifest>
