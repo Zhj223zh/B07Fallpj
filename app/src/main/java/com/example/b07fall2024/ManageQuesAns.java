@@ -132,7 +132,6 @@ public class ManageQuesAns implements Parcelable {
         return false;
     }
 
-
     private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
         Map<String, String> answers = answersByCategory.get(quesAns);
         return answers != null ? answers.get(questionText) : null;
