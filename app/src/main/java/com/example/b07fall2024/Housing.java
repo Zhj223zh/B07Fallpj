@@ -163,7 +163,7 @@ public class Housing implements QuesAns {
         }
     }
 
-    public float getEmissions() {
+    public float getEmissions(){
         String homeType = getSelectedAnswer(1);
         String householdSize = getSelectedAnswer(2);
         String houseSize = getSelectedAnswer(3);
