@@ -6,27 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Transportation implements QuesAns {
-    private final Map<Integer, String> questionText;
+    private final List<String> questionText;
     private final List<Map<String, String>> options;
-    private final Map<Integer, String> selectedAnswer;
-    private final int starting_quiz_number;
-    private final int ending_quiz_number;
+    private final Map<String, String> selectedAnswer;
 
     public Transportation() {
-        //Initialize options and questionText array
-        questionText = new HashMap<>();
+        // Initialize options and questionText arrays
+        questionText = new ArrayList<>();
         options = new ArrayList<>();
         selectedAnswer = new HashMap<>();
-        starting_quiz_number = 1;
-        ending_quiz_number = 7;
 
-        questionText.put(1, "Do you own or regularly use a car?");
-        questionText.put(2, "What type of car do you drive?");
-        questionText.put(3, "How many kilometers/miles do you drive per year?");
-        questionText.put(4, "How often do you use public transportation (bus, train, subway)? ");
-        questionText.put(5, "How much time do you spend on public transport per week (bus, train, subway)?");
-        questionText.put(6, "How many short-haul flights (less than 1,500 km / 932 miles) have you taken in the past year ? ");
-        questionText.put(7, "How many long-haul flights (more than 1,500 km / 932 miles) have you taken in the past year ? ");
+        questionText.add("Do you own or regularly use a car?");
+        questionText.add("What type of car do you drive?");
+        questionText.add("How many kilometers/miles do you drive per year?");
+        questionText.add("How often do you use public transportation (bus, train, subway)?");
+        questionText.add("How much time do you spend on public transport per week (bus, train, subway)?");
+        questionText.add("How many short-haul flights (less than 1,500 km / 932 miles) have you taken in the past year?");
+        questionText.add("How many long-haul flights (more than 1,500 km / 932 miles) have you taken in the past year?");
 
         Map<String, String> options1 = new HashMap<>();
         options1.put("A", "Yes");
@@ -84,7 +80,7 @@ public class Transportation implements QuesAns {
 
     @Override
     public String getQuestionText(int questionIndex) {
-        if (questionText.containsKey(questionIndex)) {
+        if (questionIndex >= 0 && questionIndex < questionText.size()) {
             return questionText.get(questionIndex);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
@@ -93,52 +89,62 @@ public class Transportation implements QuesAns {
 
     @Override
     public Map<String, String> getOptions(int questionIndex) {
-        if (questionIndex >= starting_quiz_number && questionIndex < ending_quiz_number) {
-            return options.get(questionIndex - 1);
+        if (questionIndex >= 0 && questionIndex < options.size()) {
+            return options.get(questionIndex);
         } else {
             throw new QuestionException("Invalid question index: " + questionIndex);
         }
     }
 
     @Override
-    public String getSelectedAnswer(int questionIndex) {
-        if (selectedAnswer.containsKey(questionIndex)) {
-            return selectedAnswer.get(questionIndex);
+    public String getSelectedAnswer(String question) {
+        if (selectedAnswer.containsKey(question)) {
+            return selectedAnswer.get(question);
         } else {
-            throw new QuestionException("No answer selected for question: " + questionIndex);
+            throw new QuestionException("No answer selected for question: " + question);
         }
     }
 
     @Override
-    public void setSelectedAnswer(int index, String answer) {
-        if (questionText.containsKey(index)) {
-            selectedAnswer.put(index, answer);
+    public void setSelectedAnswer(String question, String key) {
+        if (questionText.contains(question)) {
+            int questionIndex = questionText.indexOf(question);
+            Map<String, String> questionOptions = options.get(questionIndex);
+            if (questionOptions.containsKey(key)) {
+                String value = questionOptions.get(key);
+                selectedAnswer.put(question, value);
+                System.out.println("Saved in transportation " + question + "answer " + value);
+            } else {
+                throw new QuestionException("Invalid answer: " + key + " for question: " + question);
+            }
         } else {
-            throw new QuestionException("Invalid question index: " + index);
+            throw new QuestionException("Invalid question: " + question);
         }
     }
 
-    @Override
-    public int getEnding_quiz_number() {
-        return ending_quiz_number;
+    // Function to verify if the key exists in the options
+    public boolean isValidOption(int questionIndex, String answer) {
+        if (questionIndex >= 0 && questionIndex < options.size()) {
+            return options.get(questionIndex).containsValue(answer);
+        }
+        return false;
     }
-
     @Override
-    public int options_size(int number) {
-        return options.get(number).size();
+    public int questionTextSize(){
+        return questionText.size();
     }
 
     @Override
     public float getEmissions() {
         float total = 0;
 
-        String ans1 = getSelectedAnswer(1);
-        String ans2 = getSelectedAnswer(2);
-        String ans3 = getSelectedAnswer(3);
-        String ans4 = getSelectedAnswer(4);
-        String ans5 = getSelectedAnswer(5);
-        String ans6 = getSelectedAnswer(6);
-        String ans7 = getSelectedAnswer(7);
+        String ans1 = getSelectedAnswer("Do you own or regularly use a car?");
+        String ans2 = getSelectedAnswer("What type of car do you drive?");
+        String ans3 = getSelectedAnswer("How many kilometers/miles do you drive per year?");
+        String ans4 = getSelectedAnswer("How often do you use public transportation (bus, train, subway)?");
+        String ans5 = getSelectedAnswer("How much time do you spend on public transport per week (bus, train, subway)?");
+        String ans6 = getSelectedAnswer("How many short-haul flights (less than 1,500 km / 932 miles) have you taken in the past year?");
+        String ans7 = getSelectedAnswer("How many long-haul flights (more than 1,500 km / 932 miles) have you taken in the past year?");
 
         if (ans1.equals("No")) {
             return 0;
@@ -149,7 +155,6 @@ public class Transportation implements QuesAns {
                 "Diesel", 0.27f,
                 "Hybrid", 0.16f,
                 "Electric", 0.05f));
-
         HashMap<String, Integer> ans3ToMiles = new HashMap<>(Map.of(
                 "Up to 5,000 km (3,000 miles)", 5000,
                 "5,000–10,000 km (3,000–6,000 miles)", 10000,
@@ -204,5 +209,4 @@ public class Transportation implements QuesAns {
 
         return total / 1000;
     }
-
 }

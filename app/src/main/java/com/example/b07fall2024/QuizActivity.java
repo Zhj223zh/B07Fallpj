@@ -13,12 +13,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.os.Parcelable;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -256,7 +253,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             if (currentQuesAns != null) {
                 Integer currentQuestionIndex = currentQuestionIndexMap.get(currentQuesAns);
                 if (currentQuestionIndex != null) {
-                    questionbank.storeAnswer(currentQuesAns, currentQuestionIndex, selectedAnswer);
+                    questionbank.setAnswer(currentQuesAns, currentQuestionIndex, selectedAnswer);
                     updateQuestionIndex(currentQuesAns, currentQuestionIndex);
                     displayCurrentCategoryQuestion();
                     System.out.println("QuizActivity" +"Question Index Updated: " + currentQuestionIndex);
@@ -294,16 +291,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     //Source: QuizApplication | Android Studio Tutorial | 2024
     private void handleOptionButtonClick(AppCompatButton clickedButton) {
-        for (int i = 0; i < optionsContainer.getChildCount(); i++) {
-            View child = optionsContainer.getChildAt(i);
-            if (child instanceof AppCompatButton) {
-                child.setBackgroundColor(Color.TRANSPARENT); // Reset background
-                child.setSelected(false); // Unselect button
-            }
-        }
-
         selectedAnswer = clickedButton.getTag().toString();
-        clickedButton.setBackgroundColor(Color.parseColor("#009999")); // Change to desired highlight color
-        clickedButton.setSelected(true);
+        clickedButton.setBackgroundColor(Color.parseColor("#009999")); // Change this color as desired
+        selectOption(selectedAnswer); // Ensure only one option is selected
     }
 }

@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ManageQuesAns implements Parcelable {
-    private final ArrayList<QuesAns> answersByCategory;
+public class ManageQuesAns implements Parcelable{
+    private final Map<QuesAns, Map<String, String>> answersByCategory;
     private String country;
 
     public ManageQuesAns(List<QuesAns> questionBanks) {
         country = null;
-        answersByCategory = new ArrayList<>();
+        answersByCategory = new HashMap<>();
         for (QuesAns quesAns : questionBanks) {
-            answersByCategory.add(quesAns);
+            answersByCategory.put(quesAns, new HashMap<>());
         }
     }
 
@@ -41,25 +41,38 @@ public class ManageQuesAns implements Parcelable {
         }
     }
 
-    // Store an answer by category and question index
-    public void storeAnswer(QuesAns quesAns, int questionIndex, String answer) {
+    public void setAnswer(QuesAns quesAns, int questionIndex, String answerKey) {
         if (quesAns != null) {
-            // Ensure the QuesAns object exists before adding the answer
-            if (answersByCategory.contains(quesAns)) {
-                quesAns.setSelectedAnswer(questionIndex, answer);
+            if (answersByCategory.containsKey(quesAns)) {
+                String question = quesAns.getQuestionText(questionIndex);
+                Map<String, String> options = quesAns.getOptions(questionIndex);
+                if(options.containsKey(answerKey)){
+                    String answerValue = options.get(answerKey);
+                    answersByCategory.get(quesAns).put(question, answerValue);
+                    System.out.println("The question is: " + question + " and the answer is: " + answerValue);
+                    quesAns.setSelectedAnswer(question, answerKey);
+                }
+                else {
+                    throw new QuestionException("Invalid answer key: " + answerKey);
+                }
             } else {
                 throw new QuestionException("QuesAns object not found in the category map.");
             }
         } else {
-            throw new QuestionException("Invalid QuesAns object or question index.");
+            throw new QuestionException("Invalid QuesAns object.");
         }
     }
 
     public String getAnswer(QuesAns quesAns, int questionIndex) {
         if (quesAns != null) {
-            // Ensure the QuesAns object exists before adding the answer
-            if (answersByCategory.contains(quesAns)) {
-                return quesAns.getSelectedAnswer(questionIndex);
+            if (answersByCategory.containsKey(quesAns)) {
+                String question = quesAns.getQuestionText(questionIndex);
+                Map<String, String> answers = answersByCategory.get(quesAns);
+                if (answers != null && question != null && answers.containsKey(question)) {
+                    return answers.get(question);
+                } else {
+                    throw new QuestionException("Question index does not exist.");
+                }
             } else {
                 throw new QuestionException("QuesAns object not found in the category map.");
             }
@@ -67,24 +80,6 @@ public class ManageQuesAns implements Parcelable {
             throw new QuestionException("QuesAns object cannot be null.");
         }
     }
-
-    public HashMap<String, Float> getEmissionsByCategory() {
-        HashMap<String, Float> EmissionsByCategory = new HashMap<>(Map.of(
-                "transportation", answersByCategory.get(0).getEmissions(),
-                "food", answersByCategory.get(1).getEmissions(),
-                "housing", answersByCategory.get(2).getEmissions(),
-                "consumption", answersByCategory.get(3).getEmissions()));
-        return EmissionsByCategory;
-    }
-
-    public float getTotalEmissions() {
-        float total = 0;
-        for (QuesAns quesAns : answersByCategory) {
-            total += quesAns.getEmissions();
-        }
-        return total;
-    }
-
 
     // New method to determine if a question should be skipped
     public boolean shouldSkipQuestion(QuesAns quesAns, int questionIndex) {
@@ -129,26 +124,24 @@ public class ManageQuesAns implements Parcelable {
         return false;
     }
 
-    private int getAnswerIndex(QuesAns quesAns, String questionText){
-        int i = 0;
-        while(true){
-            try{
-                String currAnswer = quesAns.getQuestionText(i);
-                if (currAnswer.equals(questionText)){
-                    return i;
-                }
-            }
-            catch (QuestionException e){
-                break;
-            }
-            i++;
-        }
-        return -1;
-    }
-    private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
-        int questionIndex = getAnswerIndex(quesAns, questionText);
-        return quesAns.getSelectedAnswer(questionIndex);
 
+    private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
+        Map<String, String> answers = answersByCategory.get(quesAns);
+        return answers != null ? answers.get(questionText) : null;
+    }
+
+    public HashMap<String, Float> getEmissionsByCategory() {
+        ArrayList<QuesAns> quesAnsList = new ArrayList<QuesAns>();
+        for (QuesAns quesAns: answersByCategory.keySet()){
+            quesAnsList.add(quesAns);
+        }
+
+        HashMap<String, Float> EmissionsByCategory = new HashMap<>(Map.of(
+                "transportation", quesAnsList.get(0).getEmissions(),
+                "food", quesAnsList.get(1).getEmissions(),
+                "housing", quesAnsList.get(2).getEmissions(),
+                "consumption", quesAnsList.get(3).getEmissions()));
+        return EmissionsByCategory;
     }
 
     public int describeContents(){
