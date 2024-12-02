@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class QuizMainActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     // stores the selected category of country
     String selectedCategory;
@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 // Check if the user has selected a category
                 if (selectedCategory.isEmpty() || selectedCategory.equals("Select Category")) {
                     // Show a message if no category is selected
-                    Toast.makeText(MainActivity.this, "Please select a category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuizMainActivity.this, "Please select a category", Toast.LENGTH_SHORT).show();
                 } else {
                     // Create an Intent to start the QuizActivity and pass the selected category
-                    Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                    Intent intent = new Intent(QuizMainActivity.this, QuizActivity.class);
                     intent.putExtra("selected category", selectedCategory); // Pass the selected category
                     startActivity(intent);
                 }

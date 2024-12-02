@@ -25,7 +25,7 @@ public class FinishActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FinishActivity.this, MainActivity.class);
+                Intent intent = new Intent(FinishActivity.this, QuizMainActivity.class);
                 startActivity(intent);
                 finish();
             }

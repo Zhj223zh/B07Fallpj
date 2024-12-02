@@ -173,7 +173,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         super.onBackPressed();
         timeManager.stopTimer();
-        startActivity(new Intent(QuizActivity.this, MainActivity.class));
+        startActivity(new Intent(QuizActivity.this, QuizMainActivity.class));
         finish();
     }
 
