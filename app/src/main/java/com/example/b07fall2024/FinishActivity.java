@@ -55,6 +55,6 @@ public class FinishActivity extends AppCompatActivity {
         ref.child("users").child(userId).child("AnualCF").child("Transportation").setValue(emissionsByCategory.get("transportation"));
 
         ref.child("users").child(userId).child("Location").child("Country").setValue(questionbank.getCountry());
-
+        ref.child("users").child(userId).child("Location").child("Region").setValue("World");
     }
 }
