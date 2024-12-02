@@ -1,9 +1,6 @@
-package com.example.b07fall2024;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +86,7 @@ public class Housing implements QuesAns {
         options7.put("B", "Yes, partially (less than 50% of energy use)");
         options7.put("C", "No");
         options.add(options7);
+
     }
 
     @Override

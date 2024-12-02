@@ -1,36 +1,18 @@
-package com.example.b07fall2024;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public class ManageQuesAns implements Parcelable {
+public class ManageQuesAns {
     private final ArrayList<QuesAns> answersByCategory;
-    private String country;
 
     public ManageQuesAns(List<QuesAns> questionBanks) {
-        country = null;
-        answersByCategory = new ArrayList<>();
+        answersByCategory = new ArrayList<QuesAns>();
         for (QuesAns quesAns : questionBanks) {
             answersByCategory.add(quesAns);
         }
-    }
-
-    public ManageQuesAns(ManageQuesAns mqa){
-        answersByCategory = mqa.answersByCategory;
-        country = null;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCountry() {
-        return this.country;
     }
 
     public String getQuestion(QuesAns quesAns, int questionIndex) {
@@ -87,72 +69,5 @@ public class ManageQuesAns implements Parcelable {
         }
         return total;
     }
-
-    // New method to determine if a question should be skipped
-    public boolean shouldSkipQuestion(QuesAns quesAns, int questionIndex) {
-        if (quesAns instanceof Transportation) {
-            String questionText = quesAns.getQuestionText(questionIndex);
-            String answer = getSelectedAnswerByQuestion(quesAns, "Do you own or regularly use a car?");
-
-            // Enhanced Debug Print Statements
-            System.out.println("Checking question: " + questionText);
-            System.out.println("Answer to 'Do you own or regularly use a car?': " + answer);
-
-            // Skip detailed car-related questions if the answer is "No"
-            if ("No".equals(answer)) {
-                System.out.println("Answer is 'No'. Checking if we should skip car-related questions.");
-                if ("What type of car do you drive?".equals(questionText) ||
-                        "How many kilometers/miles do you drive per year?".equals(questionText)) {
-                    System.out.println("Skipping question: " + questionText);
-                    return true;
-                }
-            }
-        }
-        if (quesAns instanceof Food) {
-            String questionText = quesAns.getQuestionText(questionIndex);
-            String answer = getSelectedAnswerByQuestion(quesAns, "What best describes your diet?");
-
-            // Enhanced Debug Print Statements
-            System.out.println("Checking question: " + questionText);
-            System.out.println("Answer to What best describes your diet?': " + answer);
-
-            // Skip detailed car-related questions if the answer is "No"
-            if (!("Meat-based (eat all types of animal products)".equals(answer))) {
-                System.out.println("Answer is 'not meat'. Checking if we should skip  meat related questions");
-                if ("How often do you eat the following animal-based products?: Beef".equals(questionText)
-                        || "How often do you eat the following animal-based products?: Pork".equals(questionText)
-                        || "How often do you eat the following animal-based products?: Chicken".equals(questionText)
-                        ||"How often do you eat the following animal-based products?: Fish/Seafood".equals(questionText)) {
-                    System.out.println("Skipping question: " + questionText);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
-    private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
-        Map<String, String> answers = answersByCategory.get(quesAns);
-        return answers != null ? answers.get(questionText) : null;
-    }
-
-    public int describeContents(){
-        return 0;
-    }
-
-    public void writeToParcel (Parcel dest, int flags){
-        dest.writeParcelable (this, 0);
-    }
-
-    public static final Parcelable.Creator<ManageQuesAns> CREATOR
-            = new Parcelable.Creator<ManageQuesAns>() {
-        public ManageQuesAns createFromParcel(Parcel in) {
-            return new ManageQuesAns((ManageQuesAns)in.readParcelable(null));
-        }
-        public ManageQuesAns[] newArray(int size) {
-            return new ManageQuesAns[size];
-        }
-    };
 
 }
