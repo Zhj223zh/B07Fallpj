@@ -1,12 +1,10 @@
 package com.example.b07fall2024;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -16,12 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import java.util.TimerTask;
 
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView question;
@@ -82,7 +77,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initQuestionManager() {
-        questions = List.of(new Transportation(), new Food(), new Housing(), new Consumption());
+        questions = List.of(new QuizTransportation(), new Food(), new Housing(), new Consumption());
         questionbank = new ManageQuesAns(questions);
         questionbank.setCountry(country);
 
@@ -173,7 +168,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         super.onBackPressed();
         timeManager.stopTimer();
-        startActivity(new Intent(QuizActivity.this, QuizMainActivity.class));
+        startActivity(new Intent(QuizActivity.this, StartActivity.class));
         finish();
     }
 

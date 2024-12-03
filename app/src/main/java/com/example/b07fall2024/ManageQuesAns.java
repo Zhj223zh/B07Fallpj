@@ -83,7 +83,7 @@ public class ManageQuesAns implements Parcelable{
 
     // New method to determine if a question should be skipped
     public boolean shouldSkipQuestion(QuesAns quesAns, int questionIndex) {
-        if (quesAns instanceof Transportation) {
+        if (quesAns instanceof QuizTransportation) {
             String questionText = quesAns.getQuestionText(questionIndex);
             String answer = getSelectedAnswerByQuestion(quesAns, "Do you own or regularly use a car?");
 

@@ -19,7 +19,7 @@
             android:name="com.example.b07fall2024.QuizActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.b07fall2024.MainActivity"
+            android:name="com.example.b07fall2024.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
