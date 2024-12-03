@@ -26,8 +26,8 @@ public class LoginPresenter implements LoginContract.Presenter{
                 model.getUser(user.getUid(), (User currentUser) -> {
                     if (currentUser == null) {
                         view.failedToLogin();
-                    } else if (!currentUser.isQuestionsCompleted) {
-                        view.jumpToQuestionsActivity(user);
+//                    } else if (!currentUser.isQuestionsCompleted) {
+//                        view.jumpToQuestionsActivity(user);
                     }else {
                         view.jumpToDashboard(user);
                     }

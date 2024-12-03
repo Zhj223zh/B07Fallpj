@@ -46,7 +46,15 @@
                 android:layout_height="240dp"
                 android:layout_weight="1"
                 android:background="#373f51" />
-
+            <Button
+                android:id="@+id/btn_back_to_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Back_to_Dashboard"
+                android:layout_gravity="start"
+                android:backgroundTint="@color/blue_green"
+                android:textColor="#FFFFFF"
+                android:padding="8dp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,7 @@ public class Dashboard extends AppCompatActivity {
         carbonCalculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Dashboard.this, CarbonCalculatorActivity.class);
+                Intent intent = new Intent(Dashboard.this, StartActivity.class);
                 startActivity(intent);
             }
         });
@@ -31,7 +31,7 @@ public class Dashboard extends AppCompatActivity {
         ecoTrackerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Dashboard.this, EcoTrackerActivity.class);
+                Intent intent = new Intent(Dashboard.this, ActivityMainLayout.class);
                 startActivity(intent);
             }
         });

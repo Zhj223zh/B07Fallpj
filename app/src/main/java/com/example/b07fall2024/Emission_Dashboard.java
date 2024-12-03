@@ -1,5 +1,6 @@
 package com.example.b07fall2024;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -42,6 +43,15 @@ public class Emission_Dashboard extends AppCompatActivity {
         loadFragment_breakdown(new emission_breakdown());
         loadFragment_trend(new emission_trend());
         loadFragment_comparison(new emission_comparison());
+        Button backButton = findViewById(R.id.btn_back_to_main);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Emission_Dashboard.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

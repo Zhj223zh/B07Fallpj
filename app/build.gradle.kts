@@ -48,8 +48,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    testImplementation("org.mockito:mockito-inline:4.6.1")
+    testImplementation("org.mockito:mockito-core:4.2.0")
+    testImplementation("org.mockito:mockito-inline:4.2.0")
     testImplementation("com.google.android.gms:play-services-tasks:18.0.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
@@ -69,7 +69,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth:23.1.0")
-
+    implementation("com.google.code.gson:gson:2.11.0")
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies

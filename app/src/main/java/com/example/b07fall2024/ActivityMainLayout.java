@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
@@ -78,6 +79,15 @@ public class ActivityMainLayout extends AppCompatActivity {
         btnHabit.setOnClickListener(v -> {
             Intent intent = new Intent(ActivityMainLayout.this, MainPage.class);
             startActivity(intent);
+        });
+        Button backButton = findViewById(R.id.bk_bk);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMainLayout.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 

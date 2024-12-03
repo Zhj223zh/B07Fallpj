@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements LoginContract.Vie
     }
 
     public void jumpToQuestionsActivity(FirebaseUser currentUser) {
-        Intent intent = new Intent(this,QuestionsActivity.class);
+        Intent intent = new Intent(this,StartActivity.class);
         Toast.makeText(this, "Let's get started! We will calculate your current carbon footprint " +
                 "based on your lifestyle. You only need to do this once.", Toast.LENGTH_LONG).show();//注意dashboard的activity名称
         intent.putExtra("user", currentUser);// 将 user 对象附加到 Intent，这样在目标页面的账户就是登录页面的账户
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements LoginContract.Vie
 
     @Override
     public void jumpToEcotrackerActivity() {
-        Intent intent = new Intent(MainActivity.this, EcoTrackerActivity.class);
+        Intent intent = new Intent(MainActivity.this, ActivityMainLayout.class);
         startActivity(intent);
         finish();
     }

@@ -159,6 +159,16 @@
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/bk_bk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Back_to_Dashboard"
+                android:layout_gravity="start"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="@color/blue_green"
+                android:padding="8dp" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
