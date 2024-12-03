@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:layout_weight="1"
-                android:background="#373f51" />
+                android:background="#a9bcd0"  />
             <Button
                 android:id="@+id/btn_back_to_main"
                 android:layout_width="wrap_content"

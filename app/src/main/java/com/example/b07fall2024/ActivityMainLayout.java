@@ -120,13 +120,13 @@ public class ActivityMainLayout extends AppCompatActivity {
                 if (snapshot.exists()) {
                     EmissionStorage emissionStorage = EmissionStorage.getInstance();
                     double foodConsumption = snapshot.hasChild("FoodConsumption") ?
-                            Double.parseDouble(Objects.requireNonNull(snapshot.child("FoodConsumption").getValue(String.class))) : 0.0;
+                            snapshot.child("FoodConsumption").getValue(Double.class) != null ? snapshot.child("FoodConsumption").getValue(Double.class) : 0.0 : 0.0;
                     double shopping = snapshot.hasChild("Shopping") ?
-                            Double.parseDouble(Objects.requireNonNull(snapshot.child("Shopping").getValue(String.class))) : 0.0;
+                            snapshot.child("Shopping").getValue(Double.class) != null ? snapshot.child("Shopping").getValue(Double.class) : 0.0 : 0.0;
                     double transportation = snapshot.hasChild("Transportation") ?
-                            Double.parseDouble(Objects.requireNonNull(snapshot.child("Transportation").getValue(String.class))) : 0.0;
+                            snapshot.child("Transportation").getValue(Double.class) != null ? snapshot.child("Transportation").getValue(Double.class) : 0.0 : 0.0;
                     double energyUse = snapshot.hasChild("EnergyUse") ?
-                            Double.parseDouble(Objects.requireNonNull(snapshot.child("EnergyUse").getValue(String.class))) : 0.0;
+                            snapshot.child("EnergyUse").getValue(Double.class) != null ? snapshot.child("EnergyUse").getValue(Double.class) : 0.0 : 0.0;
                     double total = foodConsumption + shopping + transportation + energyUse;
                     emissionStorage.setEnergyUse(energyUse);
                     emissionStorage.setFoodConsumption(foodConsumption);

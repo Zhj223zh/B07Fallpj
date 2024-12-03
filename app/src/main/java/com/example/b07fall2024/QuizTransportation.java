@@ -101,7 +101,8 @@ public class QuizTransportation implements QuesAns {
         if (selectedAnswer.containsKey(question)) {
             return selectedAnswer.get(question);
         } else {
-            throw new QuestionException("No answer selected for question: " + question);
+            return null;
+//            throw new QuestionException("No answer selected for question: " + question);
         }
     }
 
@@ -154,14 +155,18 @@ public class QuizTransportation implements QuesAns {
                 "Gasoline", 0.24f,
                 "Diesel", 0.27f,
                 "Hybrid", 0.16f,
-                "Electric", 0.05f));
+                "Electric", 0.05f,
+                "", 0f
+        ));
         HashMap<String, Integer> ans3ToMiles = new HashMap<>(Map.of(
                 "Up to 5,000 km (3,000 miles)", 5000,
                 "5,000–10,000 km (3,000–6,000 miles)", 10000,
                 "10,000–15,000 km (6,000–9,000 miles)", 15000,
                 "15,000–20,000 km (9,000–12,000 miles)", 20000,
                 "20,000–25,000 km (12,000–15,000 miles)", 25000,
-                "More than 25,000 km (15,000 miles)", 35000));
+                "More than 25,000 km (15,000 miles)", 35000,
+                "",0
+        ));
 
         // Answers 4 and 5
         HashMap<String, Integer> ans5Occasionally = new HashMap<>(Map.of(
@@ -169,19 +174,25 @@ public class QuizTransportation implements QuesAns {
                 "1-3 hours", 819,
                 "3-5 hours", 1638,
                 "5-10 hours", 3071,
-                "More than 10 hours", 9555));
+                "More than 10 hours", 9555,
+                "",0
+        ));
         HashMap<String, Integer> ans5Frequently = new HashMap<>(Map.of(
                 "Under 1 hour", 573,
                 "1-3 hours", 1911,
                 "3-5 hours", 3822,
                 "5-10 hours", 7166,
-                "More than 10 hours", 9555));
+                "More than 10 hours", 9555,
+                "",0
+        ));
 
         HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
                 "Never", 0,
                 "Occasionally", ans5Occasionally.get(ans5),
                 "Frequently", ans5Frequently.get(ans5),
-                "Always", ans5Frequently.get(ans5)));
+                "Always", ans5Frequently.get(ans5),
+                "",0
+        ));
 
         // answer 6
         HashMap<String, Integer> ans6ToCO2 = new HashMap<>(Map.of(
@@ -189,7 +200,8 @@ public class QuizTransportation implements QuesAns {
                 "1-2 flights", 225,
                 "3-5 flights", 600,
                 "6-10 flights", 1200,
-                "More than 10 flights", 1800));
+                "More than 10 flights", 1800,
+                "",0));
 
         // answer 7
         HashMap<String, Integer> ans7ToCO2 = new HashMap<>(Map.of(
@@ -197,7 +209,9 @@ public class QuizTransportation implements QuesAns {
                 "1-2 flights", 825,
                 "3-5 flights", 2200,
                 "6-10 flights", 4400,
-                "More than 10 flights", 6600));
+                "More than 10 flights", 6600,
+                "",0
+        ));
 
         float kgPerKm = ans2ToCO2.get(ans2);
         int milesDriven = ans3ToMiles.get(ans3);

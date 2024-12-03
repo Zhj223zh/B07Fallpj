@@ -2,6 +2,7 @@ package com.example.b07fall2024;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class FinishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finish);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance("https://b07ecoproject-default-rtdb.firebaseio.com/").getReference();
 
         // Fetch the current user details
         fetchUserDetails();
@@ -39,6 +40,13 @@ public class FinishActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (user != null) {
+                    submitData();
+                    Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(FinishActivity.this, "User data not loaded. Try again.", Toast.LENGTH_SHORT).show();
+                }
                 Intent intent = new Intent(FinishActivity.this, Dashboard.class);
                 startActivity(intent);
                 finish();
@@ -62,7 +70,7 @@ public class FinishActivity extends AppCompatActivity {
 
     private void fetchUserDetails() {
         String userId = mAuth.getCurrentUser().getUid();
-        databaseReference.child("users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 user = snapshot.getValue(User.class);
@@ -91,14 +99,13 @@ public class FinishActivity extends AppCompatActivity {
             float housing = intent.getFloatExtra("housing", 0);
             float consumption= intent.getFloatExtra("consumption", 0);
             float country= intent.getFloatExtra("country", 0);
-
             // Update Firebase database
-            DatabaseReference userRef = databaseReference.child("users").child(userId);
+            DatabaseReference userRef = databaseReference.child("Users").child(userId);
             userRef.child("AnualCF").child("EnergyUse").setValue(housing);
             userRef.child("AnualCF").child("FoodConsumption").setValue(food);
             userRef.child("AnualCF").child("Shopping").setValue(consumption);
             userRef.child("AnualCF").child("Transportation").setValue(transportation);
-            userRef.child("Location").child("Country").setValue(country);
+            userRef.child("Location").child("Country").setValue("Canada");
             userRef.child("Location").child("Region").setValue("World");
 
             // Mark the quiz as completed

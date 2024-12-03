@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a9bcd0">
+    android:background="@drawable/tracker_background">
 
     <TextView
         android:id="@+id/consumptionTitle"
@@ -211,7 +211,6 @@
                 android:orientation="vertical"
                 android:padding="8dp" />
 
-            <!-- 提交按钮 -->
             <Button
                 android:id="@+id/submitButton"
                 android:layout_width="wrap_content"
@@ -221,6 +220,7 @@
                 android:text="Submit"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"/>
+
         </LinearLayout>
     </ScrollView>
 

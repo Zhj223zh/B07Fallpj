@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#009999"
+    android:background="@drawable/login_background"
     tools:context="com.example.b07fall2024.Dashboard">
 
 

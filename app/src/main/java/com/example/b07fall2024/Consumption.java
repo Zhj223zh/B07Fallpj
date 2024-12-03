@@ -116,25 +116,33 @@ public class Consumption implements QuesAns {
         HashMap<String, Float> ans2ToMultiplier = new HashMap<>(Map.of(
                 "Yes, regularly", 0.5f,
                 "Yes, occasionally", 0.7f,
-                "No", 1f));
+                "No", 1f,
+                "",0f
+        ));
 
         HashMap<String, Integer> ans3ToCO2 = new HashMap<>(Map.of(
                 "None", 0,
                 "1", 300,
                 "2", 600,
-                "3 or more", 900));
+                "3 or more", 900,
+                "",0
+        ));
 
         HashMap<String, Integer> ans4ToCO2 = new HashMap<>(Map.of(
                 "Never", 0,
                 "Occasionally", 0,
                 "Frequently", 30,
-                "Always", 50));
+                "Always", 50,
+                "",0
+        ));
 
         HashMap<String, Float> ans4ToCO2Rarely = new HashMap<>(Map.of(
                 "Never", 0f,
                 "Occasionally", 0.75f,
                 "Frequently", 1.5f,
-                "Always", 2.5f));
+                "Always", 2.5f,
+                "",0f
+        ));
 
         total += 5 * ans2ToMultiplier.get(ans2);
         total += ans3ToCO2.get(ans3);

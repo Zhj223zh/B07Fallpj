@@ -59,10 +59,10 @@ public class UpdateToFirebase {
         double Shopping = EmissionStorage.getInstance().getShopping();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("FoodConsumption", String.valueOf(Food));
-        data.put("Shopping", String.valueOf(Shopping));
-        data.put("Transportation", String.valueOf(Transportation));
-        data.put("EnergyUse", String.valueOf(EnergyUse/daysInMonth));
+        data.put("FoodConsumption", Food);
+        data.put("Shopping", Shopping);
+        data.put("Transportation", Transportation);
+        data.put("EnergyUse", EnergyUse/daysInMonth);
 
         // path
         DatabaseReference categoryBreakdownRef = databaseRef.child("Users").child(userId)

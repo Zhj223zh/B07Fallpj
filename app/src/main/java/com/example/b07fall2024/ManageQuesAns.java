@@ -83,6 +83,7 @@ public class ManageQuesAns{
 
     // New method to determine if a question should be skipped
     public boolean shouldSkipQuestion(QuesAns quesAns, int questionIndex) {
+
         if (quesAns instanceof QuizTransportation) {
             String questionText = quesAns.getQuestionText(questionIndex);
             String answer = getSelectedAnswerByQuestion(quesAns, "Do you own or regularly use a car?");
@@ -97,6 +98,8 @@ public class ManageQuesAns{
                 if ("What type of car do you drive?".equals(questionText) ||
                         "How many kilometers/miles do you drive per year?".equals(questionText)) {
                     System.out.println("Skipping question: " + questionText);
+
+                    setRandomDefaultAnswer(quesAns,questionText);
                     return true;
                 }
             }
@@ -117,13 +120,29 @@ public class ManageQuesAns{
                         || "How often do you eat the following animal-based products?: Chicken".equals(questionText)
                         ||"How often do you eat the following animal-based products?: Fish/Seafood".equals(questionText)) {
                     System.out.println("Skipping question: " + questionText);
+
+                    setRandomDefaultAnswer(quesAns,questionText);
                     return true;
                 }
             }
         }
         return false;
     }
+    private void setRandomDefaultAnswer(QuesAns quesAns, String questionText) {
+        // Possible default answers - modify these as per your use case
+        String defaultAnswers =  "Not applicable";
 
+        // Choose a random answe
+
+
+        // Set the random answer in the answersByCategory map
+        Map<String, String> answers = answersByCategory.get(quesAns);
+        if (answers != null) {
+            answers.put(questionText, defaultAnswers);
+        }
+
+        System.out.println("Assigned random default answer: " + defaultAnswers + " to question: " + questionText);
+    }
 
     private String getSelectedAnswerByQuestion(QuesAns quesAns, String questionText) {
         Map<String, String> answers = answersByCategory.get(quesAns);

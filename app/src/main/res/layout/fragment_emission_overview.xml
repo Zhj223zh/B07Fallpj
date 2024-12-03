@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/totalEmissionsText"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:minWidth="48dp"
+            android:entries="@array/time_period_options"
             android:padding="8dp" />
     </LinearLayout>
 

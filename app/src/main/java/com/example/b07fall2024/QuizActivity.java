@@ -145,6 +145,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             View child = optionsContainer.getChildAt(i);
             if (child instanceof AppCompatButton) {
                 child.setSelected(false);
+                child.setBackgroundColor(Color.TRANSPARENT);
             }
         }
 
@@ -152,6 +153,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             View child = optionsContainer.getChildAt(i);
             if (child instanceof AppCompatButton && option.equals(child.getTag())) {
                 child.setSelected(true);
+                child.setBackgroundColor(Color.parseColor("#009999"));
             }
         }
     }
@@ -277,12 +279,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 currentQuestionIndexMap.put(questions.get(currentCategoryIndex), 0); // Start from the first question of the next category
                 System.out.println("QuizActivity"+ "Next Category Index: " + currentCategoryIndex);
             } else {
-                System.out.println("QuizActivity" + "Quiz finished");
                 Intent intent = new Intent(QuizActivity.this, FinishActivity.class);
-                for (String cat :questionbank.getEmissionsByCategory().keySet()){
-                    intent.putExtra(cat, questionbank.getEmissionsByCategory().get(cat));
+
+                // Pass emissionsByCategory to FinishActivity
+                for (Map.Entry<String, Float> entry : questionbank.getEmissionsByCategory().entrySet()) {
+                    intent.putExtra(entry.getKey(), entry.getValue());
                 }
                 intent.putExtra("country", questionbank.getCountry());
+
                 startActivity(intent);
                 finish();
             }
@@ -292,7 +296,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     //Source: QuizApplication | Android Studio Tutorial | 2024
     private void handleOptionButtonClick(AppCompatButton clickedButton) {
         selectedAnswer = clickedButton.getTag().toString();
-        clickedButton.setBackgroundColor(Color.parseColor("#009999")); // Change this color as desired
         selectOption(selectedAnswer); // Ensure only one option is selected
     }
 }
