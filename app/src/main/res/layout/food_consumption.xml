@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a9bcd0"
+    android:background="@drawable/tracker_background"
     android:padding="16dp">
 
 
@@ -66,6 +66,8 @@
                 android:id="@+id/addMealButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
                 android:onClick="onAdd"
                 android:text="Add" />
 
@@ -75,8 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
                 android:text="Submit"
-                android:textColor="@android:color/white"
                 android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
@@ -97,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Next:\nShopping"
-            android:textColor="@android:color/white"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:textSize="16sp" />
 
         <Button
@@ -106,7 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Activity\nList"
-            android:textColor="@android:color/white"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:textSize="15sp" />
+
     </LinearLayout>
 </RelativeLayout>

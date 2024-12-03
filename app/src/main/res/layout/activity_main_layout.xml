@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#a9bcd0">
+    android:background="@drawable/tracker_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,7 +38,10 @@
                     android:layout_marginBottom="12dp"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black"
+                    android:layout_margin="16dp"
+                    android:padding="16dp"
+                    android:background="@drawable/rounded_corner"
+                    android:textColor="@android:color/white"
                     android:gravity="center" />
 
                 <TextView
@@ -77,13 +80,16 @@
             <TextView
                 android:id="@+id/textViewHabitTracking"
                 android:text="Habit Tracking"
+                android:padding="16dp"
+                android:background="@drawable/rounded_corner"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tvAdoptedSummary"
@@ -158,6 +164,12 @@
                 android:text="Record your daily carbon emission here"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo1"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a9bcd0">
+    android:background="@drawable/tracker_background">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,6 +24,8 @@
             android:id="@+id/btnUploadAndReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:text="Return"
             android:layout_marginTop="16dp" />
 
@@ -31,6 +33,8 @@
             android:id="@+id/btnFilterType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:text="Filter by Type"
             android:layout_marginTop="8dp" />
 
@@ -38,6 +42,8 @@
             android:id="@+id/btnFilterImpact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:text="Filter by Impact"
             android:layout_marginTop="8dp" />
 
@@ -45,6 +51,8 @@
             android:id="@+id/btnReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#009999"
             android:text="Reset Filters"
             android:layout_marginTop="8dp" />
 
@@ -53,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

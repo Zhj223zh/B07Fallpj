@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a9bcd0">
+    android:background="@drawable/tracker_background">
 
     <TextView
         android:id="@+id/TransportationTitle"
@@ -111,6 +111,8 @@
                     android:id="@+id/addVehicleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:text="Add" />
             </LinearLayout>
 
@@ -141,6 +143,8 @@
                     android:id="@+id/addTransportButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:text="Add" />
             </LinearLayout>
 
@@ -170,6 +174,8 @@
                     android:id="@+id/addCyclingButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:text="Add" />
             </LinearLayout>
 
@@ -201,7 +207,11 @@
                     android:id="@+id/addFlightButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:text="Add" />
+
+
             </LinearLayout>
             <Button
                 android:id="@+id/submitButton"
@@ -209,8 +219,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
                 android:text="Submit"
-                android:textColor="@android:color/white"
                 android:textSize="18sp"/>
 
             <!-- Submit and Navigation Buttons -->
@@ -229,7 +240,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Next\nFood Consumption"
-                    android:textColor="@android:color/white"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:textSize="16sp" />
 
                 <Button
@@ -238,7 +250,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Activity\nList"
-                    android:textColor="@android:color/white"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#009999"
                     android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
