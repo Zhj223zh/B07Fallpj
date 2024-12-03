@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vehicle_types">
+        <item>Gasoline(mile)</item>
+        <item>Diesel(mile)</item>
+        <item>Hybrid(mile)</item>
+        <item>Electric(mile)</item>
+        <item>Gasoline(km)</item>
+        <item>Diesel(km)</item>
+        <item>Hybrid(km)</item>
+        <item>Electric(km)</item>
+    </string-array>
+
+    <string-array name="flight_types">
+        <item>Short-Haul (&lt;1,500 km)</item>
+        <item>Long-Haul (&gt;1,500 km)</item>
+    </string-array>
+
+    <string-array name="public_transport_types">
+        <item>Bus</item>
+        <item>Train</item>
+        <item>Subway</item>
+    </string-array>
+
+    <string-array name="meal_types">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Chicken</item>
+        <item>Fish</item>
+        <item>Plant-Based</item>
+    </string-array>
+
+
+    <string-array name="cycling_walking_types">
+        <item>(mile)</item>
+        <item>(km)</item>
+    </string-array>
+
+    <string-array name="electronics_types">
+        <item>Smartphone</item>
+        <item>Laptop</item>
+        <item>TV</item>
+    </string-array>
+
+    <string-array name="bill_types">
+        <item>Electricity</item>
+        <item>Gas</item>
+        <item>Water</item>
+    </string-array>
+
+    <string-array name="other_purchase_type">
+        <item>furniture</item>
+        <item>appliances</item>
+    </string-array>
+</resources>

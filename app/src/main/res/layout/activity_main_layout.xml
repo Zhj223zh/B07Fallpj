@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/tracker_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/textViewDailyEmissions"
+                    android:text="Daily CO2e Emissions: 0 kg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_margin="16dp"
+                    android:padding="16dp"
+                    android:background="@drawable/rounded_corner"
+                    android:textColor="@android:color/white"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/textViewFoodConsumption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Food Consumption: 0 kg"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/textViewShopping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shopping: 0 kg"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/textViewTransportation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transportation: 0 kg"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/textViewEnergyUse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Energy Use: 0 kg"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewHabitTracking"
+                android:text="Habit Tracking"
+                android:padding="16dp"
+                android:background="@drawable/rounded_corner"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvAdoptedSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adopted Habits Summary"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewHabits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                android:layout_marginBottom="16dp"
+                tools:listitem="@layout/item_habit" />
+
+            <Button
+                android:id="@+id/btnHabit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go to Habit Page"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/tvReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You have not adopted any habits yet."
+                android:padding="16dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btnTransportationActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
+                android:text="Transportation Activity" />
+
+            <Button
+                android:id="@+id/btnFoodConsumptionActivities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
+                android:text="Food Consumption Activities" />
+
+            <Button
+                android:id="@+id/btnConsumptionShoppingActivities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#009999"
+                android:text="Consumption and\nShopping Activities" />
+
+            <TextView
+                android:id="@+id/buttonGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Record your daily carbon emission here"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo1"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
