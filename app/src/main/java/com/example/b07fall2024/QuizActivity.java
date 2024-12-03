@@ -3,6 +3,7 @@ package com.example.b07fall2024;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -226,7 +227,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     // Helper method to get the last question index
     private int getLastQuestionIndex(QuesAns quesAns) {
         int index = 0;
@@ -285,7 +285,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 for (Map.Entry<String, Float> entry : questionbank.getEmissionsByCategory().entrySet()) {
                     intent.putExtra(entry.getKey(), entry.getValue());
                 }
-                intent.putExtra("country", questionbank.getCountry());
+                if (country == null || country.isEmpty()){
+                    Log.d("QuizActivity", "country is null");
+                    intent.putExtra("country", "Canada");
+                }
+                else {
+                    intent.putExtra("country", country);
+                }
 
                 startActivity(intent);
                 finish();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,6 +87,19 @@ public class FinishActivity extends AppCompatActivity {
         });
     }
 
+    private String newCountry(String country){
+        if (!(country != null && !country.isEmpty())){
+            Log.d("FinishActivity", "Country is null or empty!");
+            //country = "Canada";
+            return "Canada";
+        }
+        else {
+            Log.d("FinishActivity", "Country received: " + country);
+            TextView selectedCountry = findViewById(R.id.country_name);
+            return selectedCountry.getText().toString();
+        }
+    }
+
     private void submitData() {
         if (user != null) {
             // Update the isQuestionsCompleted field
@@ -98,14 +112,20 @@ public class FinishActivity extends AppCompatActivity {
             float food = intent.getFloatExtra("food", 0);
             float housing = intent.getFloatExtra("housing", 0);
             float consumption= intent.getFloatExtra("consumption", 0);
-            float country= intent.getFloatExtra("country", 0);
+            //float country= intent.getFloatExtra("country", 0);
+            String country= intent.getStringExtra("country");
+            String newcountry = newCountry(country);
+
+            //newcountry = "Canada";
+            //newcountry = null;
+
             // Update Firebase database
             DatabaseReference userRef = databaseReference.child("Users").child(userId);
             userRef.child("AnualCF").child("EnergyUse").setValue(housing);
             userRef.child("AnualCF").child("FoodConsumption").setValue(food);
             userRef.child("AnualCF").child("Shopping").setValue(consumption);
             userRef.child("AnualCF").child("Transportation").setValue(transportation);
-            userRef.child("Location").child("Country").setValue("Canada");
+            userRef.child("Location").child("Country").setValue(newcountry);
             userRef.child("Location").child("Region").setValue("World");
 
             // Mark the quiz as completed
@@ -116,6 +136,8 @@ public class FinishActivity extends AppCompatActivity {
                     Toast.makeText(FinishActivity.this, "Failed to update user status.", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            //userRef.child("Location").child("Country").setValue(newcountry);
         }
     }
 }
