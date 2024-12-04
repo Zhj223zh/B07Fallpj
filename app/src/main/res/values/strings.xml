@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">B07Fall2024</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_emissions">Total Emissions</string>
+    <string name="open_emission_dashboard">Open Emission Dashboard</string>
+    <string name="no_data">no date</string>
+    <string name="emission_overview_and_analysis">Emission overview and analysis</string>
+    <string name="back_to_main">Back to Main</string>
+    <string name="Planetze">Planetze</string>
+    <string name="Back_to_Dashboard">Back</string>
+    <string-array name="time_period_options">
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+    <string-array name="time_period_option">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+    <string name="planet_quiz">Welcome  to Planetze Quiz</string>
+    <string name="start_quiz">Start Quiz\n</string>
+    <string name="selected_country_name">Canada</string>
+    <string name="option_4">Option_4</string>
+    <string name="option_3">Option_3</string>
+    <string name="option_2">Option_2</string>
+    <string name="option_1">Option_1</string>
+    <string name="question_will_come_here">Question will come here</string>
+    <string name="next">Next\n</string>
+    <string name="select_country">Select_country</string>
+    <string name="survey_on_the_carbon_footprint">A survey on the carbon footprint\n</string>
+    <string name="carbon_fooprint">Carbon Footprint Survey\n</string>
+    <string name="Transpo">Consumption, Food, Housing, Transportation</string>
+    <string name="time">5 min\n</string>
+    <string name="completed_quiz">Thank you for completing Planetze Quiz\n</string>
+    <string name="completed_quiz_note">Your data will remain confidential within us</string>
+    <string name="end_quiz">End Quiz\n</string>
+    <string name="restart_quiz">Restart Quiz\n</string>
+    <string-array name="categories_array">
+        <item>South Korea</item>
+        <item>China</item>
+        <item>Canada</item>
+        <item>Philippines</item>
+        <!-- Add more categories as needed -->
+    </string-array>
 </resources>
