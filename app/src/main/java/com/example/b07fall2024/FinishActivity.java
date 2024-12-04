@@ -28,6 +28,7 @@ public class FinishActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("FINISHING UP");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
 
@@ -41,16 +42,7 @@ public class FinishActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
-                    submitData();
-                    Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(FinishActivity.this, "User data not loaded. Try again.", Toast.LENGTH_SHORT).show();
-                }
-                Intent intent = new Intent(FinishActivity.this, Dashboard.class);
-                startActivity(intent);
-                finish();
+                handleButtonClick(v);
             }
         });
 
@@ -58,15 +50,49 @@ public class FinishActivity extends AppCompatActivity {
         endQuizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
-                    submitData();
-                    Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(FinishActivity.this, "User data not loaded. Try again.", Toast.LENGTH_SHORT).show();
-                }
+                handleButtonClick(v);
             }
         });
+    }
+
+    private void handleButtonClick(View view){
+        int id = view.getId();
+        if (id == R.id.bk) {
+            handleBackButtonClick();
+        }
+        else if(id == R.id.end_quiz) {
+            handleEndQuizButtonClick();
+        }
+        else {
+            Toast.makeText(this, "Invalid click detected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handleBackButtonClick(){
+        if (user != null) {
+            submitData();
+            Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
+            //Intent intent = new Intent(FinishActivity.this, FinishActivity.class);
+            finish();
+        } else {
+            Toast.makeText(FinishActivity.this, "User data not loaded. Try again.", Toast.LENGTH_SHORT).show();
+        }
+        System.out.println("SWITCHING TO DASHBOARD");
+        Intent intent = new Intent(FinishActivity.this, Dashboard.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void handleEndQuizButtonClick(){
+        if (user != null) {
+            submitData();
+            Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FinishActivity.this, Dashboard.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(FinishActivity.this, "User data not loaded. Try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void fetchUserDetails() {
