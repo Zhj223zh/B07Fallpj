@@ -89,7 +89,8 @@ public class Food implements QuesAns {
         if (selectedAnswer.containsKey(question)) {
             return selectedAnswer.get(question);
         } else {
-            throw new QuestionException("No answer selected for question: " + question);
+            //throw new QuestionException("No answer selected for question: " + question);
+            return "";
         }
     }
 
