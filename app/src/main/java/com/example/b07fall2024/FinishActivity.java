@@ -91,12 +91,14 @@ public class FinishActivity extends AppCompatActivity {
         if (!(country != null && !country.isEmpty())){
             Log.d("FinishActivity", "Country is null or empty!");
             //country = "Canada";
+            System.out.println("null country");
             return "Canada";
         }
         else {
             Log.d("FinishActivity", "Country received: " + country);
             //TextView selectedCountry = findViewById(R.id.country_name);
             //return selectedCountry.getText().toString();
+            System.out.println("country =" + country);
             return country;
         }
     }
@@ -117,6 +119,8 @@ public class FinishActivity extends AppCompatActivity {
             String country= intent.getStringExtra("country");
             String newcountry = newCountry(country);
 
+            System.out.println("PASSING TO DB: COUNTRY = " + newcountry);
+
             //newcountry = "Canada";
             //newcountry = null;
 
@@ -126,7 +130,7 @@ public class FinishActivity extends AppCompatActivity {
             userRef.child("AnualCF").child("FoodConsumption").setValue(food);
             userRef.child("AnualCF").child("Shopping").setValue(consumption);
             userRef.child("AnualCF").child("Transportation").setValue(transportation);
-            userRef.child("Location").child("Country").setValue("Canada");
+            userRef.child("Location").child("Country").setValue(newcountry);
             userRef.child("Location").child("Region").setValue("World");
 
             // Mark the quiz as completed

@@ -71,7 +71,11 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public void setSelectedCountry() {
         TextView selectedCountry = findViewById(R.id.country_name);
         country = selectedCountry.getText().toString();
+        System.out.println("COUNTRY SET TO" + country);
         String getSelectedCountry = getIntent().getStringExtra("selected category");
+        System.out.println("SELECTED COUNTRY SET TO " + getSelectedCountry);
+        country = getSelectedCountry;
+        System.out.println("COUNTRY SET TO " + country);
         if (getSelectedCountry != null && !getSelectedCountry.isEmpty()) {
             selectedCountry.setText(getSelectedCountry);
         } else {
@@ -297,10 +301,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (country == null || country.isEmpty()){
                     Log.d("QuizActivity", "country is null");
+                    System.out.println("SUBMITTING: NULL COUNTRY");
                     intent.putExtra("country", "Canada");
                 }
                 else {
                     intent.putExtra("country", country);
+                    System.out.println("SUBMITTING: COUNTRY = " + country);
                 }
 
                 startActivity(intent);

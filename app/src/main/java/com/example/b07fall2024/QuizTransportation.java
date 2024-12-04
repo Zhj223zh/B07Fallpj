@@ -101,7 +101,8 @@ public class QuizTransportation implements QuesAns {
         if (selectedAnswer.containsKey(question)) {
             return selectedAnswer.get(question);
         } else {
-            return null;
+            //return null;
+            return "";
 //            throw new QuestionException("No answer selected for question: " + question);
         }
     }
@@ -217,7 +218,7 @@ public class QuizTransportation implements QuesAns {
         int milesDriven = ans3ToMiles.get(ans3);
 
         total += kgPerKm * milesDriven;
-        total += ans4ToCO2.get(ans4);
+        total += ans4ToCO2.getOrDefault(ans4, 0);
         total += ans6ToCO2.get(ans6);
         total += ans7ToCO2.get(ans7);
 
