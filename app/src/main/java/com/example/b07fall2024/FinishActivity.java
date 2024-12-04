@@ -95,8 +95,9 @@ public class FinishActivity extends AppCompatActivity {
         }
         else {
             Log.d("FinishActivity", "Country received: " + country);
-            TextView selectedCountry = findViewById(R.id.country_name);
-            return selectedCountry.getText().toString();
+            //TextView selectedCountry = findViewById(R.id.country_name);
+            //return selectedCountry.getText().toString();
+            return country;
         }
     }
 
