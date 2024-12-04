@@ -87,7 +87,7 @@ public class FinishActivity extends AppCompatActivity {
         if (user != null) {
             submitData();
             Toast.makeText(FinishActivity.this, "Quiz completed successfully.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(FinishActivity.this, Dashboard.class);
+            Intent intent = new Intent(FinishActivity.this, Emission_Dashboard.class);
             startActivity(intent);
             finish();
         } else {
