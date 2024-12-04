@@ -120,6 +120,7 @@ public class FinishActivity extends AppCompatActivity {
             String newcountry = newCountry(country);
 
             System.out.println("PASSING TO DB: COUNTRY = " + newcountry);
+            Log.i("FinishActivity", "PASSING TO DB: COUNTRY = " + newcountry);
 
             //newcountry = "Canada";
             //newcountry = null;
@@ -130,8 +131,9 @@ public class FinishActivity extends AppCompatActivity {
             userRef.child("AnualCF").child("FoodConsumption").setValue(food);
             userRef.child("AnualCF").child("Shopping").setValue(consumption);
             userRef.child("AnualCF").child("Transportation").setValue(transportation);
-            userRef.child("Location").child("Country").setValue(newcountry);
-            userRef.child("Location").child("Region").setValue("World");
+            userRef.child("Location").child("Region").setValue(newcountry);
+            userRef.child("Location").child("Country").setValue("Canada");
+            //userRef.child("Location").child("Region").setValue("Wordle");
 
             // Mark the quiz as completed
             userRef.child("isQuestionsCompleted").setValue(true).addOnCompleteListener(task -> {
