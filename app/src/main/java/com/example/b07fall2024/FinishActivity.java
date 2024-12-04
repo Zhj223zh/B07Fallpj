@@ -126,7 +126,7 @@ public class FinishActivity extends AppCompatActivity {
             userRef.child("AnualCF").child("FoodConsumption").setValue(food);
             userRef.child("AnualCF").child("Shopping").setValue(consumption);
             userRef.child("AnualCF").child("Transportation").setValue(transportation);
-            userRef.child("Location").child("Country").setValue(newcountry);
+            userRef.child("Location").child("Country").setValue("Canada");
             userRef.child("Location").child("Region").setValue("World");
 
             // Mark the quiz as completed

@@ -209,22 +209,32 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void handleBackButtonClick() {
         QuesAns currentQuesAns = questions.get(currentCategoryIndex);
+
         if (currentQuesAns != null) {
-            if (currentCategoryIndex > 0) {
-                // Move to the previous category and its last question
+            Integer currentQuestionIndex = currentQuestionIndexMap.get(currentQuesAns);
+
+            if (currentQuestionIndex != null && currentQuestionIndex > 0) {
+                // Go back to the previous question in the same category
+                currentQuestionIndex--;
+                currentQuestionIndexMap.put(currentQuesAns, currentQuestionIndex);
+                displayCurrentCategoryQuestion();
+                Toast.makeText(this, "Moved to previous question.", Toast.LENGTH_SHORT).show();
+            } else if (currentCategoryIndex > 0) {
+                // Move to the last question of the previous category
                 currentCategoryIndex--;
                 currentQuesAns = questions.get(currentCategoryIndex);
-                int lastQuestionIndex = getLastQuestionIndex(currentQuesAns);  // Get the last question index
+                int lastQuestionIndex = getLastQuestionIndex(currentQuesAns);
                 currentQuestionIndexMap.put(currentQuesAns, lastQuestionIndex);
                 displayCurrentCategoryQuestion();
                 Toast.makeText(this, "Moved to previous category: " + currentCategoryIndex, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "This is the first category.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "This is the first question of the first category.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "Error: currentQuesAns is null", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
     // Helper method to get the last question index

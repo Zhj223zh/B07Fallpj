@@ -58,7 +58,7 @@ public class FoodConsumption extends AppCompatActivity{
         submitButton.setOnClickListener(v -> {
             EmissionStorage emissionStorage = EmissionStorage.getInstance();
             FoodEmission = onSubmitButtonClicked();
-            Toast.makeText(FoodConsumption.this, "碳排放量: " + FoodEmission + " kg CO2e", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FoodConsumption.this, "emission: " + FoodEmission + " kg CO2e", Toast.LENGTH_SHORT).show();
             emissionStorage.setFoodConsumption(FoodEmission);
         });
     }
